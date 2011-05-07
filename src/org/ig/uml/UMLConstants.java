@@ -3,7 +3,7 @@ package org.ig.uml;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public interface UMLConstants { 
+public interface UMLConstants {
 	public static final String TITLE_KEY = "title";
 	public static final String RS_NAME = "rs";
 	public static final String LOCALE = "fr";
@@ -25,10 +25,21 @@ public interface UMLConstants {
 	public static final String A_PROPOS_KEY = "about";
 	public static final String EXPORT_GRAPHIC_KEY = "export_graphic";
 	public static final String PREFERENCES_KEY = "preferences";
+	public static final String NEW_CLASS_KEY= "new_class"; 
+	public static final String NEW_ASSOCIATION_KEY  = "new_association";
+	public static final String NEW_AGGREGATION_KEY = "new_aggregation";
+	public static final String NEW_GENERALIZATION_KEY = "new_generalization";
+	public static final String NEW_COMPOSITION_KEY = "new_composition";
+	public static final String NEW_INTERFACE_KEY = "new_interface";
+	public static final String NEW_REALIZATION_KEY = "new_realization";
+	public static final String NEW_DEPENDENCY_KEY = "new_dependency";
+	public static final String NEW_ATTRIBUTE_KEY = "new_attribute";
+	public static final String NEW_OPERATION_KEY = "new_operation";
 	
-	public static Locale currentLocale  = new Locale(LOCALE);
-	public static ResourceBundle rs = ResourceBundle.getBundle(RS_NAME, currentLocale);
-	
+	public static Locale currentLocale = new Locale(LOCALE);
+	public static ResourceBundle rs = ResourceBundle.getBundle(RS_NAME,
+			currentLocale);
+
 	public static final String TITLE = rs.getString(TITLE_KEY);
 	public static final String FILE = rs.getString(FILE_KEY);
 	public static final String EDIT = rs.getString(EDIT_KEY);
@@ -46,8 +57,19 @@ public interface UMLConstants {
 	public static final String PASTE = rs.getString(PASTE_KEY);
 	public static final String GENERATE_CODE = rs.getString(GENERATE_CODE_KEY);
 	public static final String A_PROPOS = rs.getString(A_PROPOS_KEY);
-	public static final String EXPORT_GRAPHIC = rs.getString(EXPORT_GRAPHIC_KEY);
+	public static final String EXPORT_GRAPHIC = rs
+			.getString(EXPORT_GRAPHIC_KEY);
 	public static final String PREFERENCES = rs.getString(PREFERENCES_KEY);
+	public static final String NEW_CLASS= rs.getString(NEW_CLASS_KEY); 
+	public static final String NEW_ASSOCIATION  = rs.getString(NEW_ASSOCIATION_KEY);
+	public static final String NEW_AGGREGATION = rs.getString(NEW_AGGREGATION_KEY);
+	public static final String NEW_GENELIZATION = rs.getString(NEW_GENERALIZATION_KEY);
+	public static final String NEW_COMPOSITION = rs.getString(NEW_COMPOSITION_KEY);
+	public static final String NEW_INTERFACE = rs.getString(NEW_INTERFACE_KEY);
+	public static final String NEW_REALIZATION = rs.getString(NEW_REALIZATION_KEY);
+	public static final String NEW_DEPENDENCY = rs.getString(NEW_DEPENDENCY_KEY);
+	public static final String NEW_ATTRIBUTE = rs.getString(NEW_ATTRIBUTE_KEY);
+	public static final String NEW_OPERATION = rs.getString(NEW_OPERATION_KEY);
 	
 	public static final int WIDTH_FRAME = 500;
 	public static final int HEIGHT_FRAME = 500;

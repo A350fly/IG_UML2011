@@ -7,7 +7,7 @@ import javax.swing.JToolBar;
 
 import org.ig.uml.UMLConstants;
 
-//TODO : Uniformiser la taille des icônes de la barre d'outils
+//TODO : Uniformiser la taille des icÃ´nes de la barre d'outils
 
 public class ToolBarUML extends JToolBar implements UMLConstants {
 

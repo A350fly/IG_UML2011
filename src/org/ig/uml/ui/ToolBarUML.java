@@ -7,11 +7,12 @@ import javax.swing.JToolBar;
 
 import org.ig.uml.UMLConstants;
 
-//TODO Uniformiser la taille des icÃ´nes de la barre d'outils
+//TODO : Uniformiser la taille des icônes de la barre d'outils
 
 public class ToolBarUML extends JToolBar implements UMLConstants {
 
 	private static final long serialVersionUID = 7662874994619958728L;
+	
 	private ButtonGroup buttonGroup;
 	private JToggleButton newClass;
 	private JToggleButton newAssociation;
@@ -23,6 +24,7 @@ public class ToolBarUML extends JToolBar implements UMLConstants {
 	private JToggleButton newDependency;
 	private JToggleButton newAttribute;
 	private JToggleButton newOperation;
+	
 	private static final ImageIcon ICON_NEW_CLASS = new ImageIcon(
 			"res/drawable/Class.gif");
 	private static final ImageIcon ICON_NEW_ASSOCIATION = new ImageIcon(

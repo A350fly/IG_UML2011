@@ -1,7 +1,6 @@
 package org.ig.uml.ui;
 
 import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
@@ -23,27 +22,6 @@ public class ToolBarUML extends JToolBar implements UmlConstants {
 	private JToggleButton newAttribute;
 	private JToggleButton newOperation;
 	
-	private static final ImageIcon ICON_NEW_CLASS = new ImageIcon(
-			"res/drawable/Class.gif");
-	private static final ImageIcon ICON_NEW_ASSOCIATION = new ImageIcon(
-			"res/drawable/Association.gif");
-	private static final ImageIcon ICON_NEW_AGGREGATION = new ImageIcon(
-			"res/drawable/Aggregation.gif");
-	private static final ImageIcon ICON_NEW_GENERALIZATION = new ImageIcon(
-			"res/drawable/Generalization.gif");
-	private static final ImageIcon ICON_NEW_COMPOSITION = new ImageIcon(
-			"res/drawable/Composition.gif");
-	private static final ImageIcon ICON_NEW_INTERFACE = new ImageIcon(
-			"res/drawable/Interface.gif");
-	private static final ImageIcon ICON_NEW_REALIZATION = new ImageIcon(
-			"res/drawable/Realization.gif");
-	private static final ImageIcon ICON_NEW_DEPENDENCY = new ImageIcon(
-			"res/drawable/Dependency.gif");
-	private static final ImageIcon ICON_NEW_ATTRIBUTE = new ImageIcon(
-			"res/drawable/Attribute.gif");
-	private static final ImageIcon ICON_NEW_OPERATION = new ImageIcon(
-			"res/drawable/AddOperation.gif");
-
 	public ToolBarUML() {
 		buttonGroup = new ButtonGroup();
 		newClass = new JToggleButton(ICON_NEW_CLASS);

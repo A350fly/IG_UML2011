@@ -1,11 +1,11 @@
 package org.ig.uml.entities;
 
 public enum PrimitiveType {
-	Void("Void"),
-	Integer("Integer"),
-	String("String"),
-	Boolean("Boolean"),
-	Decimal("Decimal");
+	VOID("Void"),
+	INTEGER("Integer"),
+	STRING("String"),
+	BOOLEAN("Boolean"),
+	DECIMAL("Decimal");
 	
 	private String name;
 	

@@ -36,11 +36,11 @@ public class UmlController {
 		umlView.close();
 	}
 	
-	public void notifyAddClass(Classe classe) {
+	public void notifyDrawClass(Classe classe) {
 		umlModel.getComponentManager().addClass(classe);
 	}
 	
-	public void notifyAddInterface(Interface i) {
+	public void notifyDrawInterface(Interface i) {
 		umlModel.getComponentManager().addInterface(i);
 	}
 	

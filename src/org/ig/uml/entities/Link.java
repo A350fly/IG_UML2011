@@ -1,0 +1,10 @@
+package org.ig.uml.entities;
+
+public enum Link {
+	ASSOCIATION,
+	AGGREGATION,
+	COMPOSITION,
+	GENERALIZATION,
+	REALIZATION,
+	DEPEDENCY
+}

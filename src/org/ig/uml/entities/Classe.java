@@ -1,5 +1,6 @@
 package org.ig.uml.entities;
 
+import java.awt.Point;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,14 +13,16 @@ public class Classe {
 	private Set<Interface> interfaces;
 	private boolean isFinal;
 	private boolean isAbstract;
+	private Point positionOnSurface;
 	
 	public Classe(String name) {
 		this.name = name;
-		visibility = Visibility.Package;
+		visibility = Visibility.PACKAGE;
 		attributes = new HashSet<Attribute>();
 		methods = new HashSet<Method>();
 		interfaces = new HashSet<Interface>();
 		baseClasses = new HashSet<Classe>();
+		positionOnSurface.setLocation(-1, -1);
 	}
 	
 	public Classe (PrimitiveType primitiveType) {
@@ -88,5 +91,13 @@ public class Classe {
 
 	public Set<Classe> getBaseClasses() {
 		return baseClasses;
+	}
+
+	public Point getPositionOnSurface() {
+		return positionOnSurface;
+	}
+
+	public void setPositionOnSurface(Point positionOnSurface) {
+		this.positionOnSurface = positionOnSurface;
 	}
 }

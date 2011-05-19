@@ -18,7 +18,6 @@ public class JFrameUml extends JFrame implements UmlConstants {
 	private PaintSurface paintSurface;
 	private ToolBarUML toolBarUML;
 	private JScrollPane paintSurfaceScrollPane;
-	
 	private SwingUmlView view;
 
 	public JFrameUml(SwingUmlView view) {

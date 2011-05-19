@@ -11,7 +11,7 @@ public class Method {
 
 	public Method(String name, Classe classe) {
 		this.name = name;
-		visibility = Visibility.Package;
+		visibility = Visibility.PACKAGE;
 		returnType = classe;
 	}
 

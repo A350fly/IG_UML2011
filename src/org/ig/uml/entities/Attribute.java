@@ -10,7 +10,7 @@ public class Attribute {
 	public Attribute(String name, Classe classe) {
 		this.name = name;
 		this.classe = classe;
-		visibility = Visibility.Package;
+		visibility = Visibility.PACKAGE;
 		isFinal = false;
 		isStatic = false;
 	}

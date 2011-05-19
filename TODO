@@ -1,13 +1,20 @@
 projets :
 
+general :
+[ ] Supprimer les Set d'interfaces et de classes. Créer Set de <Link, Classe>
+et <Link, Interface>. Ou <Link, X> avec X classe mère de Classe et d'Interface.
+
 ui :
 [ ] Uniformiser la taille des icônes de la barre d'outils
 
-managers:
+managers :
 [ ] Implémenter UndoManager
 
-entities:
+entities :
 [ ] S'assurer que l'utilisateur rentre des noms valides, par exemple, lors de la
 	création de classe, pour s'assurer que le code issu de la génération
 	automatique soit compilable.
 [X] Supprimer Type.java ? Et créer instances de la classe Class
+
+generation de code :
+[ ] generation de code en c++, java et sql

@@ -1,0 +1,9 @@
+
+ui :
+[ ] Uniformiser la taille des icônes de la barre d'outils
+
+entities:
+[ ] S'assurer que l'utilisateur rentre des noms valides, par exemple, lors de la
+	création de classe, pour s'assurer que le code issu de la génération
+	automatique soit compilable.
+[ ] Supprimer Type.java ? Et créer instances de la classe Class

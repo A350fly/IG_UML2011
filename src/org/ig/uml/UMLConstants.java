@@ -3,6 +3,8 @@ package org.ig.uml;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.swing.ImageIcon;
+
 public interface UMLConstants {
 	public static final String TITLE_KEY = "title";
 	public static final String RS_NAME = "rs";
@@ -75,4 +77,24 @@ public interface UMLConstants {
 	public static final int HEIGHT_FRAME = 500;
 	public static final int WIDTH_MIN_FRAME = 200;
 	public static final int HEIGHT_MIN_FRAME = 200;
+	public static final ImageIcon ICON_NEW_CLASS = new ImageIcon(
+			"res/drawable/Class.gif");
+	public static final ImageIcon ICON_NEW_ASSOCIATION = new ImageIcon(
+			"res/drawable/Association.gif");
+	public static final ImageIcon ICON_NEW_AGGREGATION = new ImageIcon(
+			"res/drawable/Aggregation.gif");
+	public static final ImageIcon ICON_NEW_GENERALIZATION = new ImageIcon(
+			"res/drawable/Generalization.gif");
+	public static final ImageIcon ICON_NEW_COMPOSITION = new ImageIcon(
+			"res/drawable/Composition.gif");
+	public static final ImageIcon ICON_NEW_INTERFACE = new ImageIcon(
+			"res/drawable/Interface.gif");
+	public static final ImageIcon ICON_NEW_REALIZATION = new ImageIcon(
+			"res/drawable/Realization.gif");
+	public static final ImageIcon ICON_NEW_DEPENDENCY = new ImageIcon(
+			"res/drawable/Dependency.gif");
+	public static final ImageIcon ICON_NEW_ATTRIBUTE = new ImageIcon(
+			"res/drawable/Attribute.gif");
+	public static final ImageIcon ICON_NEW_OPERATION = new ImageIcon(
+			"res/drawable/AddOperation.gif");
 }

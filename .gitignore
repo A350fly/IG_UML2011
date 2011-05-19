@@ -6,3 +6,6 @@
 # ignorer les fichiers temporaires
 *~
 *.swp
+
+# ignorer binaires
+bin*

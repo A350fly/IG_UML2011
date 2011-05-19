@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.ImageIcon;
 
-public interface UMLConstants {
+public interface UmlConstants {
 	public static final String TITLE_KEY = "title";
 	public static final String RS_NAME = "rs";
 	public static final String LOCALE = "fr";

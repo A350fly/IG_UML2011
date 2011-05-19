@@ -7,9 +7,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
-import org.ig.uml.UMLConstants;
+import org.ig.uml.UmlConstants;
 
-public class JMenuBarUML extends JMenuBar implements UMLConstants {
+public class JMenuBarUML extends JMenuBar implements UmlConstants {
 	private static final long serialVersionUID = 7869107930309653383L;
 	private JMenu fileMenu;
 	private JMenu editMenu;

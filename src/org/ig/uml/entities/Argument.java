@@ -2,12 +2,12 @@ package org.ig.uml.entities;
 
 public class Argument {
 	private String name;
-	private Class classType;
+	private Classe classe;
 	private boolean isFinal;
 
-	public Argument(String name, Class classType) {
+	public Argument(String name, Classe classe) {
 		this.name = name;
-		this.classType = classType;
+		this.classe = classe;
 	}
 
 	public String getName() {
@@ -18,12 +18,12 @@ public class Argument {
 		this.name = name;
 	}
 
-	public Class getClassType() {
-		return classType;
+	public Classe getClasse() {
+		return classe;
 	}
 
-	public void setClassType(Class classType) {
-		this.classType = classType;
+	public void setClasse(Classe classe) {
+		this.classe = classe;
 	}
 
 	public boolean isFinal() {

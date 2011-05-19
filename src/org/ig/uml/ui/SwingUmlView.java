@@ -2,6 +2,8 @@ package org.ig.uml.ui;
 
 import org.ig.uml.UmlController;
 import org.ig.uml.UmlView;
+import org.ig.uml.events.DrawClassEvent;
+import org.ig.uml.events.DrawInterfaceEvent;
 
 public class SwingUmlView extends UmlView {
 
@@ -18,5 +20,15 @@ public class SwingUmlView extends UmlView {
 
 	public void close() {
 		jframe.dispose();
+	}
+
+	@Override
+	public void drawClass(DrawClassEvent addClassEvent) {
+		jframe.drawClass(addClassEvent);
+	}
+
+	@Override
+	public void addInterface(DrawInterfaceEvent addInterfaceEvent) {
+		jframe.addInterface(addInterfaceEvent);
 	}
 }

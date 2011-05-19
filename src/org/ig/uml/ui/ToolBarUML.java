@@ -5,9 +5,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
-import org.ig.uml.UMLConstants;
+import org.ig.uml.UmlConstants;
 
-public class ToolBarUML extends JToolBar implements UMLConstants {
+public class ToolBarUML extends JToolBar implements UmlConstants {
 
 	private static final long serialVersionUID = 7662874994619958728L;
 	

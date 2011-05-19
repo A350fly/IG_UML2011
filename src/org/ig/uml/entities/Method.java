@@ -4,15 +4,15 @@ import java.util.Set;
 public class Method {
 	private String name;
 	private Visibility visibility;
-	private Class returnType;
+	private Classe returnType;
 	private Set<Argument> arguments;
 	private boolean isFinal;
 	private boolean isStatic;
 
-	public Method(String name, Class classType) {
+	public Method(String name, Classe classe) {
 		this.name = name;
 		visibility = Visibility.Package;
-		returnType = classType;
+		returnType = classe;
 	}
 
 	public String getName() {
@@ -31,11 +31,11 @@ public class Method {
 		this.visibility = visibility;
 	}
 
-	public Class getReturnType() {
+	public Classe getReturnType() {
 		return returnType;
 	}
 
-	public void setReturnType(Class returnType) {
+	public void setReturnType(Classe returnType) {
 		this.returnType = returnType;
 	}
 

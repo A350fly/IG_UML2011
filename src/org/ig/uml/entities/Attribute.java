@@ -2,14 +2,14 @@ package org.ig.uml.entities;
 
 public class Attribute {
 	private String name;
-	private Class classType;
+	private Classe classe;
 	private Visibility visibility;
 	private boolean isFinal;
 	private boolean isStatic;
 
-	public Attribute(String name, Class classType) {
+	public Attribute(String name, Classe classe) {
 		this.name = name;
-		this.classType = classType;
+		this.classe = classe;
 		visibility = Visibility.Package;
 		isFinal = false;
 		isStatic = false;
@@ -23,12 +23,12 @@ public class Attribute {
 		this.name = name;
 	}
 
-	public Class getClassType() {
-		return classType;
+	public Classe getClasse() {
+		return classe;
 	}
 
-	public void setClassType(Class classType) {
-		this.classType = classType;
+	public void setClassType(Classe classe) {
+		this.classe = classe;
 	}
 
 	public Visibility getVisibility() {

@@ -8,13 +8,15 @@ public class Interface {
 	private String name;
 	private Visibility visibility;
 	private Interface baseInterface;
-	private Set<Method> methods;
+	private Set<Method> methods;	
+	private Set<Link> links;
 	private Point positionOnSurface;
 	
 	public Interface(String name) {
 		this.name = name;
 		visibility = Visibility.PACKAGE;
 		methods = new HashSet<Method>();
+		links = new HashSet<Link>();
 		baseInterface = null;
 		positionOnSurface.setLocation(-1, -1);
 	}
@@ -57,5 +59,13 @@ public class Interface {
 
 	public void setPositionOnSurface(Point positionOnSurface) {
 		this.positionOnSurface = positionOnSurface;
+	}
+
+	public void setLinks(Set<Link> links) {
+		this.links = links;
+	}
+
+	public Set<Link> getLinks() {
+		return links;
 	}
 }

@@ -4,6 +4,7 @@ import org.ig.uml.UmlController;
 import org.ig.uml.UmlView;
 import org.ig.uml.events.DrawClassEvent;
 import org.ig.uml.events.DrawInterfaceEvent;
+import org.ig.uml.events.DrawLinkEvent;
 
 public class SwingUmlView extends UmlView {
 
@@ -23,12 +24,17 @@ public class SwingUmlView extends UmlView {
 	}
 
 	@Override
-	public void drawClass(DrawClassEvent addClassEvent) {
-		jframe.drawClass(addClassEvent);
+	public void drawClass(DrawClassEvent drawClassEvent) {
+		jframe.drawClass(drawClassEvent);
 	}
 
 	@Override
-	public void addInterface(DrawInterfaceEvent addInterfaceEvent) {
-		jframe.addInterface(addInterfaceEvent);
+	public void drawInterface(DrawInterfaceEvent drawInterfaceEvent) {
+		jframe.addInterface(drawInterfaceEvent);
+	}
+
+	@Override
+	public void drawLink(DrawLinkEvent drawLinkEvent) {
+		jframe.drawLink(drawLinkEvent);
 	}
 }

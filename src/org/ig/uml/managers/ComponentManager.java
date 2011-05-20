@@ -7,6 +7,7 @@ import org.ig.uml.UmlModel;
 import org.ig.uml.entities.Attribute;
 import org.ig.uml.entities.Classe;
 import org.ig.uml.entities.Interface;
+import org.ig.uml.entities.Link;
 import org.ig.uml.entities.Method;
 
 public class ComponentManager {
@@ -55,6 +56,16 @@ public class ComponentManager {
 	public void addMethod(Method method, Classe classe) {
 		classe.getMethods().add(method);
 		model.fireDrawClass(classe);
+	}
+
+	public void addLink(Link link, Classe classe) {
+		classe.getLinks().add(link);
+		model.fireDrawLink(link, classe);
+	}
+	
+	public void addLink(Link link, Interface i) {
+		i.getLinks().add(link);
+		model.fireDrawLink(link, i);
 	}
 	
 }

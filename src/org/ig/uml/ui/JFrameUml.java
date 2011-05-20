@@ -9,6 +9,7 @@ import javax.swing.JScrollPane;
 import org.ig.uml.UmlConstants;
 import org.ig.uml.events.DrawClassEvent;
 import org.ig.uml.events.DrawInterfaceEvent;
+import org.ig.uml.events.DrawLinkEvent;
 
 public class JFrameUml extends JFrame implements UmlConstants {
 
@@ -58,7 +59,22 @@ public class JFrameUml extends JFrame implements UmlConstants {
 		
 	}
 
+	/**
+	 * Même que drawClass() sauf que c'est une interface.
+	 * On rajoutera la chaîne "<<interface>>" au dessus du nom de l'interface.
+	 */
 	public void addInterface(DrawInterfaceEvent drawInterfaceEvent) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * Dessine une droite entre deux objets (une interface ou une classe).
+	 * La forme de la droite dépend du champ link du paramètre drawLinkEvent.
+	 * Pour savoir quel sont les deux objets concernés, on regarde le champ 
+	 * classe du paramètre et on regarde le champ classe du link.
+	 */
+	public void drawLink(DrawLinkEvent drawLinkEvent) {
 		// TODO Auto-generated method stub
 		
 	}

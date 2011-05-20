@@ -4,8 +4,10 @@ import javax.swing.event.EventListenerList;
 
 import org.ig.uml.entities.Classe;
 import org.ig.uml.entities.Interface;
+import org.ig.uml.entities.Link;
 import org.ig.uml.events.DrawClassEvent;
 import org.ig.uml.events.DrawInterfaceEvent;
+import org.ig.uml.events.DrawLinkEvent;
 import org.ig.uml.managers.ComponentManager;
 
 public class UmlModel {
@@ -52,8 +54,19 @@ public class UmlModel {
 
 	public void fireAddInterface(Interface i) {
 		for (UmlListener listener : listenerList) {
-			listener.addInterface(new DrawInterfaceEvent(this, i));
+			listener.drawInterface(new DrawInterfaceEvent(this, i));
 		}
-		
+	}
+
+	public void fireDrawLink(Link link, Classe classe) {
+		for (UmlListener listener : listenerList) {
+			listener.drawLink(new DrawLinkEvent(this, link, classe));
+		}
+	}
+
+	public void fireDrawLink(Link link, Interface i) {
+		for (UmlListener listener : listenerList) {
+			listener.drawLink(new DrawLinkEvent(this, link, i));
+		}
 	}
 }

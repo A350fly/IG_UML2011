@@ -7,10 +7,9 @@ import java.util.Set;
 public class Classe {
 	private String name;
 	private Visibility visibility;
-	private Set<Classe> baseClasses;
 	private Set<Attribute> attributes;
 	private Set<Method> methods;
-	private Set<Interface> interfaces;
+	private Set<Link> links;
 	private boolean isFinal;
 	private boolean isAbstract;
 	private Point positionOnSurface;
@@ -20,8 +19,7 @@ public class Classe {
 		visibility = Visibility.PACKAGE;
 		attributes = new HashSet<Attribute>();
 		methods = new HashSet<Method>();
-		interfaces = new HashSet<Interface>();
-		baseClasses = new HashSet<Classe>();
+		links = new HashSet<Link>();
 		positionOnSurface.setLocation(-1, -1);
 	}
 	
@@ -57,14 +55,6 @@ public class Classe {
 		this.methods = methods;
 	}
 
-	public Set<Interface> getInterfaces() {
-		return interfaces;
-	}
-
-	public void setInterfaces(Set<Interface> interfaces) {
-		this.interfaces = interfaces;
-	}
-
 	public boolean isFinal() {
 		return isFinal;
 	}
@@ -85,19 +75,19 @@ public class Classe {
 		this.name = name;
 	}
 
-	public void setBaseClasses(Set<Classe> baseClasses) {
-		this.baseClasses = baseClasses;
-	}
-
-	public Set<Classe> getBaseClasses() {
-		return baseClasses;
-	}
-
 	public Point getPositionOnSurface() {
 		return positionOnSurface;
 	}
 
 	public void setPositionOnSurface(Point positionOnSurface) {
 		this.positionOnSurface = positionOnSurface;
+	}
+
+	public void setLinks(Set<Link> links) {
+		this.links = links;
+	}
+
+	public Set<Link> getLinks() {
+		return links;
 	}
 }

@@ -3,6 +3,7 @@ package org.ig.uml;
 import org.ig.uml.entities.Attribute;
 import org.ig.uml.entities.Classe;
 import org.ig.uml.entities.Interface;
+import org.ig.uml.entities.Link;
 import org.ig.uml.entities.Method;
 import org.ig.uml.ui.SwingUmlView;
 
@@ -50,5 +51,13 @@ public class UmlController {
 	
 	public void notifyAddMethod(Method method, Classe classe) {
 		umlModel.getComponentManager().addMethod(method, classe);
+	}
+	
+	public void notifyDrawLink(Link link, Classe classe) {
+		umlModel.getComponentManager().addLink(link, classe);
+	}
+	
+	public void notifyDrawLink(Link link, Interface i) {
+		umlModel.getComponentManager().addLink(link, i);
 	}
 }

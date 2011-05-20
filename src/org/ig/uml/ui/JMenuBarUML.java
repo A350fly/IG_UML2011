@@ -10,7 +10,9 @@ import javax.swing.KeyStroke;
 import org.ig.uml.UmlConstants;
 
 public class JMenuBarUML extends JMenuBar implements UmlConstants {
+	
 	private static final long serialVersionUID = 7869107930309653383L;
+	
 	private JMenu fileMenu;
 	private JMenu editMenu;
 	private JMenu helpMenu;
@@ -30,8 +32,12 @@ public class JMenuBarUML extends JMenuBar implements UmlConstants {
 	private JMenuItem aPropos;
 	private JMenuItem exportGraphic;
 	private JMenuItem preferences;
+	
+	private JFrameUml frame;
 
-	public JMenuBarUML() {
+	public JMenuBarUML(JFrameUml frame) {
+		this.frame = frame;
+		
 		fileMenu = new JMenu(FILE);
 		editMenu = new JMenu(EDIT);
 		helpMenu = new JMenu(HELP);
@@ -51,9 +57,11 @@ public class JMenuBarUML extends JMenuBar implements UmlConstants {
 		aPropos = new JMenuItem(A_PROPOS);
 		exportGraphic = new JMenuItem(EXPORT_GRAPHIC);
 		preferences = new JMenuItem(PREFERENCES);
+		
 		addComponents();
 		setAccelerators();
 		setMnemonics();
+		setCommandListener();
 	}
 
 	private void addComponents() {
@@ -126,5 +134,39 @@ public class JMenuBarUML extends JMenuBar implements UmlConstants {
 		help.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		generateCode.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G,
 				ActionEvent.CTRL_MASK));
+	}
+	
+	private void setCommandListener() {
+		nouveau.setActionCommand(NEW);
+		ouvrir.setActionCommand(OPEN);
+		enregistrer.setActionCommand(SAVE);
+		enregistrerSous.setActionCommand(SAVE_AS);
+		quitter.setActionCommand(QUIT);
+		annuler.setActionCommand(REDO);
+		retablir.setActionCommand(UNDO);
+		couper.setActionCommand(CUT);
+		copier.setActionCommand(COPY);
+		coller.setActionCommand(PASTE);
+		help.setActionCommand(HELP);
+		generateCode.setActionCommand(GENERATE_CODE);
+		aPropos.setActionCommand(A_PROPOS);
+		exportGraphic.setActionCommand(EXPORT_GRAPHIC);
+		preferences.setActionCommand(PREFERENCES);
+		
+		nouveau.addActionListener(new MenuBarListener(frame));
+		ouvrir.addActionListener(new MenuBarListener(frame));
+		enregistrer.addActionListener(new MenuBarListener(frame));
+		enregistrerSous.addActionListener(new MenuBarListener(frame));
+		quitter.addActionListener(new MenuBarListener(frame));
+		annuler.addActionListener(new MenuBarListener(frame));
+		retablir.addActionListener(new MenuBarListener(frame));
+		couper.addActionListener(new MenuBarListener(frame));
+		copier.addActionListener(new MenuBarListener(frame));
+		coller.addActionListener(new MenuBarListener(frame));
+		help.addActionListener(new MenuBarListener(frame));
+		generateCode.addActionListener(new MenuBarListener(frame));
+		aPropos.addActionListener(new MenuBarListener(frame));
+		exportGraphic.addActionListener(new MenuBarListener(frame));
+		preferences.addActionListener(new MenuBarListener(frame));
 	}
 }

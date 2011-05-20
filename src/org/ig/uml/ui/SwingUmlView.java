@@ -28,13 +28,15 @@ public class SwingUmlView extends UmlView {
 		jframe.drawClass(drawClassEvent);
 	}
 
-	@Override
 	public void drawInterface(DrawInterfaceEvent drawInterfaceEvent) {
 		jframe.addInterface(drawInterfaceEvent);
 	}
 
-	@Override
 	public void drawLink(DrawLinkEvent drawLinkEvent) {
 		jframe.drawLink(drawLinkEvent);
+	}
+	
+	public JFrameUml getJframe() {
+		return jframe;
 	}
 }

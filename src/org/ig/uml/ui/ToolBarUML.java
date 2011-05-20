@@ -22,7 +22,11 @@ public class ToolBarUML extends JToolBar implements UmlConstants {
 	private JToggleButton newAttribute;
 	private JToggleButton newOperation;
 	
-	public ToolBarUML() {
+	private JFrameUml frame;
+	
+	public ToolBarUML(JFrameUml frame) {
+		this.frame = frame;
+		
 		buttonGroup = new ButtonGroup();
 		newClass = new JToggleButton(ICON_NEW_CLASS);
 		newAssociation = new JToggleButton(ICON_NEW_ASSOCIATION);
@@ -34,11 +38,14 @@ public class ToolBarUML extends JToolBar implements UmlConstants {
 		newDependency = new JToggleButton(ICON_NEW_DEPENDENCY);
 		newAttribute = new JToggleButton(ICON_NEW_ATTRIBUTE);
 		newOperation = new JToggleButton(ICON_NEW_OPERATION);
+		
+		addCommandsListener();
 		addComponents();
 		addToButtonGroup();
+		addTooltipText();
 	}
 
-	public void addComponents() {
+	private void addComponents() {
 		add(newClass);
 		add(newInterface);
 		add(newAttribute);
@@ -51,7 +58,7 @@ public class ToolBarUML extends JToolBar implements UmlConstants {
 		add(newDependency);
 	}
 	
-	public void addToButtonGroup() {
+	private void addToButtonGroup() {
 		buttonGroup.add(newClass);
 		buttonGroup.add(newInterface);
 		buttonGroup.add(newAttribute);
@@ -62,5 +69,82 @@ public class ToolBarUML extends JToolBar implements UmlConstants {
 		buttonGroup.add(newComposition);
 		buttonGroup.add(newRealization);
 		buttonGroup.add(newDependency);
+	}
+	
+	private void addTooltipText() {
+		newClass.setToolTipText(NEW_CLASS);
+		newAssociation.setToolTipText(NEW_ASSOCIATION);
+		newAggregation.setToolTipText(NEW_AGGREGATION);
+		newGeneralization.setToolTipText(NEW_GENELIZATION);
+		newComposition.setToolTipText(NEW_COMPOSITION);
+		newInterface.setToolTipText(NEW_INTERFACE);
+		newRealization.setToolTipText(NEW_REALIZATION);
+		newDependency.setToolTipText(NEW_DEPENDENCY);
+		newAttribute.setToolTipText(NEW_ATTRIBUTE);
+		newOperation.setToolTipText(NEW_OPERATION);
+	}
+	
+	private void addCommandsListener() {
+		newClass.setActionCommand(NEW_CLASS);
+		newAssociation.setActionCommand(NEW_ASSOCIATION);
+		newAggregation.setActionCommand(NEW_AGGREGATION);
+		newGeneralization.setActionCommand(NEW_GENELIZATION);
+		newComposition.setActionCommand(NEW_COMPOSITION);
+		newInterface.setActionCommand(NEW_INTERFACE);
+		newRealization.setActionCommand(NEW_REALIZATION);
+		newDependency.setActionCommand(NEW_DEPENDENCY);
+		newAttribute.setActionCommand(NEW_ATTRIBUTE);
+		newOperation.setActionCommand(NEW_OPERATION);
+	    
+		newClass.addActionListener(new ToolBarListener(frame));
+		newAssociation.addActionListener(new ToolBarListener(frame));
+		newAggregation.addActionListener(new ToolBarListener(frame));
+		newGeneralization.addActionListener(new ToolBarListener(frame));
+		newComposition.addActionListener(new ToolBarListener(frame));
+		newInterface.addActionListener(new ToolBarListener(frame));
+		newRealization.addActionListener(new ToolBarListener(frame));
+		newDependency.addActionListener(new ToolBarListener(frame));
+		newAttribute.addActionListener(new ToolBarListener(frame));
+		newOperation.addActionListener(new ToolBarListener(frame));
+	}
+	
+	public JToggleButton getNewClass() {
+		return newClass;
+	}
+
+	public JToggleButton getNewAssociation() {
+		return newAssociation;
+	}
+
+	public JToggleButton getNewAggregation() {
+		return newAggregation;
+	}
+
+	public JToggleButton getNewGeneralization() {
+		return newGeneralization;
+	}
+
+	public JToggleButton getNewComposition() {
+		return newComposition;
+	}
+
+	public JToggleButton getNewInterface() {
+		return newInterface;
+	}
+
+	public JToggleButton getNewRealization() {
+		return newRealization;
+	}
+
+	public JToggleButton getNewAttribute() {
+		return newAttribute;
+	}
+
+	public JToggleButton getNewDependency() {
+		return newDependency;
+	}
+
+	public JToggleButton getNewOperation() {
+		return newOperation;
 	}
 }

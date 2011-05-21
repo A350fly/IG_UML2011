@@ -55,7 +55,7 @@ public class JFrameUml extends JFrame implements UmlConstants {
 	 * chaîne "<<interface>>" au dessus du nom si l'item est une l'interface.
 	 */
 	public void drawItem(DrawItemEvent drawItemEvent) {
-		paintSurface.paintClass();
+		paintSurface.paintClass(drawItemEvent.getItem());
 	}
 
 	/**

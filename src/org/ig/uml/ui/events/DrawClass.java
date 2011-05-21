@@ -19,7 +19,10 @@ public class DrawClass implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		Classe classe = new Classe("");
+		String name = dialog.getNameField().getText();
+		Classe classe = new Classe(name);
+		classe.setPositionOnSurface(dialog.getPoint());
 		view.getController().notifyDrawItem(classe);
+		dialog.dispose();
 	}
 }

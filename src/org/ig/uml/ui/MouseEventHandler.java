@@ -17,9 +17,10 @@ public class MouseEventHandler extends MouseAdapter {
 	}
 	
 	public void mousePressed(MouseEvent e) {
-		surface.setStartDrag(new Point(e.getX(), e.getY()));
-		surface.getPoints().add(surface.getStartDrag());
 		point.setLocation(e.getX(), e.getY());
+		surface.setStartDrag(point);
+		surface.getPoints().add(point);		// on ajoute à la zone de diagramme 
+											// les coordonnées du clique
 		
 		ToolBarUML toolBar = surface.getToolBar();
 		
@@ -54,8 +55,6 @@ public class MouseEventHandler extends MouseAdapter {
 		else if (toolBar.getNewRealization().isSelected()) {
 			
 		}
-		
-		//surface.repaint();
 	}
 	
 	public void mouseDragged(MouseEvent e) {

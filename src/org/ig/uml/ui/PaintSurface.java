@@ -16,16 +16,17 @@ public class PaintSurface extends JComponent {
 	private SwingUmlView view;
 
 	public PaintSurface(ToolBarUML toolBar, SwingUmlView view) {
-		setPoints(new ArrayList<Point>());
+		points = new ArrayList<Point>();
 		this.view = view;
 		this.toolBar = toolBar;
 
 		this.addMouseListener(new MouseEventHandler(this));
 		//this.addMouseMotionListener(new MouveEventHandler());
 	}
-
-	public void paint(Graphics g) {
-		Graphics2D g2d = (Graphics2D) g;
+	
+	public void paintClass() {
+		Graphics2D g2d = (Graphics2D) this.getGraphics();
+		super.paintComponents(g2d);
 		
 		for (Point point : points) {
 			g2d.setPaint(Color.BLACK);
@@ -33,6 +34,10 @@ public class PaintSurface extends JComponent {
 			g2d.setPaint(Color.WHITE);
 			g2d.fillRect(point.x, point.y, 100, 100);
 		}
+	}
+
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 	}
 
 	public void setStartDrag(Point startDrag) {

@@ -23,5 +23,6 @@ public class DrawClass implements ActionListener {
 		Classe classe = new Classe(name);
 		classe.setPositionOnSurface(dialog.getPoint());
 		view.getController().notifyDrawItem(classe);
+		dialog.dispose();
 	}
 }

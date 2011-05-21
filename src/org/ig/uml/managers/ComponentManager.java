@@ -7,65 +7,37 @@ import org.ig.uml.UmlModel;
 import org.ig.uml.entities.Attribute;
 import org.ig.uml.entities.Classe;
 import org.ig.uml.entities.Interface;
+import org.ig.uml.entities.Item;
 import org.ig.uml.entities.Link;
 import org.ig.uml.entities.Method;
 
 public class ComponentManager {
 
-	private Set<Classe> classes;
-	private Set<Interface> interfaces;
+	private Set<Item> items;
 	private UmlModel model;
 
 	public ComponentManager(UmlModel model) {
 		this.model = model;
-		classes = new HashSet<Classe>();
-		interfaces = new HashSet<Interface>();
+		items = new HashSet<Item>();
 	}
 
-	public Set<Classe> getClasses() {
-		return classes;
+	public void addItem(Item item) {
+		items.add(item);
+		model.fireDrawItem(item);
 	}
 
-	public void setClasses(Set<Classe> classes) {
-		this.classes = classes;
+	public void addLink(Link link, Item item) {
+		item.getLinks().add(link);
+		model.fireDrawLink(link, item);
 	}
-
-	public Set<Interface> getInterfaces() {
-		return interfaces;
-	}
-
-	public void setInterfaces(Set<Interface> interfaces) {
-		this.interfaces = interfaces;
-	}
-
-	public void addClass(Classe newClass) {
-		classes.add(newClass);
-		model.fireDrawClass(newClass);
-	}
-
-	public void addInterface(Interface i) {
-		interfaces.add(i);
-		model.fireAddInterface(i);
-	}
-
+	
 	public void addAttribute(Attribute attribute, Classe classe) {
 		classe.getAttributes().add(attribute);
-		model.fireDrawClass(classe);
+		model.fireDrawItem(classe);
 	}
 	
-	public void addMethod(Method method, Classe classe) {
-		classe.getMethods().add(method);
-		model.fireDrawClass(classe);
+	public void addMethod(Method method, Item item) {
+		item.getMethods().add(method);
+		model.fireDrawItem(item);
 	}
-
-	public void addLink(Link link, Classe classe) {
-		classe.getLinks().add(link);
-		model.fireDrawLink(link, classe);
-	}
-	
-	public void addLink(Link link, Interface i) {
-		i.getLinks().add(link);
-		model.fireDrawLink(link, i);
-	}
-	
 }

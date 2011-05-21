@@ -2,11 +2,9 @@ package org.ig.uml;
 
 import javax.swing.event.EventListenerList;
 
-import org.ig.uml.entities.Classe;
-import org.ig.uml.entities.Interface;
+import org.ig.uml.entities.Item;
 import org.ig.uml.entities.Link;
-import org.ig.uml.events.DrawClassEvent;
-import org.ig.uml.events.DrawInterfaceEvent;
+import org.ig.uml.events.DrawItemEvent;
 import org.ig.uml.events.DrawLinkEvent;
 import org.ig.uml.managers.ComponentManager;
 
@@ -46,27 +44,15 @@ public class UmlModel {
 		return componentManager;
 	}
 
-	public void fireDrawClass(Classe newClass) {
+	public void fireDrawItem(Item item) {
 		for (UmlListener listener : listenerList) {
-			listener.drawClass(new DrawClassEvent(this, newClass));
+			listener.drawItem(new DrawItemEvent(this, item));
 		}
 	}
 
-	public void fireAddInterface(Interface i) {
+	public void fireDrawLink(Link link, Item item) {
 		for (UmlListener listener : listenerList) {
-			listener.drawInterface(new DrawInterfaceEvent(this, i));
-		}
-	}
-
-	public void fireDrawLink(Link link, Classe classe) {
-		for (UmlListener listener : listenerList) {
-			listener.drawLink(new DrawLinkEvent(this, link, classe));
-		}
-	}
-
-	public void fireDrawLink(Link link, Interface i) {
-		for (UmlListener listener : listenerList) {
-			listener.drawLink(new DrawLinkEvent(this, link, i));
+			listener.drawLink(new DrawLinkEvent(this, link, item));
 		}
 	}
 }

@@ -54,4 +54,42 @@ public class Attribute {
 	public void setStatic(boolean isStatic) {
 		this.isStatic = isStatic;
 	}
+
+	public String toStringJava() {
+		String res = "";
+		String finalString = "";
+		String staticString = "";
+		if(isStatic)
+			staticString = "static ";
+		if(isFinal)
+			finalString = "final ";
+		res += visibility.toStringJava() + " ";
+		res += staticString;
+		res += finalString;
+		res += classe.getName() + " ";
+		res += name + ";\n";
+		return res;
+	}
+
+	public String toStringHpp() {
+		String res = "";
+		String finalString = "";		
+		String staticString = "";
+		if(isStatic)
+			staticString = "static ";
+		if(isFinal)
+			finalString = "const ";
+		res += staticString;
+		res += finalString;
+		res += classe.getName() + " ";
+		res += name + ";\n";
+		return res;
+	}
+
+	public String toStringSql() {
+		String res = "";
+		res += name + " ";
+		res += classe.getName() + ",\n";
+		return res;
+	}
 }

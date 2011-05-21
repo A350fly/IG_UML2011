@@ -2,18 +2,13 @@ package org.ig.uml.entities;
 
 public class Link {
 	private LinkType linkType;
-	private Object object;
-	
-	public Link(LinkType linkType, Interface i) {
-		this.linkType = linkType;
-		this.object = i;
-	}
-	
-	public Link(LinkType linkType, Classe classe) {
-		this.linkType = linkType;
-		this.object = classe;
-	}
+	private Item item;
 
+	public Link(LinkType linkType, Item item) {
+		this.linkType = linkType;
+		this.item = item;
+	}
+	
 	public void setLinkType(LinkType linkType) {
 		this.linkType = linkType;
 	}
@@ -22,12 +17,12 @@ public class Link {
 		return linkType;
 	}
 
-	public void setObject(Object object) {
-		this.object = object;
+	public void setItem(Item item) {
+		this.item = item;
 	}
 
-	public Object getObject() {
-		return object;
+	public Item getItem() {
+		return item;
 	}
 
 }

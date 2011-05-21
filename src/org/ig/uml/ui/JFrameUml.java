@@ -7,14 +7,13 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
 import org.ig.uml.UmlConstants;
-import org.ig.uml.events.DrawClassEvent;
-import org.ig.uml.events.DrawInterfaceEvent;
+import org.ig.uml.events.DrawItemEvent;
 import org.ig.uml.events.DrawLinkEvent;
 
 public class JFrameUml extends JFrame implements UmlConstants {
 
 	private static final long serialVersionUID = -7551368803304492966L;
-	
+
 	private JMenuBarUML jmenuBarUML;
 	private PaintSurface paintSurface;
 	private ToolBarUML toolBarUML;
@@ -27,7 +26,7 @@ public class JFrameUml extends JFrame implements UmlConstants {
 		toolBarUML = new ToolBarUML();
 		paintSurfaceScrollPane = new JScrollPane(paintSurface);
 		this.view = view;
-		
+
 		setTitle(TITLE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setPreferredSize(new Dimension(HEIGHT_FRAME, WIDTH_FRAME));
@@ -51,31 +50,23 @@ public class JFrameUml extends JFrame implements UmlConstants {
 	}
 
 	/**
-	 * Dessine la classe à partir des informations de l'évènement (le nom de la
-	 * la classe, la liste des méthodes et la liste des attributs).
+	 * Dessine l'item à partir des informations de l'évènement (le nom de
+	 * l'item, la liste des méthodes et la liste des attributs). On rajoutera la
+	 * chaîne "<<interface>>" au dessus du nom si l'item est une l'interface.
 	 */
-	public void drawClass(DrawClassEvent drawClassEvent) {
+	public void drawItem(DrawItemEvent drawItemEvent) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	/**
-	 * Même que drawClass() sauf que c'est une interface.
-	 * On rajoutera la chaîne "<<interface>>" au dessus du nom de l'interface.
-	 */
-	public void addInterface(DrawInterfaceEvent drawInterfaceEvent) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/**
-	 * Dessine une droite entre deux objets (une interface ou une classe).
-	 * La forme de la droite dépend du champ link du paramètre drawLinkEvent.
-	 * Pour savoir quel sont les deux objets concernés, on regarde le champ 
-	 * classe du paramètre et on regarde le champ classe du link.
+	 * Dessine une droite entre deux Item. La forme de la droite dépend du champ
+	 * link du paramètre drawLinkEvent. Pour savoir quel sont les deux item
+	 * concernés, on regarde le champ item du paramètre et on regarde le champ
+	 * item du link.
 	 */
 	public void drawLink(DrawLinkEvent drawLinkEvent) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

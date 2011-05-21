@@ -27,8 +27,11 @@ public class SwingUmlView extends UmlView {
 		jframe.drawItem(drawItemEvent);
 	}
 
-	@Override
 	public void drawLink(DrawLinkEvent drawLinkEvent) {
 		jframe.drawLink(drawLinkEvent);
+	}
+	
+	public JFrameUml getJframe() {
+		return jframe;
 	}
 }

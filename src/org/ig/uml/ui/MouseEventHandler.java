@@ -9,20 +9,23 @@ import org.ig.uml.ui.notifications.ClassDialog;
 public class MouseEventHandler extends MouseAdapter {
 
 	private PaintSurface surface;
+	private Point point;			// coordonnées du dernier clique
 	
 	public MouseEventHandler(PaintSurface surface) {
 		this.surface = surface;
+		point = new Point();
 	}
 	
 	public void mousePressed(MouseEvent e) {
 		surface.setStartDrag(new Point(e.getX(), e.getY()));
 		surface.getPoints().add(surface.getStartDrag());
+		point.setLocation(e.getX(), e.getY());
 		
 		ToolBarUML toolBar = surface.getToolBar();
 		
 		// On agit en fonction du bouton sélectionné sur la ToolBar
 		if (toolBar.getNewClass().isSelected()) {
-			new ClassDialog(surface.getView());
+			new ClassDialog(surface.getView(), point);
 		}
 		else if (toolBar.getNewAggregation().isSelected()) {
 			
@@ -52,7 +55,7 @@ public class MouseEventHandler extends MouseAdapter {
 			
 		}
 		
-		surface.repaint();
+		//surface.repaint();
 	}
 	
 	public void mouseDragged(MouseEvent e) {

@@ -2,6 +2,7 @@ package org.ig.uml.ui.notifications;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
+import java.awt.Point;
 import java.awt.Rectangle;
 
 import javax.swing.Box;
@@ -21,11 +22,14 @@ public class ClassDialog extends JDialog {
 	private JLabel nameLabel;
 	private JTextField nameField;
 	private JButton validate;
-	
-	private SwingUmlView view;
 
-	public ClassDialog(SwingUmlView view) {
+	private SwingUmlView view;
+	private Point point;		// coordonnées du clique ayant amené au Jdialog
+
+	public ClassDialog(SwingUmlView view, Point point) {
 		this.view = view;
+		this.point = point;
+		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setResizable(false);
 		this.setTitle("Nouvelle classe");
@@ -35,7 +39,7 @@ public class ClassDialog extends JDialog {
 		this.setDialogLocation(view.getJframe());
 		this.setVisible(true);
 	}
-	
+
 	private void setDialogLocation(Frame f) {
 		Rectangle r = f.getBounds();
 		int x = r.x + (r.width - getSize().width)/2;
@@ -71,5 +75,13 @@ public class ClassDialog extends JDialog {
 		
 		panel.add(vbox, BorderLayout.CENTER);
 		return panel;
+	}
+	
+	public JTextField getNameField() {
+		return nameField;
+	}
+	
+	public Point getPoint() {
+		return point;
 	}
 }

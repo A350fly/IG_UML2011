@@ -17,7 +17,7 @@ public class Item {
 		visibility = Visibility.PACKAGE;
 		methods = new HashSet<Method>();
 		links = new HashSet<Link>();
-		positionOnSurface.setLocation(-1, -1);
+		positionOnSurface = new Point(-1, -1);
 	}
 	
 	public Set<Method> getMethods() {

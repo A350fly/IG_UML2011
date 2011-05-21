@@ -1,7 +1,6 @@
 package org.ig.uml.ui;
 
 import java.awt.Cursor;
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
@@ -15,7 +14,9 @@ public class MouseEventHandler extends MouseAdapter {
 	private static final long serialVersionUID = -5433034343223349595L;
 	
 	private PaintSurface surface;
-	
+	private int last_x;
+	private int last_y;
+
 	public MouseEventHandler(PaintSurface surface) {
 		this.surface = surface;
 	}
@@ -27,7 +28,9 @@ public class MouseEventHandler extends MouseAdapter {
 		
 		for (ItemDraw itemDraw : surface.getItemDraw()) {
 			if (itemDraw.getRectangle().contains(surface.getStartDrag())) {
-				surface.setRectangle(itemDraw.getRectangle());
+				surface.setRectangleCourant(itemDraw.getRectangle());
+	            last_x = surface.getRectangleCourant().x - e.getX();
+	            last_y = surface.getRectangleCourant().y - e.getY();
 				return;
 			}
 		}
@@ -66,25 +69,7 @@ public class MouseEventHandler extends MouseAdapter {
 	}
 	
 	public void mouseDragged(MouseEvent e) {
-		int x = e.getX();
-		int y = e.getY();
-		
-		Graphics2D g = (Graphics2D) surface.getGraphics();
-		Rectangle rect = surface.getRectangle();
-		
-		g.setXORMode(surface.getBackground());
-		g.fill(rect);
-		rect.setLocation(x, y);
-		g.fill(rect);
-		
-		g.dispose();
-	}
-	
-	public Rectangle getRectangle(int x, int y) {
-		for (ItemDraw itemDraw : surface.getItemDraw())
-			if (itemDraw.getRectangle().contains(x, y))
-				return itemDraw.getRectangle();
-		return null;
+		updateLocation(e);
 	}
 	
 	public void mouseMoved(MouseEvent e) {
@@ -95,5 +80,22 @@ public class MouseEventHandler extends MouseAdapter {
 			surface.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 		else
 			surface.setCursor(Cursor.getDefaultCursor());
+	}
+	
+	public void updateLocation(MouseEvent e){
+		Rectangle rect = surface.getRectangleCourant();
+		
+		if (rect == null)
+			return;
+		
+		rect.setLocation(last_x + e.getX(), last_y + e.getY());
+		surface.paintClass(null, false);
+	}
+	
+	public Rectangle getRectangle(int x, int y) {
+		for (ItemDraw itemDraw : surface.getItemDraw())
+			if (itemDraw.getRectangle().contains(x, y))
+				return itemDraw.getRectangle();
+		return null;
 	}
 }

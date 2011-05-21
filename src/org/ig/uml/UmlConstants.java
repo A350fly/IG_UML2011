@@ -29,6 +29,7 @@ public interface UmlConstants {
 	public static final String PREFERENCES_KEY = "preferences";
 	public static final String NEW_CLASS_KEY= "new_class"; 
 	public static final String NEW_ASSOCIATION_KEY  = "new_association";
+	public static final String NEW_UNI_ASSOCIATION_KEY  = "new_uni_association";
 	public static final String NEW_AGGREGATION_KEY = "new_aggregation";
 	public static final String NEW_GENERALIZATION_KEY = "new_generalization";
 	public static final String NEW_COMPOSITION_KEY = "new_composition";
@@ -64,7 +65,7 @@ public interface UmlConstants {
 	public static final String PREFERENCES = rs.getString(PREFERENCES_KEY);
 	public static final String NEW_CLASS= rs.getString(NEW_CLASS_KEY); 
 	public static final String NEW_ASSOCIATION  = rs.getString(NEW_ASSOCIATION_KEY);
-	public static final String NEW_AGGREGATION = rs.getString(NEW_AGGREGATION_KEY);
+	public static final String NEW_UNI_ASSOCIATION  = rs.getString(NEW_UNI_ASSOCIATION_KEY); public static final String NEW_AGGREGATION = rs.getString(NEW_AGGREGATION_KEY);
 	public static final String NEW_GENELIZATION = rs.getString(NEW_GENERALIZATION_KEY);
 	public static final String NEW_COMPOSITION = rs.getString(NEW_COMPOSITION_KEY);
 	public static final String NEW_INTERFACE = rs.getString(NEW_INTERFACE_KEY);
@@ -81,6 +82,8 @@ public interface UmlConstants {
 			"res/drawable/Class.gif");
 	public static final ImageIcon ICON_NEW_ASSOCIATION = new ImageIcon(
 			"res/drawable/Association.gif");
+	public static final ImageIcon ICON_NEW_UNI_ASSOCIATION = new ImageIcon(
+			"res/drawable/UniAssociation.gif");
 	public static final ImageIcon ICON_NEW_AGGREGATION = new ImageIcon(
 			"res/drawable/Aggregation.gif");
 	public static final ImageIcon ICON_NEW_GENERALIZATION = new ImageIcon(

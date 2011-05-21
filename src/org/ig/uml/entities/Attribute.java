@@ -10,7 +10,7 @@ public class Attribute {
 	public Attribute(String name, Classe classe) {
 		this.name = name;
 		this.classe = classe;
-		visibility = Visibility.PACKAGE;
+		visibility = Visibility.PRIVATE;
 		isFinal = false;
 		isStatic = false;
 	}
@@ -63,7 +63,7 @@ public class Attribute {
 			staticString = "static ";
 		if(isFinal)
 			finalString = "final ";
-		res += visibility.toStringJava() + " ";
+		res += visibility.toStringJava();
 		res += staticString;
 		res += finalString;
 		res += classe.getName() + " ";

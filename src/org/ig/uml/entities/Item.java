@@ -14,9 +14,10 @@ public class Item {
 	
 	public Item(String name) {
 		this.name = name;
-		visibility = Visibility.PACKAGE;
+		visibility = Visibility.PUBLIC;
 		methods = new HashSet<Method>();
 		links = new HashSet<Link>();
+		positionOnSurface = new Point();
 		positionOnSurface.setLocation(-1, -1);
 	}
 	

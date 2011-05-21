@@ -1,6 +1,8 @@
 package org.ig.uml.entities;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Classe extends Item {
@@ -49,14 +51,15 @@ public class Classe extends Item {
 		String res = "";
 		
 		res += getVisibility().toStringJava() + "class" + " " + getName() + " " 
-		+ toStringExtendClassJava() + " " + toStringImplementsInterfaceJava() 
+		+ toStringExtendClassJava() + toStringImplementsInterfaceJava() 
 		+ "{" + "\n";
 		res += toStringAttributesJava();
 		res += toStringMethodsJava();
+		res += toStringGettersSettersJava();
 		res += "}";
 		return res;
 	}
-	
+
 	/**
 	 * #ifndef test_h
 	 * #define test_h
@@ -67,10 +70,10 @@ public class Classe extends Item {
 	 */
 	public String toStringHpp() {
 		String res = "";
-		res += "#ifndef" + " " + getName() + "_h" + "\n";
-		res += "#define" + " " + getName() + "_h" + "\n\n";
-		res += toStringIncludeClassHpp() + "\n";
-		res += "class" + " " + getName() + toStringExtendAndImplementClassHpp() + "{" + "\n";
+		res += "#ifndef" + " " + getName().toUpperCase() + "_H" + "\n";
+		res += "#define" + " " + getName().toUpperCase() + "_H" + "\n\n";
+		res += toStringIncludeClassHpp();
+		res += "class" + " " + getName() + toStringExtendAndImplementClassHpp() + " {" + "\n";
 		res += toStringAttributesHpp();
 		res += toStringMethodsHpp();
 		
@@ -78,14 +81,16 @@ public class Classe extends Item {
 		res += "#endif";
 		return res;
 	}
-	
+
 	/**
 	 * #include "test3.h"
 	 */
 	public String toStringCpp() {
 		String res = "";
-		res += "#include \"" + getName() + ".hpp\"\n";
+		res += "#include \"" + getName() + ".hpp\"\n\n";
 		res += toStringMethodsCpp();
+		res += toStringGettersSettersCpp();
+		
 		return res;
 	}
 
@@ -142,11 +147,15 @@ public class Classe extends Item {
 	 */
 	private String toStringIncludeClassHpp() {
 		String res = "";
+		boolean includeFound = false;
 		for(Link link : getLinks()) {
 			if(link.getLinkType() == LinkType.GENERALIZATION) {
 				res += "#include " + link.getItem().getName() + ".hpp\n";
+				includeFound = true;
 			}
 		}
+		if(includeFound)
+			res += "\n";
 		return res;
 	}
 	
@@ -179,6 +188,10 @@ public class Classe extends Item {
 		for(Method method : getMethods()) {
 			res += "\t" + method.toStringJava();
 		}
+		res = "\n" + res;
+		//Enlève le dernier saut de ligne
+		res = res.substring(0, res.length() - 1);
+		
 		return res;
 	}
 
@@ -204,6 +217,20 @@ public class Classe extends Item {
 				privateMethods += "\t" + method.toStringHpp();
 			}
 		}
+		for(Attribute attribute : attributes) {	
+			//Getter
+			String firstLetterName = "" + attribute.getName().charAt(0);
+			firstLetterName = firstLetterName.toUpperCase();
+			String nameForMethod = firstLetterName + attribute.getName().substring(1);
+			publicMethods += "\t" + attribute.getClasse().getName() + " ";
+			publicMethods += "get" + nameForMethod;
+			publicMethods += "();\n";
+			//Setter
+			publicMethods += "\tvoid set" + nameForMethod + "(";
+			publicMethods += attribute.getClasse().getName() + " ";
+			publicMethods += attribute.getName();
+			publicMethods += ");\n";
+		}
 		if(publicMethodFound) {
 			res += "public : \n";
 			res += publicMethods;
@@ -224,7 +251,8 @@ public class Classe extends Item {
 		for(Method method : getMethods()) {
 			if(method.getVisibility() == Visibility.PUBLIC
 					|| method.getVisibility() == Visibility.PRIVATE) {
-				res += "\t" + method.toStringCpp();
+				res += method.getReturnType().getName() + " ";
+				res += getName() + "::" + method.toStringCpp();
 			}
 		}
 		return res;
@@ -240,9 +268,40 @@ public class Classe extends Item {
 		for(Attribute attribute : attributes) {
 			res += "\t" + attribute.toStringJava();
 		}
+		res += tosStringAttributesLinkJava();
 		return res;
 	}	
 	
+	/**
+	 * Si la classe est HelloWorld, le nom de l'attribut est myHelloWorld.
+	 * Si on a 2 associations vers une même classe, la deuxième prend le nom
+	 * name1, puis name2 et ainsi de suite. On prend donc soin d'incrémenter
+	 * i et de l'ajouter à la fin du nom de l'attribut lorsqu'on tombe sur un 
+	 * double.
+	 */
+	private String tosStringAttributesLinkJava() {
+		String res = "";
+		String attributeName = "";
+		
+		int i = 1;
+		
+		List<String> classesName = new ArrayList<String>();
+		for(Link link : getLinks()) {
+			if(link.getLinkType() == LinkType.ASSOCIATION
+					|| link.getLinkType() == LinkType.UNI_ASSOCIATION
+					|| link.getLinkType() == LinkType.COMPOSITION) {
+				attributeName = "my" + link.getClass().getName();
+				if(classesName.contains(attributeName))
+					attributeName = attributeName + i++;
+				res += "\t" + link.getClass().getName();
+				res += " *" + attributeName + "\n";
+				classesName.add(attributeName);
+			}
+		}
+		
+		return res;
+	}
+
 	/**
 	 * class test {
 	 *  public:
@@ -287,6 +346,58 @@ public class Classe extends Item {
 		String res = "";
 		for(Attribute attribute : attributes) {
 			res += "\t" + attribute.toStringSql();
+		}
+		return res;
+	}
+	
+	private String toStringGettersSettersJava() {
+		String res = "";
+		for(Attribute attribute : attributes) {
+			//Getter
+			String firstLetterName = "" + attribute.getName().charAt(0);
+			firstLetterName = firstLetterName.toUpperCase();
+			String nameForMethod = firstLetterName + attribute.getName().substring(1);
+			res += "\n\tpublic " + attribute.getClasse().getName() + " ";
+			res += "get" + nameForMethod;
+			res += "() {\n";
+			res += "\t\treturn " + attribute.getName() + ";\n";
+			res += "\t}\n\n";
+			//Setter
+			res += "\tpublic void set" + nameForMethod + "(";
+			res += attribute.getClasse().getName() + " ";
+			res += attribute.getName();
+			res += ") {\n";
+			res += "\t\tthis." + attribute.getName() + " = ";
+			res += attribute.getName();
+			res += ";\n";
+			res += "\t}\n";
+		}
+		return res;
+	}
+	
+	private String toStringGettersSettersCpp() {
+		String res = "";
+		for(Attribute attribute : attributes) {
+			//Getter
+			String firstLetterName = "" + attribute.getName().charAt(0);
+			firstLetterName = firstLetterName.toUpperCase();
+			String nameForMethod = firstLetterName + attribute.getName().substring(1);
+			res += attribute.getClasse().getName() + " ";
+			res += getName() + "::";
+			res += "get" + nameForMethod;
+			res += "() {\n";
+			res += "\treturn " + attribute.getName() + ";\n";
+			res += "}\n\n";
+			//Setter
+			res += "void ";
+			res += getName() + "::";
+			res += "set" + nameForMethod + "(";
+			res += attribute.getClasse().getName() + " ";
+			res += "new" + nameForMethod; 
+			res += ") {\n";
+			res += "\t" + attribute.getName() + " = ";
+			res += "new" + nameForMethod + ";\n";
+			res += "}\n\n";
 		}
 		return res;
 	}

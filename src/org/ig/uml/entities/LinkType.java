@@ -2,6 +2,7 @@ package org.ig.uml.entities;
 
 public enum LinkType {
 	ASSOCIATION,
+	UNI_ASSOCIATION,
 	AGGREGATION,
 	COMPOSITION,
 	GENERALIZATION,

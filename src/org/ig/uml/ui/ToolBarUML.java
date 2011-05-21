@@ -13,6 +13,7 @@ public class ToolBarUML extends JToolBar implements UmlConstants {
 	private ButtonGroup buttonGroup;
 	private JToggleButton newClass;
 	private JToggleButton newAssociation;
+	private JToggleButton newUniAssociation;
 	private JToggleButton newAggregation;
 	private JToggleButton newGeneralization;
 	private JToggleButton newComposition;
@@ -30,6 +31,7 @@ public class ToolBarUML extends JToolBar implements UmlConstants {
 		buttonGroup = new ButtonGroup();
 		newClass = new JToggleButton(ICON_NEW_CLASS);
 		newAssociation = new JToggleButton(ICON_NEW_ASSOCIATION);
+		newUniAssociation = new JToggleButton(ICON_NEW_UNI_ASSOCIATION);
 		newAggregation = new JToggleButton(ICON_NEW_AGGREGATION);
 		newGeneralization = new JToggleButton(ICON_NEW_GENERALIZATION);
 		newComposition = new JToggleButton(ICON_NEW_COMPOSITION);
@@ -51,6 +53,7 @@ public class ToolBarUML extends JToolBar implements UmlConstants {
 		add(newAttribute);
 		add(newOperation);
 		add(newAssociation);
+		add(newUniAssociation);
 		add(newAggregation);
 		add(newGeneralization);
 		add(newComposition);
@@ -64,6 +67,7 @@ public class ToolBarUML extends JToolBar implements UmlConstants {
 		buttonGroup.add(newAttribute);
 		buttonGroup.add(newOperation);
 		buttonGroup.add(newAssociation);
+		buttonGroup.add(newUniAssociation);
 		buttonGroup.add(newAggregation);
 		buttonGroup.add(newGeneralization);
 		buttonGroup.add(newComposition);
@@ -74,6 +78,7 @@ public class ToolBarUML extends JToolBar implements UmlConstants {
 	private void addTooltipText() {
 		newClass.setToolTipText(NEW_CLASS);
 		newAssociation.setToolTipText(NEW_ASSOCIATION);
+		newUniAssociation.setToolTipText(NEW_UNI_ASSOCIATION);
 		newAggregation.setToolTipText(NEW_AGGREGATION);
 		newGeneralization.setToolTipText(NEW_GENELIZATION);
 		newComposition.setToolTipText(NEW_COMPOSITION);
@@ -87,6 +92,7 @@ public class ToolBarUML extends JToolBar implements UmlConstants {
 	private void addCommandsListener() {
 		newClass.setActionCommand(NEW_CLASS);
 		newAssociation.setActionCommand(NEW_ASSOCIATION);
+		newUniAssociation.setActionCommand(NEW_UNI_ASSOCIATION);
 		newAggregation.setActionCommand(NEW_AGGREGATION);
 		newGeneralization.setActionCommand(NEW_GENELIZATION);
 		newComposition.setActionCommand(NEW_COMPOSITION);
@@ -98,6 +104,7 @@ public class ToolBarUML extends JToolBar implements UmlConstants {
 	    
 		newClass.addActionListener(new ToolBarListener(frame));
 		newAssociation.addActionListener(new ToolBarListener(frame));
+		newUniAssociation.addActionListener(new ToolBarListener(frame));
 		newAggregation.addActionListener(new ToolBarListener(frame));
 		newGeneralization.addActionListener(new ToolBarListener(frame));
 		newComposition.addActionListener(new ToolBarListener(frame));

@@ -18,3 +18,6 @@ entities :
 
 generation de code :
 [ ] generation de code en c++, java et sql
+	[X] Classe, attributs et methodes
+	[X] Visibilité
+	[X] Getters et setters

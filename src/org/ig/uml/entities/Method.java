@@ -1,4 +1,5 @@
 package org.ig.uml.entities;
+import java.util.HashSet;
 import java.util.Set;
 
 public class Method {
@@ -11,8 +12,9 @@ public class Method {
 
 	public Method(String name, Item returnType) {
 		this.name = name;
-		this.visibility = Visibility.PACKAGE;
+		this.visibility = Visibility.PUBLIC;
 		this.returnType = returnType;
+		this.arguments = new HashSet<Argument>();
 	}
 
 	public String getName() {
@@ -68,11 +70,11 @@ public class Method {
 	 */
 	public String toStringJava() {
 		String res = "";
-		res += visibility.toStringJava() + " ";
+		res += visibility.toStringJava();
 		res += returnType.getName() + " ";
 		res += getName() + "(";
 		res += toStringArguments();
-		res += ") {\n\n}\n\n";
+		res += ") {\n\n\t}\n\n";
 		return res;
 	}
 	

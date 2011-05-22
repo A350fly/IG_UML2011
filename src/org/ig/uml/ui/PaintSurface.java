@@ -15,15 +15,15 @@ import org.ig.uml.entities.Item;
 public class PaintSurface extends JComponent {
 	private static final long serialVersionUID = 3224506743591509786L;
 	
-	private Point startDrag;
-	private Rectangle rectangle;		// Rectangle courant sélectionné
+	private Point startDrag;			// point de clique pour créer le rectangle
+	private Rectangle rectangleCourant;	// Rectangle courant sélectionné
 	private ArrayList<Point> points;
 	private List<ItemDraw> itemDraw;
 	private ToolBarUML toolBar;
 	private SwingUmlView view;
 
 	public PaintSurface(ToolBarUML toolBar, SwingUmlView view) {
-		rectangle = new Rectangle();
+		rectangleCourant = null;
 		points = new ArrayList<Point>();
 		itemDraw = new ArrayList<ItemDraw>();
 		this.view = view;
@@ -33,17 +33,30 @@ public class PaintSurface extends JComponent {
 		this.addMouseMotionListener(new MouseEventHandler(this));
 	}
 	
-	public void paintClass(Item item) {
+	/*
+	 * Dessine la classe associé à l'Item donné en paramètre
+	 * Si firstDraw est vrai, on créé un nouveau rectangle,
+	 * sinon on travaille sur le rectangle courant
+	 */
+	public void paintClass(Item item, boolean firstDraw) {
 		Graphics2D g2d = (Graphics2D) this.getGraphics();
+		Rectangle rectangle;
 		super.paintComponents(g2d);
 		
-		Rectangle rectangle = new Rectangle(startDrag.x, startDrag.y, 100, 100);
+		if (firstDraw)
+			rectangle = new Rectangle(startDrag.x, startDrag.y, 100, 100);
+		else
+			rectangle = rectangleCourant;
+			
 		g2d.setPaint(Color.WHITE);
 		g2d.fill(rectangle);
 		g2d.setPaint(Color.BLACK);
 		g2d.draw(rectangle);
 		
-		itemDraw.add(new ItemDraw(item, rectangle));
+		if (item != null)
+			itemDraw.add(new ItemDraw(item, rectangle));	// association de l'item en rectangle créé
+		
+		repaint();
 	}
 
 	public void paintComponent(Graphics g) {
@@ -82,11 +95,11 @@ public class PaintSurface extends JComponent {
 		return itemDraw;
 	}
 
-	public void setRectangle(Rectangle rectangle) {
-		this.rectangle = rectangle;
+	public void setRectangleCourant(Rectangle rectangle) {
+		this.rectangleCourant = rectangle;
 	}
 
-	public Rectangle getRectangle() {
-		return rectangle;
+	public Rectangle getRectangleCourant() {
+		return rectangleCourant;
 	}
 }

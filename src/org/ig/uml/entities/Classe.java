@@ -49,7 +49,7 @@ public class Classe extends Item {
 	 */
 	public String toStringJava() {
 		String res = "";
-		
+		res += importNeeded();
 		res += getVisibility().toStringJava() + "class" + " " + getName() + " " 
 		+ toStringExtendClassJava() + toStringImplementsInterfaceJava() 
 		+ "{" + "\n";
@@ -57,6 +57,20 @@ public class Classe extends Item {
 		res += toStringMethodsJava();
 		res += toStringGettersSettersJava();
 		res += "}";
+		return res;
+	}
+
+	private String importNeeded() {
+		String res = "";
+		for(Link link : getLinks()) {
+			if(link.getLinkType() == LinkType.ASSOCIATION
+					|| link.getLinkType() == LinkType.UNI_ASSOCIATION
+					|| link.getLinkType() == LinkType.COMPOSITION
+					|| link.getLinkType() == LinkType.AGGREGATION) {
+				res = "import java.util.Vector;\n\n";
+				return res;
+			}
+		}
 		return res;
 	}
 
@@ -289,6 +303,30 @@ public class Classe extends Item {
 		for(Link link : getLinks()) {
 			if(link.getLinkType() == LinkType.ASSOCIATION
 					|| link.getLinkType() == LinkType.UNI_ASSOCIATION
+					|| link.getLinkType() == LinkType.COMPOSITION
+					|| link.getLinkType() == LinkType.AGGREGATION) {
+				attributeName = "my" + link.getItem().getName();
+				if(classesName.contains(attributeName))
+					attributeName = attributeName + i++;
+				res += "\tpublic Vector<" + link.getItem().getName() + ">";
+				res += " " + attributeName + ";\n";
+				classesName.add(attributeName);
+			}
+		}
+		
+		return res;
+	}
+	
+	private String tosStringAttributesLinkHpp() {
+		String res = "";
+		String attributeName = "";
+		
+		int i = 1;
+		
+		List<String> classesName = new ArrayList<String>();
+		for(Link link : getLinks()) {
+			if(link.getLinkType() == LinkType.ASSOCIATION
+					|| link.getLinkType() == LinkType.UNI_ASSOCIATION
 					|| link.getLinkType() == LinkType.COMPOSITION) {
 				attributeName = "my" + link.getClass().getName();
 				if(classesName.contains(attributeName))
@@ -372,9 +410,16 @@ public class Classe extends Item {
 			res += ";\n";
 			res += "\t}\n";
 		}
+		res += toStringGettersSettersLink();
 		return res;
 	}
 	
+	private String toStringGettersSettersLink() {
+		String res = "";
+		
+		return res;
+	}
+
 	private String toStringGettersSettersCpp() {
 		String res = "";
 		for(Attribute attribute : attributes) {

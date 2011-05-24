@@ -35,32 +35,25 @@ public class PaintSurface extends JComponent {
 	
 	/*
 	 * Dessine la classe associé à l'Item donné en paramètre
-	 * Si firstDraw est vrai, on créé un nouveau rectangle,
-	 * sinon on travaille sur le rectangle courant
+	 * Si un item est donné, alors on créé un nouveau rectangle
 	 */
-	public void paintClass(Item item, boolean firstDraw) {
-		Graphics2D g2d = (Graphics2D) this.getGraphics();
-		Rectangle rectangle;
-		super.paintComponents(g2d);
-		
-		if (firstDraw)
-			rectangle = new Rectangle(startDrag.x, startDrag.y, 100, 100);
-		else
-			rectangle = rectangleCourant;
-			
-		g2d.setPaint(Color.WHITE);
-		g2d.fill(rectangle);
-		g2d.setPaint(Color.BLACK);
-		g2d.draw(rectangle);
-		
+	public void paintClass(Item item) {
 		if (item != null)
-			itemDraw.add(new ItemDraw(item, rectangle));	// association de l'item en rectangle créé
+			itemDraw.add(new ItemDraw(item, new Rectangle(startDrag.x, startDrag.y, 100, 100)));	// association de l'item en rectangle créé
 		
 		repaint();
 	}
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		Graphics2D g2d = (Graphics2D) g;
+		
+		for (ItemDraw draw : itemDraw) {
+			g2d.setPaint(Color.WHITE);
+			g2d.fill(draw.getRectangle());
+			g2d.setPaint(Color.BLACK);
+			g2d.draw(draw.getRectangle());
+		}
 	}
 
 	public void setStartDrag(Point startDrag) {

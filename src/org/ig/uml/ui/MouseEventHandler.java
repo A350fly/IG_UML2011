@@ -31,6 +31,7 @@ public class MouseEventHandler extends MouseAdapter {
 				surface.setRectangleCourant(itemDraw.getRectangle());
 	            last_x = surface.getRectangleCourant().x - e.getX();
 	            last_y = surface.getRectangleCourant().y - e.getY();
+	            updateLocation(e);
 				return;
 			}
 		}
@@ -87,9 +88,9 @@ public class MouseEventHandler extends MouseAdapter {
 		
 		if (rect == null)
 			return;
-		
+
 		rect.setLocation(last_x + e.getX(), last_y + e.getY());
-		surface.paintClass(null, false);
+		surface.paintClass(null);
 	}
 	
 	public Rectangle getRectangle(int x, int y) {

@@ -20,6 +20,9 @@ public class ClasseJavaGenerationCodeTest {
 	Method m2 = new Method("getFactory", c2);
 	Link l = new Link(LinkType.ASSOCIATION, c2);
 	Link l2 = new Link(LinkType.ASSOCIATION, c2);
+	Link l3 = new Link(LinkType.GENERALIZATION, c2);
+	Link l4 = new Link(LinkType.REALIZATION, c2);
+	Link l5 = new Link(LinkType.REALIZATION, c2);
 	
 	@Before
 	public void addElements() {
@@ -29,6 +32,9 @@ public class ClasseJavaGenerationCodeTest {
 		c.getMethods().add(m2);
 		c.getLinks().add(l);
 		c.getLinks().add(l2);
+		c.getLinks().add(l3);
+		c.getLinks().add(l4);
+		c.getLinks().add(l5);
 	}
 
 	@Test

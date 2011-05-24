@@ -87,9 +87,10 @@ public class Classe extends Item {
 		res += "#ifndef" + " " + getName().toUpperCase() + "_H" + "\n";
 		res += "#define" + " " + getName().toUpperCase() + "_H" + "\n\n";
 		res += toStringIncludeClassHpp();
-		res += "class" + " " + getName() + toStringExtendAndImplementClassHpp() + " {" + "\n";
+		res += "class" + " " + getName() + toStringExtendAndImplementClassHpp() + "{" + "\n";
 		res += toStringAttributesHpp();
 		res += toStringMethodsHpp();
+		res += tosStringAttributesLinkHpp();
 		
 		res += "};" + "\n\n";
 		res += "#endif";
@@ -126,7 +127,7 @@ public class Classe extends Item {
 		String res = "";
 		for(Link link : getLinks()) {
 			if(link.getLinkType() == LinkType.GENERALIZATION) {
-				return "extends" + link.getItem().getName() + " ";
+				return "extends " + link.getItem().getName() + " ";
 			}
 		}
 		return res;
@@ -141,15 +142,16 @@ public class Classe extends Item {
 		for(Link link : getLinks()) {
 			if(link.getLinkType() == LinkType.GENERALIZATION) {
 				res += "public " + link.getItem().getName() + ", ";
+				generalizationFound = true;
 			} else if (link.getLinkType() == LinkType.REALIZATION) {
 				res += "virtual public " + link.getItem().getName() + ", ";
+				generalizationFound = true;
 			}
-			generalizationFound = true;
 		}
 		if(generalizationFound) {
-			res = ": " + res;
+			res = " : " + res;
 			// On enlève le ', ' à la fin
-			res = res.substring(0, res.length() - 1);
+			res = res.substring(0, res.length() - 2);
 			res += " ";
 		}
 		return res;
@@ -182,13 +184,13 @@ public class Classe extends Item {
 		for(Link link : getLinks()) {
 			if(link.getLinkType() == LinkType.REALIZATION) {
 				res += link.getItem().getName() + ", ";
+				realizationFound = true;
 			}
-			realizationFound = true;
 		}
 		if(realizationFound) {
 			res = "implements " + res;
 			// On enlève le ', ' à la fin
-			res = res.substring(0, res.length() - 1);
+			res = res.substring(0, res.length() - 2);
 			res += " ";
 		}
 		return res;
@@ -288,7 +290,7 @@ public class Classe extends Item {
 	
 	/**
 	 * Si la classe est HelloWorld, le nom de l'attribut est myHelloWorld.
-	 * Si on a 2 associations vers une même classe, la deuxième prend le nom
+	 * Si on a 2 associations vers une même classe, le deuxième prend le nom
 	 * name1, puis name2 et ainsi de suite. On prend donc soin d'incrémenter
 	 * i et de l'ajouter à la fin du nom de l'attribut lorsqu'on tombe sur un 
 	 * double.
@@ -327,19 +329,25 @@ public class Classe extends Item {
 		for(Link link : getLinks()) {
 			if(link.getLinkType() == LinkType.ASSOCIATION
 					|| link.getLinkType() == LinkType.UNI_ASSOCIATION
-					|| link.getLinkType() == LinkType.COMPOSITION) {
-				attributeName = "my" + link.getClass().getName();
+					|| link.getLinkType() == LinkType.COMPOSITION
+					|| link.getLinkType() == LinkType.AGGREGATION) {
+				attributeName = "my" + link.getItem().getName();
 				if(classesName.contains(attributeName))
 					attributeName = attributeName + i++;
-				res += "\t" + link.getClass().getName();
-				res += " *" + attributeName + "\n";
+				res += "\t" + link.getItem().getName();
+				if(link.getLinkType() == LinkType.AGGREGATION) {
+					res += " " + attributeName + ";\n";
+				} else {
+					res += " *" + attributeName + ";\n";
+				}
 				classesName.add(attributeName);
 			}
 		}
-		
+		if(!res.equals(""))
+			res = "public:\n" + res;
 		return res;
 	}
-
+	
 	/**
 	 * class test {
 	 *  public:
@@ -362,14 +370,14 @@ public class Classe extends Item {
 				privateAttributes += "\t" + attribute.toStringHpp();
 			}
 		}
-		if(publicAttributesFound) {
-			res += "public : \n";
-			res += publicAttributes;
-		}
-		
 		if(privateAttributesFound) {
 			res += "private : \n";
 			res += privateAttributes;
+		}
+		
+		if(publicAttributesFound) {
+			res += "public : \n";
+			res += publicAttributes;
 		}
 		return res;
 	}	

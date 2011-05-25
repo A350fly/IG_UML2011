@@ -6,13 +6,14 @@ import java.awt.event.ActionListener;
 import org.ig.uml.UmlConstants;
 import org.ig.uml.actions.OpenFile;
 import org.ig.uml.actions.SaveFile;
+import org.ig.uml.ui.notifications.LanguageChoiceDialog;
 
 public class MenuBarListener implements ActionListener {
 
-	private JFrameUml frame;
+	private SwingUmlView view;
 	
-	public MenuBarListener(JFrameUml frame) {
-		this.frame = frame;
+	public MenuBarListener(SwingUmlView view) {
+		this.view = view;
 	}
 	
     public void actionPerformed(ActionEvent e) {
@@ -20,13 +21,13 @@ public class MenuBarListener implements ActionListener {
     		
     	}
     	else if (e.getActionCommand().equals(UmlConstants.OPEN)) {
-    		new OpenFile(frame);
+    		new OpenFile(view.getJframe());
     	}
     	else if (e.getActionCommand().equals(UmlConstants.SAVE)) {
-    		new SaveFile(frame, false);	// TODO : le booléen dépend d'un param extérieur
+    		new SaveFile(view.getJframe(), false);	// TODO : le booléen dépend d'un param extérieur
     	}
     	else if (e.getActionCommand().equals(UmlConstants.SAVE_AS)) {
-    		new SaveFile(frame, true);
+    		new SaveFile(view.getJframe(), true);
     	}
     	else if (e.getActionCommand().equals(UmlConstants.QUIT)) {
     		System.exit(0);
@@ -50,7 +51,7 @@ public class MenuBarListener implements ActionListener {
     		
     	}
     	else if (e.getActionCommand().equals(UmlConstants.GENERATE_CODE)) {
-    		
+    		new LanguageChoiceDialog(view);
     	}
     	else if (e.getActionCommand().equals(UmlConstants.A_PROPOS)) {
     		

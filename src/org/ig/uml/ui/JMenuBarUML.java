@@ -33,10 +33,10 @@ public class JMenuBarUML extends JMenuBar implements UmlConstants {
 	private JMenuItem exportGraphic;
 	private JMenuItem preferences;
 	
-	private JFrameUml frame;
+	private SwingUmlView view;
 
-	public JMenuBarUML(JFrameUml frame) {
-		this.frame = frame;
+	public JMenuBarUML(SwingUmlView view) {
+		this.view = view;
 		
 		fileMenu = new JMenu(FILE);
 		editMenu = new JMenu(EDIT);
@@ -153,20 +153,20 @@ public class JMenuBarUML extends JMenuBar implements UmlConstants {
 		exportGraphic.setActionCommand(EXPORT_GRAPHIC);
 		preferences.setActionCommand(PREFERENCES);
 		
-		nouveau.addActionListener(new MenuBarListener(frame));
-		ouvrir.addActionListener(new MenuBarListener(frame));
-		enregistrer.addActionListener(new MenuBarListener(frame));
-		enregistrerSous.addActionListener(new MenuBarListener(frame));
-		quitter.addActionListener(new MenuBarListener(frame));
-		annuler.addActionListener(new MenuBarListener(frame));
-		retablir.addActionListener(new MenuBarListener(frame));
-		couper.addActionListener(new MenuBarListener(frame));
-		copier.addActionListener(new MenuBarListener(frame));
-		coller.addActionListener(new MenuBarListener(frame));
-		help.addActionListener(new MenuBarListener(frame));
-		generateCode.addActionListener(new MenuBarListener(frame));
-		aPropos.addActionListener(new MenuBarListener(frame));
-		exportGraphic.addActionListener(new MenuBarListener(frame));
-		preferences.addActionListener(new MenuBarListener(frame));
+		nouveau.addActionListener(new MenuBarListener(view));
+		ouvrir.addActionListener(new MenuBarListener(view));
+		enregistrer.addActionListener(new MenuBarListener(view));
+		enregistrerSous.addActionListener(new MenuBarListener(view));
+		quitter.addActionListener(new MenuBarListener(view));
+		annuler.addActionListener(new MenuBarListener(view));
+		retablir.addActionListener(new MenuBarListener(view));
+		couper.addActionListener(new MenuBarListener(view));
+		copier.addActionListener(new MenuBarListener(view));
+		coller.addActionListener(new MenuBarListener(view));
+		help.addActionListener(new MenuBarListener(view));
+		generateCode.addActionListener(new MenuBarListener(view));
+		aPropos.addActionListener(new MenuBarListener(view));
+		exportGraphic.addActionListener(new MenuBarListener(view));
+		preferences.addActionListener(new MenuBarListener(view));
 	}
 }

@@ -70,14 +70,32 @@ public class Method {
 	 */
 	public String toStringJava() {
 		String res = "";
+		res += "\t";
 		res += visibility.toStringJava();
 		res += returnType.getName() + " ";
-		res += getName() + "(";
+		res += getName() + "(";			 
 		res += toStringArguments();
-		res += ") {\n\n\t}\n\n";
+		res += ") {\n";
+		if(!getReturnType().getName().equals("Void"))
+			res += "\t\treturn null;\n";
+		else res += "\n";
+		res += "\t}\n\n";
 		return res;
 	}
 	
+	/**
+	 * public void newOperation();
+	 */
+	public String toStringJavaInterface() {
+		String res = "";
+		res += "\t";
+		res += visibility.toStringJava();
+		res += returnType.getName() + " ";
+		res += getName() + "(";			 
+		res += toStringArguments();
+		res += ");\n\n";
+		return res;
+	}
 	/**
 	 * public void newOperation(Test t) { }
 	 */
@@ -85,12 +103,12 @@ public class Method {
 		String res = "";
 		boolean argFound = false;
 		for(Argument argument : arguments) {
-			res += argument.getClass().getName() + " " + argument.getName() + ", ";
+			res += argument.getItem().getName() + " *" + argument.getName() + ", ";
 			argFound = true;
 		}
 		if(argFound) {
 			// On enlève le ', ' à la fin
-			res = res.substring(0, res.length() - 1);
+			res = res.substring(0, res.length() - 2);
 		}
 		return res;
 	}
@@ -100,10 +118,13 @@ public class Method {
 	 */
 	public String toStringCpp() {
 		String res = "";
-		res += returnType.getName() + " ";
 		res += getName() + "(";
-		res += toStringArguments();
-		res += ") {\n\n}\n\n";
+		res += toStringArguments();			
+		res += ") {\n";
+		if(!getReturnType().getName().equals("Void"))
+			res += "\treturn 0;\n";
+		else res += "\n";
+		res += "}\n\n";
 		return res;
 	}
 
@@ -112,10 +133,12 @@ public class Method {
 	 */
 	public String toStringHpp() {
 		String res = "";
-		res += "virtual" + " " + returnType.getName() + " ";
+		if(returnType.getName().equals("Void"))
+			res += "virtual" + " " + returnType.getName() + " ";
+		else res += "virtual" + " " + returnType.getName() + " *";
 		res += getName() + "(";
 		res += toStringArguments();
-		res += ");\n";
+		res += ")";
 		return res;
 	}
 }

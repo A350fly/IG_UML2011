@@ -6,7 +6,6 @@ import java.util.Set;
 import org.ig.uml.UmlModel;
 import org.ig.uml.entities.Attribute;
 import org.ig.uml.entities.Classe;
-import org.ig.uml.entities.Interface;
 import org.ig.uml.entities.Item;
 import org.ig.uml.entities.Link;
 import org.ig.uml.entities.Method;
@@ -39,5 +38,9 @@ public class ComponentManager {
 	public void addMethod(Method method, Item item) {
 		item.getMethods().add(method);
 		model.fireDrawItem(item);
+	}
+
+	public Set<Item> getItems() {
+		return items;
 	}
 }

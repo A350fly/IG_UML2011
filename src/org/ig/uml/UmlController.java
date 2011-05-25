@@ -1,5 +1,7 @@
 package org.ig.uml;
 
+import java.io.File;
+
 import org.ig.uml.entities.Attribute;
 import org.ig.uml.entities.Classe;
 import org.ig.uml.entities.Item;
@@ -51,5 +53,13 @@ public class UmlController {
 	
 	public void notifyAddMethod(Method method, Item item) {
 		umlModel.getComponentManager().addMethod(method, item);
+	}
+
+	public void notifySave(File file) {
+		umlModel.save(file);
+	}
+
+	public void notifyCurrentLanguage(String language) {
+		umlModel.setCurrentLanguage(language);
 	}
 }

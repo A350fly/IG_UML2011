@@ -1,5 +1,9 @@
 package org.ig.uml.entities;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -116,9 +120,9 @@ public class Classe extends Item {
 	 */
 	public String toStringSql() {
 		String res = "";
-		res += "CREATE TABLE " + getName() + " " + "(";
-		res += "PRIMARY KEY ()" + "\n";
+		res += "CREATE TABLE " + getName() + " " + "(\n";
 		res += toStringAttributesSql();
+		res += "\tPRIMARY KEY ()" + "\n";
 		res += ");";
 		return res;
 	}
@@ -163,11 +167,35 @@ public class Classe extends Item {
 	 */
 	private String toStringIncludeClassHpp() {
 		String res = "";
+		String toInclude = "";
 		boolean includeFound = false;
+		List<String> includes = new ArrayList<String>();
 		for(Link link : getLinks()) {
-			if(link.getLinkType() == LinkType.GENERALIZATION) {
-				res += "#include " + link.getItem().getName() + ".hpp\n";
+			toInclude = link.getItem().getName();
+			if((link.getLinkType() == LinkType.GENERALIZATION
+					|| link.getLinkType() == LinkType.REALIZATION)
+					&& !includes.contains(toInclude)) {
+				res += "#include \"" + toInclude + ".hpp\"\n";
+				includes.add(toInclude);
 				includeFound = true;
+			}
+		}
+		for(Method method : getMethods()) {
+			// fait un include des types de retour des méthodes
+			toInclude = method.getReturnType().getName(); 
+			if(!includes.contains(toInclude)) {
+				res += "#include \"" + toInclude + ".hpp\"\n";
+				includes.add(toInclude);
+				includeFound = true;
+			}
+			for(Argument arg : method.getArguments()) {
+				// fait un include des arguments de la méthode
+				toInclude = arg.getItem().getName();
+				if(!includes.contains(toInclude)) {
+					res += "#include \"" + toInclude + ".hpp\"\n";
+					includes.add(toInclude);
+					includeFound = true;
+				}
 			}
 		}
 		if(includeFound)
@@ -202,7 +230,20 @@ public class Classe extends Item {
 	private String toStringMethodsJava() {
 		String res = "";
 		for(Method method : getMethods()) {
-			res += "\t" + method.toStringJava();
+			res += method.toStringJava();
+		}
+		for(Link link : getLinks()) {
+			if(link.getLinkType() == LinkType.REALIZATION) {
+//				attributeName = "my" + link.getItem().getName();
+//				if(classesName.contains(attributeName))
+//					attributeName = attributeName + i++;
+//				res += "\tpublic Vector<" + link.getItem().getName() + ">";
+//				res += " " + attributeName + ";\n";
+//				classesName.add(attributeName);
+				for(Method method : link.getItem().getMethods()) {
+					res += method.toStringJava();
+				}
+			}
 		}
 		res = "\n" + res;
 		//Enlève le dernier saut de ligne
@@ -227,10 +268,10 @@ public class Classe extends Item {
 		for(Method method : getMethods()) {
 			if(method.getVisibility() == Visibility.PUBLIC) {
 				publicMethodFound = true;
-				publicMethods += "\t" + method.toStringHpp();
+				publicMethods += "\t" + method.toStringHpp() + ";\n";
 			} else if(method.getVisibility() == Visibility.PRIVATE) {
 				privateMethodFound = true;
-				privateMethods += "\t" + method.toStringHpp();
+				privateMethods += "\t" + method.toStringHpp() + ";\n";
 			}
 		}
 		for(Attribute attribute : attributes) {	
@@ -238,12 +279,12 @@ public class Classe extends Item {
 			String firstLetterName = "" + attribute.getName().charAt(0);
 			firstLetterName = firstLetterName.toUpperCase();
 			String nameForMethod = firstLetterName + attribute.getName().substring(1);
-			publicMethods += "\t" + attribute.getClasse().getName() + " ";
+			publicMethods += "\t" + attribute.getClasse().getName() + " *";
 			publicMethods += "get" + nameForMethod;
 			publicMethods += "();\n";
 			//Setter
 			publicMethods += "\tvoid set" + nameForMethod + "(";
-			publicMethods += attribute.getClasse().getName() + " ";
+			publicMethods += attribute.getClasse().getName() + " *";
 			publicMethods += attribute.getName();
 			publicMethods += ");\n";
 		}
@@ -267,7 +308,10 @@ public class Classe extends Item {
 		for(Method method : getMethods()) {
 			if(method.getVisibility() == Visibility.PUBLIC
 					|| method.getVisibility() == Visibility.PRIVATE) {
-				res += method.getReturnType().getName() + " ";
+				if(method.getReturnType().getName().equals("Void"))
+					res += method.getReturnType().getName() + " ";
+				else 
+					res += method.getReturnType().getName() + " *";
 				res += getName() + "::" + method.toStringCpp();
 			}
 		}
@@ -435,7 +479,7 @@ public class Classe extends Item {
 			String firstLetterName = "" + attribute.getName().charAt(0);
 			firstLetterName = firstLetterName.toUpperCase();
 			String nameForMethod = firstLetterName + attribute.getName().substring(1);
-			res += attribute.getClasse().getName() + " ";
+			res += attribute.getClasse().getName() + " *";
 			res += getName() + "::";
 			res += "get" + nameForMethod;
 			res += "() {\n";
@@ -445,7 +489,7 @@ public class Classe extends Item {
 			res += "void ";
 			res += getName() + "::";
 			res += "set" + nameForMethod + "(";
-			res += attribute.getClasse().getName() + " ";
+			res += attribute.getClasse().getName() + " *";
 			res += "new" + nameForMethod; 
 			res += ") {\n";
 			res += "\t" + attribute.getName() + " = ";
@@ -453,5 +497,33 @@ public class Classe extends Item {
 			res += "}\n\n";
 		}
 		return res;
+	}
+
+	public void save(File folder, String currentLanguage) {
+		try {
+			File fileFinal;
+			BufferedWriter out;
+			if(currentLanguage.equals("Java")){
+				fileFinal = new File(folder, getName() + ".java");
+				out = new BufferedWriter(new FileWriter(fileFinal));
+				out.write(toStringJava());
+				out.close();
+			} else if(currentLanguage.equals("C++")){
+				fileFinal = new File(folder, getName() + ".hpp");
+				out = new BufferedWriter(new FileWriter(fileFinal));
+			    out.write(toStringHpp());
+				out.close();
+				fileFinal = new File(folder, getName() + ".cpp");
+				out = new BufferedWriter(new FileWriter(fileFinal));
+		    	out.write(toStringCpp());
+				out.close();
+			} else if(currentLanguage.equals("SQL")){
+				fileFinal = new File(folder, getName() + ".sql");
+				out = new BufferedWriter(new FileWriter(fileFinal));
+				out.write(toStringSql());
+				out.close();
+			}
+		} catch (IOException e) {
+		}
 	}
 }

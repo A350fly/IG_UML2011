@@ -1,10 +1,11 @@
 package org.ig.uml.entities;
 
 import java.awt.Point;
+import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Item {
+public abstract class Item {
 
 	private String name;
 	private Visibility visibility;
@@ -60,4 +61,6 @@ public class Item {
 	public Set<Link> getLinks() {
 		return links;
 	}
+
+	public abstract void save(File folder, String currentLanguage);
 }

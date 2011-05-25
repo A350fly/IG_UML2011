@@ -21,7 +21,7 @@ public class JFrameUml extends JFrame implements UmlConstants {
 	private SwingUmlView view;
 
 	public JFrameUml(SwingUmlView view) {
-		jmenuBarUML = new JMenuBarUML(this);
+		jmenuBarUML = new JMenuBarUML(view);
 		toolBarUML = new ToolBarUML(this);
 		paintSurface = new PaintSurface(toolBarUML, view);
 		paintSurfaceScrollPane = new JScrollPane(paintSurface);
@@ -59,7 +59,7 @@ public class JFrameUml extends JFrame implements UmlConstants {
 	}
 
 	/**
-	 * Dessine une droite entre deux Item. La forme de la droite dépend du champ
+	 * Dessine une droite entre deux Items. La forme de la droite dépend du champ
 	 * link du paramètre drawLinkEvent. Pour savoir quel sont les deux item
 	 * concernés, on regarde le champ item du paramètre et on regarde le champ
 	 * item du link.

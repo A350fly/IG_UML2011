@@ -81,7 +81,7 @@ public class Attribute {
 			finalString = "const ";
 		res += staticString;
 		res += finalString;
-		res += classe.getName() + " ";
+		res += classe.getName() + " *";
 		res += name + ";\n";
 		return res;
 	}

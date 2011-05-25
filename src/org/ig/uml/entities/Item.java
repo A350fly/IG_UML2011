@@ -13,6 +13,15 @@ public abstract class Item {
 	private Set<Link> links;
 	private Point positionOnSurface;
 	
+	public Item() {
+		this.name = "anonymous";
+		visibility = Visibility.PUBLIC;
+		methods = new HashSet<Method>();
+		links = new HashSet<Link>();
+		positionOnSurface = new Point();
+		positionOnSurface.setLocation(-1, -1);
+	}
+	
 	public Item(String name) {
 		this.name = name;
 		visibility = Visibility.PUBLIC;
@@ -62,5 +71,5 @@ public abstract class Item {
 		return links;
 	}
 
-	public abstract void save(File folder, String currentLanguage);
+	public abstract void generateCode(File folder, String currentLanguage);
 }

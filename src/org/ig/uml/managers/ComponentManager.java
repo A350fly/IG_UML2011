@@ -12,9 +12,14 @@ import org.ig.uml.entities.Method;
 
 public class ComponentManager {
 
-	private Set<Item> items;
+	private HashSet<Item> items;
 	private UmlModel model;
 
+	public ComponentManager() {
+		this.model = null;
+		items = new HashSet<Item>();
+	}
+	
 	public ComponentManager(UmlModel model) {
 		this.model = model;
 		items = new HashSet<Item>();
@@ -22,25 +27,41 @@ public class ComponentManager {
 
 	public void addItem(Item item) {
 		items.add(item);
+		model.setNeedSave(true);
 		model.fireDrawItem(item);
 	}
 
 	public void addLink(Link link, Item item) {
 		item.getLinks().add(link);
+		model.setNeedSave(true);
 		model.fireDrawLink(link, item);
 	}
 	
 	public void addAttribute(Attribute attribute, Classe classe) {
 		classe.getAttributes().add(attribute);
+		model.setNeedSave(true);
 		model.fireDrawItem(classe);
 	}
 	
 	public void addMethod(Method method, Item item) {
 		item.getMethods().add(method);
+		model.setNeedSave(true);
 		model.fireDrawItem(item);
 	}
 
-	public Set<Item> getItems() {
+	public HashSet<Item> getItems() {
 		return items;
+	}
+
+	public UmlModel getModel() {
+		return model;
+	}
+
+	public void setModel(UmlModel model) {
+		this.model = model;
+	}
+
+	public void setItems(HashSet<Item> items) {
+		this.items = items;
 	}
 }

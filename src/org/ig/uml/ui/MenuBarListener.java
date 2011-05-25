@@ -4,8 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import org.ig.uml.UmlConstants;
-import org.ig.uml.actions.OpenFile;
 import org.ig.uml.actions.SaveFile;
+import org.ig.uml.ui.events.OpenFileXmlFile;
+import org.ig.uml.ui.events.SaveFileToXml;
 import org.ig.uml.ui.notifications.AboutJFrame;
 import org.ig.uml.ui.notifications.LanguageChoiceDialog;
 
@@ -22,13 +23,13 @@ public class MenuBarListener implements ActionListener {
     		
     	}
     	else if (e.getActionCommand().equals(UmlConstants.OPEN)) {
-    		new OpenFile(view.getJframe());
+    		new OpenFileXmlFile(view);
     	}
     	else if (e.getActionCommand().equals(UmlConstants.SAVE)) {
-    		new SaveFile(view.getJframe(), false);	// TODO : le booléen dépend d'un param extérieur
+    		
     	}
     	else if (e.getActionCommand().equals(UmlConstants.SAVE_AS)) {
-    		new SaveFile(view.getJframe(), true);
+    		new SaveFileToXml(view);
     	}
     	else if (e.getActionCommand().equals(UmlConstants.QUIT)) {
     		System.exit(0);
@@ -58,7 +59,7 @@ public class MenuBarListener implements ActionListener {
     		new AboutJFrame(view);
     	}
     	else if (e.getActionCommand().equals(UmlConstants.EXPORT_GRAPHIC)) {
-    		
+    		new SaveFile(view.getJframe(), true);
     	}
     	else if (e.getActionCommand().equals(UmlConstants.PREFERENCES)) {
     		

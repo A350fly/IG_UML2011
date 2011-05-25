@@ -14,6 +14,11 @@ public class Classe extends Item {
 	private boolean isFinal;
 	private boolean isAbstract;
 	
+	public Classe() {
+		super("anonymous");
+		attributes = new HashSet<Attribute>();
+	}
+	
 	public Classe(String name) {
 		super(name);
 		attributes = new HashSet<Attribute>();
@@ -493,7 +498,7 @@ public class Classe extends Item {
 		return res;
 	}
 
-	public void save(File folder, String currentLanguage) {
+	public void generateCode(File folder, String currentLanguage) {
 		try {
 			File fileFinal;
 			BufferedWriter out;

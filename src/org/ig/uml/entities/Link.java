@@ -4,6 +4,11 @@ public class Link {
 	private LinkType linkType;
 	private Item item;
 
+	public Link() {
+		this.linkType = null;
+		this.item = null;
+	}
+	
 	public Link(LinkType linkType, Item item) {
 		this.linkType = linkType;
 		this.item = item;

@@ -10,6 +10,13 @@ public class Method {
 	private boolean isFinal;
 	private boolean isStatic;
 
+	public Method() {
+		this.name = "anomynous";
+		this.visibility = Visibility.PUBLIC;
+		this.returnType = null;
+		this.arguments = new HashSet<Argument>();
+	}
+	
 	public Method(String name, Item returnType) {
 		this.name = name;
 		this.visibility = Visibility.PUBLIC;

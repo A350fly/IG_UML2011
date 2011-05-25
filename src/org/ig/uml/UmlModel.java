@@ -1,6 +1,9 @@
 package org.ig.uml;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.HashSet;
 
 import javax.swing.event.EventListenerList;
 
@@ -15,19 +18,26 @@ import org.ig.uml.entities.Method;
 import org.ig.uml.events.DrawItemEvent;
 import org.ig.uml.events.DrawLinkEvent;
 import org.ig.uml.managers.ComponentManager;
+import org.ig.uml.utils.XmlTools;
 
 public class UmlModel {
 	private EventListenerList listeners;
 	private ComponentManager componentManager;
 	private UmlListener[] listenerList;
 	private String currentLanguage;
+	private boolean needSave;
+	
+	// Si on vient d'ouvrir un fichier ou si on a enregistré, il n'est pas 
+	// nécessaire de lancer le fileChooser.
+	private boolean needFilePathToSave;
 
 	public UmlModel() {
 		listeners = new EventListenerList();
 		componentManager = new ComponentManager(this);
 		listenerList = null;
 		setCurrentLanguage("Java");
-		
+		needSave = false;
+		needFilePathToSave = true;
 		//test
 		Classe c = new Classe("CarToy");
 		Classe c2 = new Classe("Car");
@@ -99,10 +109,10 @@ public class UmlModel {
 		}
 	}
 
-	public void save(File folder) {
+	public void generateCode(File folder) {
 		System.out.println("Generate in " + currentLanguage + "...");
 		for(Item item : componentManager.getItems()) {
-			item.save(folder, currentLanguage);
+			item.generateCode(folder, currentLanguage);
 		}
 		System.out.println("Generate is done.");
 	}
@@ -114,4 +124,58 @@ public class UmlModel {
 	public String getCurrentLanguage() {
 		return currentLanguage;
 	}
+
+	public void saveToXml(File file) {
+		try {
+			XmlTools.encodeToFile(componentManager.getItems(), file);
+			needSave = false;
+			needFilePathToSave = false;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void openXmlFile(File file) {
+		try {
+			HashSet<Item> items = (HashSet<Item>) XmlTools.decodeFromFile(file);
+			componentManager.setItems(items);
+			needSave = false;
+			needFilePathToSave = false;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public UmlListener[] getListenerList() {
+		return listenerList;
+	}
+
+	public void setListenerList(UmlListener[] listenerList) {
+		this.listenerList = listenerList;
+	}
+
+	public void setListeners(EventListenerList listeners) {
+		this.listeners = listeners;
+	}
+
+	public void setNeedSave(boolean needSave) {
+		this.needSave = needSave;
+	}
+
+	public boolean isNeedSave() {
+		return needSave;
+	}
+
+	public void setNeedFilePathToSave(boolean needFilePathToSave) {
+		this.needFilePathToSave = needFilePathToSave;
+	}
+
+	public boolean isNeedFilePathToSave() {
+		return needFilePathToSave;
+	}
+
 }

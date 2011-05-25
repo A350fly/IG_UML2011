@@ -7,6 +7,14 @@ public class Attribute {
 	private boolean isFinal;
 	private boolean isStatic;
 
+	public Attribute(){
+		this.name = "anonymous";
+		this.classe = null;
+		visibility = Visibility.PRIVATE;
+		isFinal = false;
+		isStatic = false;
+	}
+	
 	public Attribute(String name, Classe classe) {
 		this.name = name;
 		this.classe = classe;

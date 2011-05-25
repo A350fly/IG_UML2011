@@ -55,11 +55,19 @@ public class UmlController {
 		umlModel.getComponentManager().addMethod(method, item);
 	}
 
-	public void notifySave(File file) {
-		umlModel.save(file);
+	public void notifyGenerateCode(File file) {
+		umlModel.generateCode(file);
 	}
 
 	public void notifyCurrentLanguage(String language) {
 		umlModel.setCurrentLanguage(language);
+	}
+
+	public void notifySaveToXml(File file) {
+		umlModel.saveToXml(file);
+	}
+
+	public void notifyOpenXmlFile(File file) {
+		umlModel.openXmlFile(file);
 	}
 }

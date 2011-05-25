@@ -5,6 +5,11 @@ public class Argument {
 	private Item item;
 	private boolean isFinal;
 
+	public Argument() {
+		this.name = "anonymous";
+		this.item = null;
+	}
+	
 	public Argument(String name, Item item) {
 		this.name = name;
 		this.item = item;

@@ -31,7 +31,7 @@ public class GenerateCode implements ActionListener {
 		int state = fileChooser.showOpenDialog(view.getJframe());
 		if (state == JFileChooser.APPROVE_OPTION) {
 			File file = fileChooser.getSelectedFile();
-			view.getController().notifySave(file);
+			view.getController().notifyGenerateCode(file);
 		}
 
 	}

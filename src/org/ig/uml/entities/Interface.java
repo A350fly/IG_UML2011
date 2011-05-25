@@ -10,6 +10,10 @@ import java.util.List;
 
 public class Interface extends Item {
 	
+	public Interface() {
+		super("anonymous");
+	}
+	
 	public Interface(String name) {
 		super(name);
 	}
@@ -239,7 +243,7 @@ public class Interface extends Item {
 	}	
 	
 	@Override
-	public void save(File folder, String currentLanguage) {
+	public void generateCode(File folder, String currentLanguage) {
 		try {
 			File fileFinal;
 			BufferedWriter out;

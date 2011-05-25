@@ -234,12 +234,6 @@ public class Classe extends Item {
 		}
 		for(Link link : getLinks()) {
 			if(link.getLinkType() == LinkType.REALIZATION) {
-//				attributeName = "my" + link.getItem().getName();
-//				if(classesName.contains(attributeName))
-//					attributeName = attributeName + i++;
-//				res += "\tpublic Vector<" + link.getItem().getName() + ">";
-//				res += " " + attributeName + ";\n";
-//				classesName.add(attributeName);
 				for(Method method : link.getItem().getMethods()) {
 					res += method.toStringJava();
 				}

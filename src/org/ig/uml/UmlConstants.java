@@ -38,6 +38,13 @@ public interface UmlConstants {
 	public static final String NEW_DEPENDENCY_KEY = "new_dependency";
 	public static final String NEW_ATTRIBUTE_KEY = "new_attribute";
 	public static final String NEW_OPERATION_KEY = "new_operation";
+	public static final String ABOUT_TITLE_KEY = "about_title";
+	public static final String VERSION_KEY = "version";
+	public static final String LANGUAGE_KEY = "language";
+	public static final String CLOSE_KEY = "close";
+	public static final String DESCRIPTION_KEY = "description";
+	public static final String COPYRIGHT_KEY = "copyright";
+	
 	
 	public static Locale currentLocale = new Locale(LOCALE);
 	public static ResourceBundle rs = ResourceBundle.getBundle(RS_NAME,
@@ -73,6 +80,12 @@ public interface UmlConstants {
 	public static final String NEW_DEPENDENCY = rs.getString(NEW_DEPENDENCY_KEY);
 	public static final String NEW_ATTRIBUTE = rs.getString(NEW_ATTRIBUTE_KEY);
 	public static final String NEW_OPERATION = rs.getString(NEW_OPERATION_KEY);
+	public static final String ABOUT_TITLE = rs.getString(ABOUT_TITLE_KEY);
+	public static final String VERSION = rs.getString(VERSION_KEY);
+	public static final String LANGUAGE = rs.getString(LANGUAGE_KEY);
+	public static final String CLOSE = rs.getString(CLOSE_KEY);
+	public static final String DESCRIPTION = rs.getString(DESCRIPTION_KEY);
+	public static final String COPYRIGHT = rs.getString(COPYRIGHT_KEY);
 	
 	public static final int WIDTH_FRAME = 500;
 	public static final int HEIGHT_FRAME = 500;

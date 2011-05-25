@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import org.ig.uml.UmlConstants;
 import org.ig.uml.actions.OpenFile;
 import org.ig.uml.actions.SaveFile;
+import org.ig.uml.ui.notifications.AboutJFrame;
 import org.ig.uml.ui.notifications.LanguageChoiceDialog;
 
 public class MenuBarListener implements ActionListener {
@@ -54,7 +55,7 @@ public class MenuBarListener implements ActionListener {
     		new LanguageChoiceDialog(view);
     	}
     	else if (e.getActionCommand().equals(UmlConstants.A_PROPOS)) {
-    		
+    		new AboutJFrame(view);
     	}
     	else if (e.getActionCommand().equals(UmlConstants.EXPORT_GRAPHIC)) {
     		

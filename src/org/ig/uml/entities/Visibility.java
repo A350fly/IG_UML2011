@@ -13,7 +13,7 @@ public enum Visibility {
 	}
 	
 	public String toStringJava() {
-		if(name.equals("package"))
+		if (name.equals("package"))
 			return "";
 		return name + " ";
 	}

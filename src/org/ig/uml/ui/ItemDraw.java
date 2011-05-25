@@ -2,18 +2,48 @@ package org.ig.uml.ui;
 
 import java.awt.Rectangle;
 
+import org.ig.uml.entities.Classe;
 import org.ig.uml.entities.Item;
 
 public class ItemDraw {
 
 	private Item item;
-	private Rectangle rectangle;
+	private Rectangle mainFrame;
+	private Rectangle atributesFrame;
+	private Rectangle methodsFrame;
 	
 	public ItemDraw(Item item, Rectangle rectangle) {
+		int height = (rectangle.height/3);
+		int width = rectangle.width;
+		int x = rectangle.x;
+		int y = rectangle.y;
+		
+		if (item instanceof Classe) {
+			System.out.println("C'est une classe !");
+		}
+		
 		this.item = item;
-		this.rectangle = rectangle;
+		mainFrame = rectangle;
+		atributesFrame = new Rectangle(x, y+height, width, height);
+		methodsFrame = new Rectangle(x, y+(2*height), width, height);
 	}
 	
+	public Rectangle getAtributesFrame() {
+		return atributesFrame;
+	}
+
+	public void setAtributesFrame(Rectangle atributesFrame) {
+		this.atributesFrame = atributesFrame;
+	}
+
+	public Rectangle getMethodsFrame() {
+		return methodsFrame;
+	}
+
+	public void setMethodsFrame(Rectangle methodsFrame) {
+		this.methodsFrame = methodsFrame;
+	}
+
 	public void setItem(Item item) {
 		this.item = item;
 	}
@@ -22,11 +52,19 @@ public class ItemDraw {
 		return item;
 	}
 	
-	public void setRectangle(Rectangle rectangle) {
-		this.rectangle = rectangle;
+	public void setMainFrame(Rectangle rectangle) {
+		this.mainFrame = rectangle;
 	}
 	
-	public Rectangle getRectangle() {
-		return rectangle;
+	public Rectangle getMainFrame() {
+		return mainFrame;
+	}
+	
+	public void setLocation(int x, int y) {
+		int height = (mainFrame.height/3);
+		
+		mainFrame.setLocation(x, y);
+		atributesFrame.setLocation(x, y+height);
+		methodsFrame.setLocation(x, y+(2*height));
 	}
 }

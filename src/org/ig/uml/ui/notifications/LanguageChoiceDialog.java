@@ -37,7 +37,7 @@ public class LanguageChoiceDialog extends JFrame implements ActionListener {
 		languageComboBox = new JComboBox(languageList);
 		languageComboBox.addActionListener(this);
 		this.setContentPane(buildComponent());
-		this.setPreferredSize(new Dimension(300, 115));
+		this.setPreferredSize(new Dimension(300, 150));
 		this.setDialogLocation(view.getJframe());
 		this.pack();
 		this.setVisible(true);		
@@ -80,7 +80,6 @@ public class LanguageChoiceDialog extends JFrame implements ActionListener {
 		return panel;
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		language = languageComboBox.getSelectedItem().toString();
 		view.getController().notifyCurrentLanguage(language);

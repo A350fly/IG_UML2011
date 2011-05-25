@@ -1,10 +1,13 @@
 package org.ig.uml.ui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.font.FontRenderContext;
+import java.awt.font.LineMetrics;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,14 +19,14 @@ public class PaintSurface extends JComponent {
 	private static final long serialVersionUID = 3224506743591509786L;
 	
 	private Point startDrag;			// point de clique pour créer le rectangle
-	private Rectangle rectangleCourant;	// Rectangle courant sélectionné
+	private ItemDraw currentItemDraw;	// Objet courant sélectionné
 	private ArrayList<Point> points;
 	private List<ItemDraw> itemDraw;
 	private ToolBarUML toolBar;
 	private SwingUmlView view;
 
 	public PaintSurface(ToolBarUML toolBar, SwingUmlView view) {
-		rectangleCourant = null;
+		currentItemDraw = null;
 		points = new ArrayList<Point>();
 		itemDraw = new ArrayList<ItemDraw>();
 		this.view = view;
@@ -37,7 +40,7 @@ public class PaintSurface extends JComponent {
 	 * Dessine la classe associé à l'Item donné en paramètre
 	 * Si un item est donné, alors on créé un nouveau rectangle
 	 */
-	public void paintClass(Item item) {
+	public void paintItem(Item item) {
 		if (item != null)
 			itemDraw.add(new ItemDraw(item, new Rectangle(startDrag.x, startDrag.y, 100, 100)));	// association de l'item en rectangle créé
 		
@@ -47,12 +50,27 @@ public class PaintSurface extends JComponent {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
+        FontRenderContext frc = g2d.getFontRenderContext();
+        Font font = g2d.getFont()/*.deriveFont(16f)*/;
 		
 		for (ItemDraw draw : itemDraw) {
+			Rectangle main = draw.getMainFrame();
+			Rectangle atributs = draw.getAtributesFrame();
+			Rectangle methods = draw.getMethodsFrame();
+			String name = draw.getItem().getName();
+	        float sw = (float)font.getStringBounds(name, frc).getWidth();
+	        LineMetrics lm = font.getLineMetrics(name, frc);
+	        float sh = lm.getAscent() + lm.getDescent();
+	        float sx = main.x + (main.width - sw)/2;
+            float sy = main.y + (main.height + sh)/6 - lm.getDescent();
+			
 			g2d.setPaint(Color.WHITE);
-			g2d.fill(draw.getRectangle());
+			g2d.fill(main);
 			g2d.setPaint(Color.BLACK);
-			g2d.draw(draw.getRectangle());
+			g2d.draw(main);
+			g2d.draw(atributs);
+			g2d.draw(methods);
+			g2d.drawString(draw.getItem().getName(), sx, sy);
 		}
 	}
 
@@ -88,11 +106,11 @@ public class PaintSurface extends JComponent {
 		return itemDraw;
 	}
 
-	public void setRectangleCourant(Rectangle rectangle) {
-		this.rectangleCourant = rectangle;
+	public void setCurrentItemDraw(ItemDraw itemDraw) {
+		this.currentItemDraw = itemDraw;
 	}
 
-	public Rectangle getRectangleCourant() {
-		return rectangleCourant;
+	public ItemDraw getCurrentItemDraw() {
+		return currentItemDraw;
 	}
 }

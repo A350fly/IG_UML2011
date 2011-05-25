@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 
 
 import org.ig.uml.ui.notifications.ClassDialog;
+import org.ig.uml.ui.notifications.InterfaceDialog;
 
 public class MouseEventHandler extends MouseAdapter {
 
@@ -27,10 +28,10 @@ public class MouseEventHandler extends MouseAdapter {
 		ToolBarUML toolBar = surface.getToolBar();
 		
 		for (ItemDraw itemDraw : surface.getItemDraw()) {
-			if (itemDraw.getRectangle().contains(surface.getStartDrag())) {
-				surface.setRectangleCourant(itemDraw.getRectangle());
-	            last_x = surface.getRectangleCourant().x - e.getX();
-	            last_y = surface.getRectangleCourant().y - e.getY();
+			if (itemDraw.getMainFrame().contains(surface.getStartDrag())) {
+				surface.setCurrentItemDraw(itemDraw);
+	            last_x = surface.getCurrentItemDraw().getMainFrame().x - e.getX();
+	            last_y = surface.getCurrentItemDraw().getMainFrame().y - e.getY();
 	            updateLocation(e);
 				return;
 			}
@@ -40,8 +41,11 @@ public class MouseEventHandler extends MouseAdapter {
 		if (toolBar.getNewClass().isSelected()) {
 			new ClassDialog(surface.getView(), surface.getStartDrag());
 		}
+		else if (toolBar.getNewInterface().isSelected()) {
+			new InterfaceDialog(surface.getView(), surface.getStartDrag());
+		}
 		else if (toolBar.getNewAggregation().isSelected()) {
-
+			
 		}
 		else if (toolBar.getNewAssociation().isSelected()) {
 			
@@ -56,9 +60,6 @@ public class MouseEventHandler extends MouseAdapter {
 			
 		}
 		else if (toolBar.getNewGeneralization().isSelected()) {
-			
-		}
-		else if (toolBar.getNewInterface().isSelected()) {
 			
 		}
 		else if (toolBar.getNewOperation().isSelected()) {
@@ -84,19 +85,19 @@ public class MouseEventHandler extends MouseAdapter {
 	}
 	
 	public void updateLocation(MouseEvent e){
-		Rectangle rect = surface.getRectangleCourant();
+		ItemDraw item = surface.getCurrentItemDraw();
 		
-		if (rect == null)
+		if (item == null)
 			return;
 
-		rect.setLocation(last_x + e.getX(), last_y + e.getY());
-		surface.paintClass(null);
+		item.setLocation(last_x + e.getX(), last_y + e.getY());
+		surface.paintItem(null);
 	}
 	
 	public Rectangle getRectangle(int x, int y) {
 		for (ItemDraw itemDraw : surface.getItemDraw())
-			if (itemDraw.getRectangle().contains(x, y))
-				return itemDraw.getRectangle();
+			if (itemDraw.getMainFrame().contains(x, y))
+				return itemDraw.getMainFrame();
 		return null;
 	}
 }

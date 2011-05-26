@@ -52,7 +52,7 @@ public class MenuBarListener implements ActionListener {
     		
     	}
     	else if (e.getActionCommand().equals(UmlConstants.HELP)) {
-    		
+    		new ManualFrame();
     	}
     	else if (e.getActionCommand().equals(UmlConstants.GENERATE_CODE)) {
     		new LanguageChoiceDialog(view);

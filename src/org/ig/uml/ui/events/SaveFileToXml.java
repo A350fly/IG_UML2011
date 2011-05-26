@@ -29,8 +29,6 @@ public class SaveFileToXml implements ActionListener, UmlConstants {
 		}
 	}
 	
-	@Override
 	public void actionPerformed(ActionEvent arg0) {
 	}
-	
 }

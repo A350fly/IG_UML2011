@@ -24,7 +24,6 @@ public class SwingUmlView extends UmlView {
 		jframe.dispose();
 	}
 
-	@Override
 	public void drawItem(DrawItemEvent drawItemEvent) {
 		jframe.drawItem(drawItemEvent);
 	}

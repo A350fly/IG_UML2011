@@ -1,6 +1,7 @@
 package org.ig.uml.ui.notifications;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -30,17 +31,21 @@ public class ClassDialog extends JDialog implements ActionListener {
 	private JButton validate;
 	private JButton addMethod;
 	private JButton addAttributes;
+	private Box methodsInformationBox;
 
 	private SwingUmlView view;
-	private Point point;		// coordonnées du clique ayant amené au Jdialog
+	private Point point;			// coordonnées du clique ayant amené au Jdialog
+	private MethodDialog methods;	// permet de récupérer la liste des méthodes de classe
 
 	public ClassDialog(SwingUmlView view, Point point) {
 		this.view = view;
 		this.point = point;
+		methods = null;
 		informationsPanel = new JPanel(new BorderLayout());
+		methodsInformationBox = Box.createVerticalBox();
 		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setResizable(false);
+		setResizable(true);
 		setTitle("Nouvelle classe");
 		setModal(true);
 		setContentPane(buildComponent());
@@ -88,6 +93,8 @@ public class ClassDialog extends JDialog implements ActionListener {
 		
 		// Nom de classe
 		Box hbox = Box.createHorizontalBox();
+		hbox.setPreferredSize(new Dimension(300, 20));
+		hbox.setMaximumSize(new Dimension(500, 25));
 		hbox.add(Box.createHorizontalStrut(10));
 		hbox.add(nameLabel);
 		hbox.add(Box.createHorizontalStrut(10));
@@ -116,7 +123,8 @@ public class ClassDialog extends JDialog implements ActionListener {
 		vbox.add(hbox);
 		vbox.add(Box.createVerticalStrut(20));
 		
-		informationsPanel.add(new JLabel("Liste des méthodes :"));
+		methodsInformationBox.add(new JLabel("Liste des méthodes :"), BorderLayout.NORTH);
+		informationsPanel.add(methodsInformationBox);
 		
 		panel.add(vbox, BorderLayout.CENTER);
 		panel.add(informationsPanel, BorderLayout.SOUTH); 
@@ -142,10 +150,34 @@ public class ClassDialog extends JDialog implements ActionListener {
 	public JPanel getInformationsPanel() {
 		return informationsPanel;
 	}
+	
+	public MethodDialog getMethods() {
+		return methods;
+	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand() == "AddMethods")
-			new MethodDialog(view);
+		if (e.getActionCommand() == "AddMethods") {
+			methods = new MethodDialog(view);
+
+			for (MethodBox set : methods.getMethodBoxList()) {
+				if (set.getNameField().getText().equals(""))
+					continue;
+				
+				Box hbox = Box.createHorizontalBox();
+				String params = " ";
+				String r = set.getReturnType().getSelectedItem().toString();
+				String m = set.getVisibilitiy().getSelectedItem().toString()+" "+r+" "+
+				set.getNameField().getText()+"("+
+				params+");";
+				
+				hbox.add(new JLabel(m), BorderLayout.CENTER);
+				methodsInformationBox.add(hbox);
+			}
+			
+			this.setSize(getWidth(), getHeight()+25);
+			informationsPanel.validate();
+			informationsPanel.repaint();
+		}
 		else if (e.getActionCommand() == "AddAttributes")
 			return;
 	}

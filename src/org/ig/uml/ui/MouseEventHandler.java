@@ -1,6 +1,7 @@
 package org.ig.uml.ui;
 
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
@@ -21,9 +22,12 @@ public class MouseEventHandler extends MouseAdapter {
 	private int y1;
 	private int x2;
 	private int y2;
+	private Rectangle paintZone;
 
 	public MouseEventHandler(PaintSurface surface) {
 		this.surface = surface;
+		Dimension dim = surface.getSize();
+		paintZone = new Rectangle(dim);
 	}
 	
 	public void mousePressed(MouseEvent e) {
@@ -117,5 +121,34 @@ public class MouseEventHandler extends MouseAdapter {
 
 	public void setxItem(int xItem) {
 		this.xItem = xItem;
+	}
+	
+	public boolean checkPanelLimit() {
+		ItemDraw item = surface.getCurrentItemDraw();
+		Rectangle rect = item.getMainFrame();
+		
+		if (paintZone == null)
+			return false;
+
+		if (paintZone.contains(rect.x, rect.y, rect.width, rect.height))
+			return true;
+			
+		int new_x = rect.x;
+		int new_y = rect.y;
+
+		if ((rect.x + rect.width) > paintZone.getWidth())
+			new_x = (int)paintZone.getWidth()-99;
+		
+		if (rect.x < 0)
+			new_x = -1;
+		
+		if ((rect.y + rect.height) > paintZone.getHeight())
+			new_y = (int)paintZone.getHeight()-49;
+		
+		if (rect.y < 0)
+			new_y = -1;
+		
+		item.setLocation(new_x, new_y);
+		return false;
 	}
 }

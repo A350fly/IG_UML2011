@@ -4,11 +4,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.ig.uml.UmlView;
 import org.ig.uml.entities.Classe;
+import org.ig.uml.entities.Item;
+import org.ig.uml.entities.Method;
 import org.ig.uml.ui.SwingUmlView;
 import org.ig.uml.ui.notifications.ClassDialog;
+import org.ig.uml.ui.notifications.MethodBox;
+import org.ig.uml.ui.notifications.MethodDialog;
 
 public class DrawClass implements ActionListener, ItemListener {
 	
@@ -27,10 +33,28 @@ public class DrawClass implements ActionListener, ItemListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("Validate")) {
 			String name = dialog.getNameField().getText();
-			Classe classe = new Classe(name);
+			Classe classe = new Classe(name);				// on créé notre classe
 			classe.setPositionOnSurface(dialog.getPoint());
 			classe.setFinal(isFinal);
 			classe.setAbstract(isAbstract);
+			
+			MethodDialog methods = dialog.getMethods();
+			if (methods != null) {
+				Set<Method> set = new HashSet<Method>();	// méthodes "valides"
+				
+				for (MethodBox box : methods.getMethodBoxList()) {
+					String mName = box.getNameField().getText();
+					
+					if (mName.equals(""))
+						continue;
+					
+					String ret = box.getReturnType().getSelectedItem().toString();
+					set.add(new Method(mName, new Classe(ret)));
+				}
+				
+				classe.setMethods(set);
+			}
+			
 			view.getController().notifyDrawItem(classe);
 			dialog.dispose();
 		}

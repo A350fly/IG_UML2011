@@ -36,8 +36,8 @@ public class CloseWindow implements WindowListener, UmlConstants {
 		    case -1:
 //		      System.out.println("You killed my die-alog - it died");
 		    case 0:  // save and quit	
-		    case 1:  // just quit
 		    	new SaveFileToXml(view);
+		    case 1:  // just quit
 		    	System.exit(0);
 		    	break;
 		    case 2:  // cancel

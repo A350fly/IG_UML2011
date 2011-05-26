@@ -15,31 +15,34 @@ public class MouseEventHandler extends MouseAdapter {
 	private static final long serialVersionUID = -5433034343223349595L;
 	
 	private PaintSurface surface;
-	private int last_x;
-	private int last_y;
+	private int xItem;
+	private int yItem;
+	private int x1;
+	private int y1;
+	private int x2;
+	private int y2;
 
 	public MouseEventHandler(PaintSurface surface) {
 		this.surface = surface;
 	}
 	
 	public void mousePressed(MouseEvent e) {
-		surface.setStartDrag(new Point(e.getX(), e.getY()));
+		Point clickPoint = new Point(e.getX(), e.getY());
+		surface.setStartDrag(clickPoint);
 		
 		ToolBarUML toolBar = surface.getToolBar();
 		
 		for (ItemDraw itemDraw : surface.getItemDraw()) {
 			if (itemDraw.getMainFrame().contains(surface.getStartDrag())) {
 				surface.setCurrentItemDraw(itemDraw);
-	            last_x = surface.getCurrentItemDraw().getMainFrame().x - e.getX();
-	            last_y = surface.getCurrentItemDraw().getMainFrame().y - e.getY();
-	            updateLocation(e);
+	            setxItem(itemDraw.getItem().getPositionOnSurface().x);
+	            yItem = itemDraw.getItem().getPositionOnSurface().y;
 				return;
 			}
 		}
-		
 		// On agit en fonction du bouton sélectionné sur la ToolBar
 		if (toolBar.getNewClass().isSelected()) {
-			new ClassDialog(surface.getView(), surface.getStartDrag());
+			new ClassDialog(surface.getView(), clickPoint); 
 		}
 		else if (toolBar.getNewInterface().isSelected()) {
 			new InterfaceDialog(surface.getView(), surface.getStartDrag());
@@ -79,18 +82,26 @@ public class MouseEventHandler extends MouseAdapter {
 		int y = e.getY();
 		
 		if (getRectangle(x, y) != null)
-			surface.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+			surface.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		else
 			surface.setCursor(Cursor.getDefaultCursor());
 	}
 	
-	public void updateLocation(MouseEvent e){
+	public void updateLocation(MouseEvent e){		
 		ItemDraw item = surface.getCurrentItemDraw();
-		
-		if (item == null)
+		if (item == null) 
 			return;
-
-		item.setLocation(last_x + e.getX(), last_y + e.getY());
+        xItem = item.getItem().getPositionOnSurface().x;
+        yItem = item.getItem().getPositionOnSurface().y;
+        x2 = e.getX();
+        y2 = e.getY();
+        x1 = surface.getStartDrag().x;
+        y1 = surface.getStartDrag().y;
+        
+        xItem = xItem + x2 - x1;
+        yItem = yItem + y2 - y1;
+        surface.setStartDrag(new Point(x2, y2));
+		item.setLocation(xItem, yItem);
 		surface.paintItem(null);
 	}
 	
@@ -99,5 +110,13 @@ public class MouseEventHandler extends MouseAdapter {
 			if (itemDraw.getMainFrame().contains(x, y))
 				return itemDraw.getMainFrame();
 		return null;
+	}
+
+	public int getxItem() {
+		return xItem;
+	}
+
+	public void setxItem(int xItem) {
+		this.xItem = xItem;
 	}
 }

@@ -16,6 +16,7 @@ import org.ig.uml.entities.Link;
 import org.ig.uml.entities.LinkType;
 import org.ig.uml.entities.Method;
 import org.ig.uml.events.DrawItemEvent;
+import org.ig.uml.events.DrawItemsEvent;
 import org.ig.uml.events.DrawLinkEvent;
 import org.ig.uml.managers.ComponentManager;
 import org.ig.uml.utils.XmlTools;
@@ -102,6 +103,12 @@ public class UmlModel {
 			listener.drawItem(new DrawItemEvent(this, item));
 		}
 	}
+	
+	public void fireDrawItems(HashSet<Item> items) {
+		for (UmlListener listener : listenerList) {
+			listener.drawItems(new DrawItemsEvent(this, items));
+		}
+	}
 
 	public void fireDrawLink(Link link, Item item) {
 		for (UmlListener listener : listenerList) {
@@ -141,6 +148,7 @@ public class UmlModel {
 		try {
 			HashSet<Item> items = (HashSet<Item>) XmlTools.decodeFromFile(file);
 			componentManager.setItems(items);
+			fireDrawItems(componentManager.getItems());
 			needSave = false;
 			needFilePathToSave = false;
 		} catch (FileNotFoundException e) {

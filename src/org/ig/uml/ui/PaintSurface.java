@@ -14,12 +14,13 @@ import java.util.List;
 import javax.swing.JComponent;
 
 import org.ig.uml.entities.Item;
+import org.ig.uml.events.DrawItemsEvent;
 
 public class PaintSurface extends JComponent {
 	private static final long serialVersionUID = 3224506743591509786L;
-	
-	private Point startDrag;			// point de clique pour créer le rectangle
-	private ItemDraw currentItemDraw;	// Objet courant sélectionné
+
+	private Point startDrag; // point de clique pour créer le rectangle
+	private ItemDraw currentItemDraw; // Objet courant sélectionné
 	private ArrayList<Point> points;
 	private List<ItemDraw> itemDraw;
 	private ToolBarUML toolBar;
@@ -35,35 +36,36 @@ public class PaintSurface extends JComponent {
 		this.addMouseListener(new MouseEventHandler(this));
 		this.addMouseMotionListener(new MouseEventHandler(this));
 	}
-	
+
 	/*
-	 * Dessine la classe associé à l'Item donné en paramètre
-	 * Si un item est donné, alors on créé un nouveau rectangle
+	 * Dessine la classe associé à l'Item donné en paramètre Si un item est
+	 * donné, alors on créé un nouveau rectangle
 	 */
 	public void paintItem(Item item) {
 		if (item != null)
-			itemDraw.add(new ItemDraw(item, new Rectangle(startDrag.x, startDrag.y, 100, 100)));	// association de l'item en rectangle créé
-		
+			itemDraw.add(new ItemDraw(item, new Rectangle(item
+					.getPositionOnSurface().x, item.getPositionOnSurface().y,
+					100, 100)));
 		repaint();
 	}
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
-        FontRenderContext frc = g2d.getFontRenderContext();
-        Font font = g2d.getFont()/*.deriveFont(16f)*/;
-		
+		FontRenderContext frc = g2d.getFontRenderContext();
+		Font font = g2d.getFont()/* .deriveFont(16f) */;
+
 		for (ItemDraw draw : itemDraw) {
 			Rectangle main = draw.getMainFrame();
 			Rectangle atributs = draw.getAtributesFrame();
 			Rectangle methods = draw.getMethodsFrame();
 			String name = draw.getItem().getName();
-	        float sw = (float)font.getStringBounds(name, frc).getWidth();
-	        LineMetrics lm = font.getLineMetrics(name, frc);
-	        float sh = lm.getAscent() + lm.getDescent();
-	        float sx = main.x + (main.width - sw)/2;
-            float sy = main.y + (main.height + sh)/6 - lm.getDescent();
-			
+			float sw = (float) font.getStringBounds(name, frc).getWidth();
+			LineMetrics lm = font.getLineMetrics(name, frc);
+			float sh = lm.getAscent() + lm.getDescent();
+			float sx = main.x + (main.width - sw) / 2;
+			float sy = main.y + (main.height + sh) / 6 - lm.getDescent();
+
 			g2d.setPaint(Color.WHITE);
 			g2d.fill(main);
 			g2d.setPaint(Color.BLACK);
@@ -101,7 +103,7 @@ public class PaintSurface extends JComponent {
 	public ArrayList<Point> getPoints() {
 		return points;
 	}
-	
+
 	public List<ItemDraw> getItemDraw() {
 		return itemDraw;
 	}
@@ -112,5 +114,16 @@ public class PaintSurface extends JComponent {
 
 	public ItemDraw getCurrentItemDraw() {
 		return currentItemDraw;
+	}
+
+	public void drawItems(DrawItemsEvent drawItemsEvent) {
+		itemDraw.clear();
+		for (Item item : drawItemsEvent.getItems()) {
+			// association de l'item en rectangle créé
+			itemDraw.add(new ItemDraw(item, new Rectangle(item
+					.getPositionOnSurface().x, item.getPositionOnSurface().y,
+					100, 100)));
+		}
+		repaint();
 	}
 }

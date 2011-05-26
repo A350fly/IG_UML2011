@@ -8,6 +8,7 @@ import javax.swing.JScrollPane;
 
 import org.ig.uml.UmlConstants;
 import org.ig.uml.events.DrawItemEvent;
+import org.ig.uml.events.DrawItemsEvent;
 import org.ig.uml.events.DrawLinkEvent;
 
 public class JFrameUml extends JFrame implements UmlConstants {
@@ -67,5 +68,9 @@ public class JFrameUml extends JFrame implements UmlConstants {
 	public void drawLink(DrawLinkEvent drawLinkEvent) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public void drawItems(DrawItemsEvent drawItemsEvent) {
+		paintSurface.drawItems(drawItemsEvent);
 	}
 }

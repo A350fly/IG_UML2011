@@ -3,6 +3,7 @@ package org.ig.uml.ui;
 import org.ig.uml.UmlController;
 import org.ig.uml.UmlView;
 import org.ig.uml.events.DrawItemEvent;
+import org.ig.uml.events.DrawItemsEvent;
 import org.ig.uml.events.DrawLinkEvent;
 
 public class SwingUmlView extends UmlView {
@@ -33,5 +34,10 @@ public class SwingUmlView extends UmlView {
 	
 	public JFrameUml getJframe() {
 		return jframe;
+	}
+
+	@Override
+	public void drawItems(DrawItemsEvent drawItemsEvent) {
+		jframe.drawItems(drawItemsEvent);
 	}
 }

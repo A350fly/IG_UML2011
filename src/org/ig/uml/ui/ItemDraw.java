@@ -1,5 +1,6 @@
 package org.ig.uml.ui;
 
+import java.awt.Point;
 import java.awt.Rectangle;
 
 import org.ig.uml.entities.Classe;
@@ -62,6 +63,7 @@ public class ItemDraw {
 	
 	public void setLocation(int x, int y) {
 		int height = (mainFrame.height/3);
+		item.setPositionOnSurface(new Point(x, y));
 		
 		mainFrame.setLocation(x, y);
 		atributesFrame.setLocation(x, y+height);

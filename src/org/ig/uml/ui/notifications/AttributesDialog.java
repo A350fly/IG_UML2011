@@ -67,7 +67,7 @@ public class AttributesDialog extends JDialog implements ActionListener {
 	}
 	
 	public void buildComponents() {
-		JLabel label = new JLabel("<html><h3>Définition des méthodes de classe</h3></html>",
+		JLabel label = new JLabel("<html><h3>Définition des attributs de classe</h3></html>",
 				JLabel.CENTER);
 		
 		methodsPanel = new JScrollPane(attributes,
@@ -85,7 +85,7 @@ public class AttributesDialog extends JDialog implements ActionListener {
 		attributes.add(mainBox);
 		mainBox.add(Box.createVerticalStrut(10));
 		
-		Box buttonsBox = Box.createHorizontalBox();
+		Box buttonsBox = Box.createVerticalBox();
 		Box hbox = Box.createHorizontalBox();
 		hbox.add(addAttribute, Box.CENTER_ALIGNMENT);
 		hbox.add(Box.createHorizontalStrut(10));

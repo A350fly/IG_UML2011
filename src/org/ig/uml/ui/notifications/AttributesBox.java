@@ -100,7 +100,7 @@ public class AttributesBox extends JComponent {
 		return visibility;
 	}
 	
-	public JComboBox getReturnType() {
+	public JComboBox getType() {
 		return type;
 	}
 }

@@ -4,8 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import org.ig.uml.UmlConstants;
-import org.ig.uml.actions.SaveFile;
 import org.ig.uml.ui.events.CloseWindow;
+import org.ig.uml.ui.events.ExportToImage;
 import org.ig.uml.ui.events.OpenFileXmlFile;
 import org.ig.uml.ui.events.SaveFileToXml;
 import org.ig.uml.ui.notifications.AboutJFrame;
@@ -60,7 +60,7 @@ public class MenuBarListener implements ActionListener {
     		new AboutJFrame(view);
     	}
     	else if (e.getActionCommand().equals(UmlConstants.EXPORT_GRAPHIC)) {
-    		new SaveFile(view.getJframe(), true);
+    		new ExportToImage(view.getJframe());
     	}
     	else if (e.getActionCommand().equals(UmlConstants.PREFERENCES)) {
     		

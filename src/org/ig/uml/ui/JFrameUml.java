@@ -72,4 +72,12 @@ public class JFrameUml extends JFrame implements UmlConstants {
 	public void drawItems(DrawItemsEvent drawItemsEvent) {
 		paintSurface.drawItems(drawItemsEvent);
 	}
+
+	public PaintSurface getPaintSurface() {
+		return paintSurface;
+	}
+
+	public void setPaintSurface(PaintSurface paintSurface) {
+		this.paintSurface = paintSurface;
+	}
 }

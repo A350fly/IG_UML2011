@@ -29,7 +29,6 @@ public class ToolBarUML extends JToolBar implements UmlConstants {
 	private JButton save;
 	private JButton save_as;
 	
-	
 	private SwingUmlView view;
 	
 	public ToolBarUML(SwingUmlView view) {
@@ -178,5 +177,9 @@ public class ToolBarUML extends JToolBar implements UmlConstants {
 
 	public JToggleButton getNewOperation() {
 		return newOperation;
+	}
+
+	public JToggleButton getNewUniAssociation() {
+		return newUniAssociation;
 	}
 }

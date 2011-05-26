@@ -139,8 +139,8 @@ public class JMenuBarUML extends JMenuBar implements UmlConstants {
 	}
 	
 	private void setCommandListener() {
-		UmlUndoRedoManager manager = new UmlUndoRedoManager(annuler, retablir);
-		UmlModel model = view.getController().getumlModel();
+		//UmlUndoRedoManager manager = new UmlUndoRedoManager(annuler, retablir);
+		//UmlModel model = view.getController().getumlModel();
 		
 		nouveau.setActionCommand(NEW);
 		ouvrir.setActionCommand(OPEN);
@@ -163,8 +163,8 @@ public class JMenuBarUML extends JMenuBar implements UmlConstants {
 		enregistrer.addActionListener(new MenuBarListener(view));
 		enregistrerSous.addActionListener(new MenuBarListener(view));
 		quitter.addActionListener(new MenuBarListener(view));
-		annuler.addActionListener(new UmlUndoRedoListener(model, manager));
-		retablir.addActionListener(new UmlUndoRedoListener(model, manager));
+		//annuler.addActionListener(new UmlUndoRedoListener(model, manager));
+		//retablir.addActionListener(new UmlUndoRedoListener(model, manager));
 		couper.addActionListener(new MenuBarListener(view));
 		copier.addActionListener(new MenuBarListener(view));
 		coller.addActionListener(new MenuBarListener(view));
@@ -173,5 +173,13 @@ public class JMenuBarUML extends JMenuBar implements UmlConstants {
 		aPropos.addActionListener(new MenuBarListener(view));
 		exportGraphic.addActionListener(new MenuBarListener(view));
 		preferences.addActionListener(new MenuBarListener(view));
+	}
+	
+	public JMenuItem getAnnuler() {
+		return annuler;
+	}
+
+	public JMenuItem getRetablir() {
+		return retablir;
 	}
 }

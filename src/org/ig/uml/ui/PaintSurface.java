@@ -93,7 +93,6 @@ public class PaintSurface extends JComponent {
 			
 			for (Method set : draw.getItem().getMethods()) {
 				String m = set.getName();
-				System.out.println(m);
 				//g2d.drawString(m, sx, sy);
 			}
 			
@@ -105,7 +104,6 @@ public class PaintSurface extends JComponent {
 		}
 		
 		for (LineDraw line : lineDraw) {
-			System.out.println("TRACE LIGNE");
 			g2d.setPaint(Color.BLACK);
 			g2d.draw(line.getLine());
 		}

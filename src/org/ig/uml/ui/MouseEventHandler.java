@@ -35,6 +35,7 @@ public class MouseEventHandler extends MouseAdapter {
 		ToolBarUML toolBar = surface.getToolBar();
 		Point clickPoint = new Point(e.getX(), e.getY());
 		ItemDraw selected = getItemDraw(clickPoint.x, clickPoint.y);
+		ItemDraw current = surface.getCurrentItemDraw();
 		surface.setStartDrag(clickPoint);
 		
 		/*
@@ -42,42 +43,53 @@ public class MouseEventHandler extends MouseAdapter {
 		 * On les traite avant les opérations suivantes
 		 */
 		if (toolBar.getNewAssociation().isSelected()) {
-			ItemDraw current = surface.getCurrentItemDraw();
-			
-			if (current != null && selected != null) {
-				if (!selected.equals(current)) {
-					boolean flag = true;
-					for (LineDraw line : surface.getLineDraw()) {
-						// On vérifie qu'un même lien n'existe pas déjà
-						if ((line.getFirstItem().equals(current) && 
-								line.getSecondItem().equals(selected)) ||
-								(line.getFirstItem().equals(selected) &&
-								line.getSecondItem().equals(current)))
-							flag = false;	// beurk
-					}
-							
-					if (flag) {
-						Link link = new Link(LinkType.ASSOCIATION, current.getItem());
-						surface.paintLine(current, selected);
-						surface.getView().getController().notifyDrawLink(link, selected.getItem());
-					}
-				}
+			if (checkLinkableItems(current, selected)) {
+				Link link = new Link(LinkType.ASSOCIATION, current.getItem());
+				surface.paintLine(current, selected);
+				surface.getView().getController().notifyDrawLink(link, selected.getItem());
+			}
+		}
+		else if (toolBar.getNewUniAssociation().isSelected()) {
+			if (checkLinkableItems(current, selected)) {
+				Link link = new Link(LinkType.UNI_ASSOCIATION, current.getItem());
+				surface.paintLine(current, selected);
+				surface.getView().getController().notifyDrawLink(link, selected.getItem());
 			}
 		}
 		else if (toolBar.getNewAggregation().isSelected()) {
-			
+			if (checkLinkableItems(current, selected)) {
+				Link link = new Link(LinkType.AGGREGATION, current.getItem());
+				surface.paintLine(current, selected);
+				surface.getView().getController().notifyDrawLink(link, selected.getItem());
+			}
 		}
 		else if (toolBar.getNewComposition().isSelected()) {
-			
+			if (checkLinkableItems(current, selected)) {
+				Link link = new Link(LinkType.COMPOSITION, current.getItem());
+				surface.paintLine(current, selected);
+				surface.getView().getController().notifyDrawLink(link, selected.getItem());
+			}
 		}
 		else if (toolBar.getNewDependency().isSelected()) {
-			
+			if (checkLinkableItems(current, selected)) {
+				Link link = new Link(LinkType.DEPENDENCY, current.getItem());
+				surface.paintLine(current, selected);
+				surface.getView().getController().notifyDrawLink(link, selected.getItem());
+			}
 		}
 		else if (toolBar.getNewGeneralization().isSelected()) {
-			
+			if (checkLinkableItems(current, selected)) {
+				Link link = new Link(LinkType.GENERALIZATION, current.getItem());
+				surface.paintLine(current, selected);
+				surface.getView().getController().notifyDrawLink(link, selected.getItem());
+			}
 		}
 		else if (toolBar.getNewRealization().isSelected()) {
-			
+			if (checkLinkableItems(current, selected)) {
+				Link link = new Link(LinkType.REALIZATION, current.getItem());
+				surface.paintLine(current, selected);
+				surface.getView().getController().notifyDrawLink(link, selected.getItem());
+			}
 		}
 		
 		surface.setCurrentItemDraw(selected);
@@ -117,10 +129,29 @@ public class MouseEventHandler extends MouseAdapter {
 			surface.setCursor(Cursor.getDefaultCursor());
 	}
 	
-	public void updateLocation(MouseEvent e){		
+	public int getxItem() {
+		return xItem;
+	}
+
+	public void setxItem(int xItem) {
+		this.xItem = xItem;
+	}
+	
+	/*
+	 * Récupère l'objet aux coordonnées x, y
+	 */
+	private ItemDraw getItemDraw(int x, int y) {
+		for (ItemDraw itemDraw : surface.getItemDraw())
+			if (itemDraw.getMainFrame().contains(x, y))
+				return itemDraw;
+		return null;
+	}
+	
+	private void updateLocation(MouseEvent e){		
 		ItemDraw item = surface.getCurrentItemDraw();
 		if (item == null) 
 			return;
+		
         xItem = item.getItem().getPositionOnSurface().x;
         yItem = item.getItem().getPositionOnSurface().y;
         x2 = e.getX();
@@ -140,24 +171,30 @@ public class MouseEventHandler extends MouseAdapter {
 	}
 	
 	/*
-	 * Récupère l'objet aux coordonnées x, y
+	 * Vérifie s'il est possible de fabriquer un lien entre deux objets
 	 */
-	public ItemDraw getItemDraw(int x, int y) {
-		for (ItemDraw itemDraw : surface.getItemDraw())
-			if (itemDraw.getMainFrame().contains(x, y))
-				return itemDraw;
-		return null;
-	}
+	private boolean checkLinkableItems(ItemDraw item1, ItemDraw item2) {
+		if (item1 != null && item2 != null) {
+			if (!item2.equals(item1)) {
+				for (LineDraw line : surface.getLineDraw()) {
+					// On vérifie qu'un même lien n'existe pas déjà
+					if ((line.getFirstItem().equals(item1) && 
+							line.getSecondItem().equals(item2)) ||
+							(line.getFirstItem().equals(item2) &&
+							line.getSecondItem().equals(item1)))
+						return false;
+				}
+			}
+			else
+				return false;
+			
+			return true;
+		}
 
-	public int getxItem() {
-		return xItem;
-	}
-
-	public void setxItem(int xItem) {
-		this.xItem = xItem;
+		return false;
 	}
 	
-	public boolean checkPanelLimit() {
+	private boolean checkPanelLimit() {
 		ItemDraw item = surface.getCurrentItemDraw();
 		Rectangle rect = item.getMainFrame();
 		

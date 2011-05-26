@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineMetrics;
 import java.util.ArrayList;
@@ -64,6 +65,8 @@ public class PaintSurface extends JComponent {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
 		FontRenderContext frc = g2d.getFontRenderContext();
 		Font font = g2d.getFont()/* .deriveFont(16f) */;
 
@@ -106,6 +109,7 @@ public class PaintSurface extends JComponent {
 		for (LineDraw line : lineDraw) {
 			g2d.setPaint(Color.BLACK);
 			g2d.draw(line.getLine());
+			g2d.fill(line.createArrow());
 		}
 	}
 	

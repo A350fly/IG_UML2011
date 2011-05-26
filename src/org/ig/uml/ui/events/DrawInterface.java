@@ -26,7 +26,7 @@ public class DrawInterface implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("Validate")) {
-			String name = dialog.getNameField().getText();
+			String name = "<< "+dialog.getNameField().getText()+" >>";
 			Interface i = new Interface(name);			// on créé notre interface
 			i.setPositionOnSurface(dialog.getPoint());
 			

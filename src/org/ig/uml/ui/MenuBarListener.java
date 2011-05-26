@@ -36,12 +36,6 @@ public class MenuBarListener implements ActionListener {
     	else if (e.getActionCommand().equals(UmlConstants.QUIT)) {
     		(new CloseWindow(view)).manageClosing();
     	}
-    	else if (e.getActionCommand().equals(UmlConstants.REDO)) {
-    		
-    	}
-    	else if (e.getActionCommand().equals(UmlConstants.UNDO)) {
-    		
-    	}
     	else if (e.getActionCommand().equals(UmlConstants.CUT)) {
     		
     	}

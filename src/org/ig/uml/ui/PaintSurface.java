@@ -110,6 +110,17 @@ public class PaintSurface extends JComponent {
 			g2d.draw(line.getLine());
 		}
 	}
+	
+	public void drawItems(DrawItemsEvent drawItemsEvent) {
+		itemDraw.clear();
+		for (Item item : drawItemsEvent.getItems()) {
+			// association de l'item au rectangle créé
+			itemDraw.add(new ItemDraw(item, new Rectangle(item
+					.getPositionOnSurface().x, item.getPositionOnSurface().y,
+					100, 100)));
+		}
+		repaint();
+	}
 
 	public void setStartDrag(Point startDrag) {
 		this.startDrag = startDrag;
@@ -153,16 +164,5 @@ public class PaintSurface extends JComponent {
 
 	public ItemDraw getCurrentItemDraw() {
 		return currentItemDraw;
-	}
-
-	public void drawItems(DrawItemsEvent drawItemsEvent) {
-		itemDraw.clear();
-		for (Item item : drawItemsEvent.getItems()) {
-			// association de l'item au rectangle créé
-			itemDraw.add(new ItemDraw(item, new Rectangle(item
-					.getPositionOnSurface().x, item.getPositionOnSurface().y,
-					100, 100)));
-		}
-		repaint();
 	}
 }

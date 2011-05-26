@@ -8,6 +8,8 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 import org.ig.uml.UmlConstants;
+import org.ig.uml.UmlModel;
+import org.ig.uml.managers.UmlUndoRedoManager;
 
 public class JMenuBarUML extends JMenuBar implements UmlConstants {
 	
@@ -137,6 +139,9 @@ public class JMenuBarUML extends JMenuBar implements UmlConstants {
 	}
 	
 	private void setCommandListener() {
+		UmlUndoRedoManager manager = new UmlUndoRedoManager(annuler, retablir);
+		UmlModel model = view.getController().getumlModel();
+		
 		nouveau.setActionCommand(NEW);
 		ouvrir.setActionCommand(OPEN);
 		enregistrer.setActionCommand(SAVE);
@@ -158,8 +163,8 @@ public class JMenuBarUML extends JMenuBar implements UmlConstants {
 		enregistrer.addActionListener(new MenuBarListener(view));
 		enregistrerSous.addActionListener(new MenuBarListener(view));
 		quitter.addActionListener(new MenuBarListener(view));
-		annuler.addActionListener(new MenuBarListener(view));
-		retablir.addActionListener(new MenuBarListener(view));
+		annuler.addActionListener(new UmlUndoRedoListener(model, manager));
+		retablir.addActionListener(new UmlUndoRedoListener(model, manager));
 		couper.addActionListener(new MenuBarListener(view));
 		copier.addActionListener(new MenuBarListener(view));
 		coller.addActionListener(new MenuBarListener(view));

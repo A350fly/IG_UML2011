@@ -1,7 +1,6 @@
 package org.ig.uml.ui;
 
 import java.awt.Dimension;
-import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -20,7 +19,7 @@ public class ManualFrame extends JFrame {
 
         textArea = new JEditorPane();
         textArea.setEditable(false);
-        Font f = new Font("Helvetica.Italic", Font.PLAIN, 13); 
+        //Font f = new Font("Helvetica.Italic", Font.PLAIN, 13); 
         //textArea.setFont(f);
         textArea.setContentType("text/html");
         textArea.setText(getManualFileContent());

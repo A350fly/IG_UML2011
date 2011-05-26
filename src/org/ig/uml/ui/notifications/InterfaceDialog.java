@@ -10,14 +10,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import org.ig.uml.ui.SwingUmlView;
-import org.ig.uml.ui.events.DrawClass;
 import org.ig.uml.ui.events.DrawInterface;
 
 public class InterfaceDialog extends JDialog implements ActionListener {

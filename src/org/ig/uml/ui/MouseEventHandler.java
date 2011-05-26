@@ -48,6 +48,7 @@ public class MouseEventHandler extends MouseAdapter {
 				if (!selected.equals(current)) {
 					boolean flag = true;
 					for (LineDraw line : surface.getLineDraw()) {
+						// On vérifie qu'un même lien n'existe pas déjà
 						if ((line.getFirstItem().equals(current) && 
 								line.getSecondItem().equals(selected)) ||
 								(line.getFirstItem().equals(selected) &&

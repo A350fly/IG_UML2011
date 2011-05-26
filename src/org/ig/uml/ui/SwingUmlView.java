@@ -5,6 +5,7 @@ import org.ig.uml.UmlView;
 import org.ig.uml.events.DrawItemEvent;
 import org.ig.uml.events.DrawItemsEvent;
 import org.ig.uml.events.DrawLinkEvent;
+import org.ig.uml.events.SetFrameTitleEvent;
 
 public class SwingUmlView extends UmlView {
 
@@ -39,5 +40,10 @@ public class SwingUmlView extends UmlView {
 	@Override
 	public void drawItems(DrawItemsEvent drawItemsEvent) {
 		jframe.drawItems(drawItemsEvent);
+	}
+
+	@Override
+	public void setFrameTitle(SetFrameTitleEvent setFrameTitleEvent) {
+		jframe.setTitle(setFrameTitleEvent.getTitle());
 	}
 }

@@ -18,10 +18,11 @@ import org.ig.uml.entities.Method;
 import org.ig.uml.events.DrawItemEvent;
 import org.ig.uml.events.DrawItemsEvent;
 import org.ig.uml.events.DrawLinkEvent;
+import org.ig.uml.events.SetFrameTitleEvent;
 import org.ig.uml.managers.ComponentManager;
 import org.ig.uml.utils.XmlTools;
 
-public class UmlModel {
+public class UmlModel implements UmlConstants {
 	private EventListenerList listeners;
 	private ComponentManager componentManager;
 	private UmlListener[] listenerList;
@@ -138,6 +139,7 @@ public class UmlModel {
 		try {
 			XmlTools.encodeToFile(componentManager.getItems(), file);
 			fileToSave = file;
+			fireSetFrameTitle();
 			needSave = false;
 			needFilePathToSave = false;
 		} catch (FileNotFoundException e) {
@@ -165,6 +167,7 @@ public class UmlModel {
 			fileToSave = file;
 			componentManager.setItems(items);
 			fireDrawItems(componentManager.getItems());
+			fireSetFrameTitle();
 			needSave = false;
 			needFilePathToSave = false;
 		} catch (FileNotFoundException e) {
@@ -172,6 +175,18 @@ public class UmlModel {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void fireSetFrameTitle() {
+		for (UmlListener listener : listenerList) {
+			listener.setFrameTitle(new SetFrameTitleEvent(this, getTitle()));
+		}
+	}
+	
+	private String getTitle() {
+		String finalTitle = fileToSave.getName() + " (" + fileToSave.getAbsolutePath() + ")" 
+		+ " - "+ TITLE;
+		return finalTitle;
 	}
 
 	public UmlListener[] getListenerList() {
@@ -200,6 +215,14 @@ public class UmlModel {
 
 	public boolean isNeedFilePathToSave() {
 		return needFilePathToSave;
+	}
+
+	public File getFileToSave() {
+		return fileToSave;
+	}
+
+	public void setFileToSave(File fileToSave) {
+		this.fileToSave = fileToSave;
 	}
 
 }

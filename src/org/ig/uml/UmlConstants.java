@@ -51,6 +51,7 @@ public interface UmlConstants {
 	public static final String CHOOSE_FOLDER_KEY = "choose_folder";
 	public static final String WARNING_KEY = "warning";
 	public static final String EXPORT_IMAGE_KEY = "export_image";
+	public static final String UNSAVED_FILE_KEY = "unsaved_file";
 	
 	
 	public static Locale currentLocale = new Locale(LOCALE);
@@ -100,6 +101,7 @@ public interface UmlConstants {
 	public static final String CHOOSE_FOLDER = rs.getString(CHOOSE_FOLDER_KEY);
 	public static final String WARNING = rs.getString(WARNING_KEY);
 	public static final String EXPORT_IMAGE = rs.getString(EXPORT_IMAGE_KEY);
+	public static final String UNSAVED_FILE = rs.getString(UNSAVED_FILE_KEY);
 	
 	public static final int WIDTH_FRAME = 500;
 	public static final int HEIGHT_FRAME = 500;

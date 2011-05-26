@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import org.ig.uml.UmlConstants;
 import org.ig.uml.actions.SaveFile;
+import org.ig.uml.ui.events.CloseWindow;
 import org.ig.uml.ui.events.OpenFileXmlFile;
 import org.ig.uml.ui.events.SaveFileToXml;
 import org.ig.uml.ui.notifications.AboutJFrame;
@@ -32,7 +33,7 @@ public class MenuBarListener implements ActionListener {
     		new SaveFileToXml(view);
     	}
     	else if (e.getActionCommand().equals(UmlConstants.QUIT)) {
-    		System.exit(0);
+    		(new CloseWindow(view)).manageClosing();
     	}
     	else if (e.getActionCommand().equals(UmlConstants.REDO)) {
     		

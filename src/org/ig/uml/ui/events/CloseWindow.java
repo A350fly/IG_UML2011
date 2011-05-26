@@ -21,6 +21,9 @@ public class CloseWindow implements WindowListener, UmlConstants {
 	public void windowActivated(WindowEvent arg0) { }
 	public void windowClosed(WindowEvent arg0) { }
 	public void windowClosing(WindowEvent arg0) { 
+		manageClosing();
+	}
+	public void manageClosing() {
 		if(view.getController().getumlModel().isNeedSave()) {    
 			String[] choices = {
 			      SAVE_QUIT, NO_SAVE_QUIT, CANCEL 

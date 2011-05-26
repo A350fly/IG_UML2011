@@ -109,8 +109,8 @@ public interface UmlConstants {
 	public static final String NO_SAVE_NEW = rs.getString(NO_SAVE_NEW_KEY);
 	public static final String UNSAVED_CHANGE_NEW = rs.getString(UNSAVED_CHANGE_NEW_KEY);
 	
-	public static final int WIDTH_FRAME = 500;
-	public static final int HEIGHT_FRAME = 500;
+	public static final int WIDTH_FRAME = 700;
+	public static final int HEIGHT_FRAME = 700;
 	public static final int WIDTH_MIN_FRAME = 200;
 	public static final int HEIGHT_MIN_FRAME = 200;
 	public static final ImageIcon ICON_NEW_CLASS = new ImageIcon(

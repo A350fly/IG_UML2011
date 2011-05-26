@@ -5,8 +5,15 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.text.Position;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.MutableTreeNode;
+import javax.swing.tree.TreePath;
 
 import org.ig.uml.UmlConstants;
+import org.ig.uml.entities.Item;
 import org.ig.uml.events.DrawItemEvent;
 import org.ig.uml.events.DrawItemsEvent;
 import org.ig.uml.events.DrawLinkEvent;
@@ -20,15 +27,26 @@ public class JFrameUml extends JFrame implements UmlConstants {
 	private PaintSurface paintSurface;
 	private ToolBarUML toolBarUML;
 	private JScrollPane paintSurfaceScrollPane;
+	private JScrollPane jtreeScrollPane;
 	private SwingUmlView view;
+	private JTreeElements jtreeElements;
+	private JSplitPane splitPane;
 
 	public JFrameUml(SwingUmlView view) {
 		String finalTitle = "";
 		jmenuBarUML = new JMenuBarUML(view);
 		toolBarUML = new ToolBarUML(this);
 		paintSurface = new PaintSurface(toolBarUML, view);
+		jtreeElements = new JTreeElements();
 		paintSurfaceScrollPane = new JScrollPane(paintSurface);
-		this.view = view;
+		jtreeScrollPane = new JScrollPane(jtreeElements);
+		this.view = view; 
+		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        splitPane.setLeftComponent(jtreeScrollPane);
+        jtreeScrollPane.setMinimumSize(new Dimension(100, 100));
+        paintSurfaceScrollPane.setMinimumSize(new Dimension(300, 100));
+        splitPane.setRightComponent(paintSurfaceScrollPane);
+        splitPane.setDividerLocation(150);
 		addWindowListener(new CloseWindow(view));
 		finalTitle = UNSAVED_FILE + " - " + TITLE;
 		setTitle(finalTitle);
@@ -50,7 +68,7 @@ public class JFrameUml extends JFrame implements UmlConstants {
 	private void addComponents() {
 		setJMenuBar(jmenuBarUML);
 		getContentPane().add(toolBarUML, BorderLayout.PAGE_START);
-		getContentPane().add(paintSurfaceScrollPane, BorderLayout.CENTER);
+		getContentPane().add(splitPane, BorderLayout.CENTER);
 	}
 
 	/**
@@ -60,6 +78,22 @@ public class JFrameUml extends JFrame implements UmlConstants {
 	 */
 	public void drawItem(DrawItemEvent drawItemEvent) {
 		paintSurface.paintItem(drawItemEvent.getItem());
+		displayItemOnTree(drawItemEvent);
+	}
+
+	private void displayItemOnTree(DrawItemEvent drawItemEvent) {
+		DefaultTreeModel modelTree = (DefaultTreeModel)jtreeElements.getModel();
+		// Find node to which new node is to be added
+		int startRow = 0;
+		String prefix = "Elements";
+		TreePath path = jtreeElements.getNextMatch(prefix, startRow, Position.Bias.Forward);
+		MutableTreeNode node = (MutableTreeNode)path.getLastPathComponent();
+
+		// Create new node
+		MutableTreeNode newNode = new DefaultMutableTreeNode(drawItemEvent.getItem().getName());
+
+		// Insert new node as last child of node
+		modelTree.insertNodeInto(newNode, node, node.getChildCount());
 	}
 
 	/**
@@ -75,6 +109,21 @@ public class JFrameUml extends JFrame implements UmlConstants {
 
 	public void drawItems(DrawItemsEvent drawItemsEvent) {
 		paintSurface.drawItems(drawItemsEvent);
+		displayItemsOnTree(drawItemsEvent);
+	}
+	
+	public void displayItemsOnTree(DrawItemsEvent drawItemsEvent) {
+	    DefaultMutableTreeNode root;
+        DefaultMutableTreeNode child;
+        
+        root = new DefaultMutableTreeNode("Elements");
+		DefaultMutableTreeNode diagram = new DefaultMutableTreeNode("Diagramme");
+		root.add(diagram);
+        for(Item item : drawItemsEvent.getItems()) {
+        	child = new DefaultMutableTreeNode(item.getName());
+        	root.add(child);
+        }
+		jtreeElements.setModel(new DefaultTreeModel(root));
 	}
 
 	public PaintSurface getPaintSurface() {

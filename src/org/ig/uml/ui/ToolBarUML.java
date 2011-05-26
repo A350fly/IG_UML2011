@@ -1,10 +1,12 @@
 package org.ig.uml.ui;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
 import org.ig.uml.UmlConstants;
+import org.ig.uml.ui.events.NewFile;
 
 public class ToolBarUML extends JToolBar implements UmlConstants {
 
@@ -22,11 +24,16 @@ public class ToolBarUML extends JToolBar implements UmlConstants {
 	private JToggleButton newDependency;
 	private JToggleButton newAttribute;
 	private JToggleButton newOperation;
+	private JButton newFile;
+	private JButton open;
+	private JButton save;
+	private JButton save_as;
 	
-	private JFrameUml frame;
 	
-	public ToolBarUML(JFrameUml frame) {
-		this.frame = frame;
+	private SwingUmlView view;
+	
+	public ToolBarUML(SwingUmlView view) {
+		this.view = view;
 		
 		buttonGroup = new ButtonGroup();
 		newClass = new JToggleButton(ICON_NEW_CLASS);
@@ -40,6 +47,10 @@ public class ToolBarUML extends JToolBar implements UmlConstants {
 		newDependency = new JToggleButton(ICON_NEW_DEPENDENCY);
 		newAttribute = new JToggleButton(ICON_NEW_ATTRIBUTE);
 		newOperation = new JToggleButton(ICON_NEW_OPERATION);
+		newFile = new JButton(ICON_NEW_FILE);
+		open = new JButton(ICON_OPEN);
+		save = new JButton(ICON_SAVE);
+		save_as = new JButton(ICON_SAVE_AS);
 		
 		addCommandsListener();
 		addComponents();
@@ -48,6 +59,11 @@ public class ToolBarUML extends JToolBar implements UmlConstants {
 	}
 
 	private void addComponents() {
+		add(newFile);
+		add(open);
+		add(save);
+		add(save_as);
+		this.addSeparator();
 		add(newClass);
 		add(newInterface);
 		add(newAttribute);
@@ -101,18 +117,27 @@ public class ToolBarUML extends JToolBar implements UmlConstants {
 		newDependency.setActionCommand(NEW_DEPENDENCY);
 		newAttribute.setActionCommand(NEW_ATTRIBUTE);
 		newOperation.setActionCommand(NEW_OPERATION);
+		newFile.setActionCommand(NEW);
+		open.setActionCommand(OPEN);
+		save_as.setActionCommand(SAVE_AS);
+		save.setActionCommand(SAVE);
 	    
-		newClass.addActionListener(new ToolBarListener(frame));
-		newAssociation.addActionListener(new ToolBarListener(frame));
-		newUniAssociation.addActionListener(new ToolBarListener(frame));
-		newAggregation.addActionListener(new ToolBarListener(frame));
-		newGeneralization.addActionListener(new ToolBarListener(frame));
-		newComposition.addActionListener(new ToolBarListener(frame));
-		newInterface.addActionListener(new ToolBarListener(frame));
-		newRealization.addActionListener(new ToolBarListener(frame));
-		newDependency.addActionListener(new ToolBarListener(frame));
-		newAttribute.addActionListener(new ToolBarListener(frame));
-		newOperation.addActionListener(new ToolBarListener(frame));
+		newClass.addActionListener(new ToolBarListener(view));
+		newAssociation.addActionListener(new ToolBarListener(view));
+		newUniAssociation.addActionListener(new ToolBarListener(view));
+		newAggregation.addActionListener(new ToolBarListener(view));
+		newGeneralization.addActionListener(new ToolBarListener(view));
+		newComposition.addActionListener(new ToolBarListener(view));
+		newInterface.addActionListener(new ToolBarListener(view));
+		newRealization.addActionListener(new ToolBarListener(view));
+		newDependency.addActionListener(new ToolBarListener(view));
+		newAttribute.addActionListener(new ToolBarListener(view));
+		newOperation.addActionListener(new ToolBarListener(view));
+		
+		newFile.addActionListener(new ToolBarListener(view));
+		open.addActionListener(new ToolBarListener(view));
+		save.addActionListener(new ToolBarListener(view));
+		save_as.addActionListener(new ToolBarListener(view));
 	}
 	
 	public JToggleButton getNewClass() {

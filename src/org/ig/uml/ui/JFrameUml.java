@@ -35,7 +35,7 @@ public class JFrameUml extends JFrame implements UmlConstants {
 	public JFrameUml(SwingUmlView view) {
 		String finalTitle = "";
 		jmenuBarUML = new JMenuBarUML(view);
-		toolBarUML = new ToolBarUML(this);
+		toolBarUML = new ToolBarUML(view);
 		paintSurface = new PaintSurface(toolBarUML, view);
 		jtreeElements = new JTreeElements();
 		paintSurfaceScrollPane = new JScrollPane(paintSurface);

@@ -135,4 +135,12 @@ public interface UmlConstants {
 			"res/drawable/Attribute.gif");
 	public static final ImageIcon ICON_NEW_OPERATION = new ImageIcon(
 			"res/drawable/AddOperation.gif");
+	public static final ImageIcon ICON_NEW_FILE = new ImageIcon(
+			"res/drawable/New.gif");
+	public static final ImageIcon ICON_OPEN = new ImageIcon(
+			"res/drawable/Open.gif");
+	public static final ImageIcon ICON_SAVE = new ImageIcon(
+			"res/drawable/Save.gif");
+	public static final ImageIcon ICON_SAVE_AS = new ImageIcon(
+			"res/drawable/SaveAs.gif");
 }

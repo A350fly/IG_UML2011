@@ -26,6 +26,7 @@ public class UmlModel {
 	private ComponentManager componentManager;
 	private UmlListener[] listenerList;
 	private String currentLanguage;
+	private File fileToSave;
 	private boolean needSave;
 	
 	// Si on vient d'ouvrir un fichier ou si on a enregistré, il n'est pas 
@@ -39,6 +40,7 @@ public class UmlModel {
 		setCurrentLanguage("Java");
 		needSave = false;
 		needFilePathToSave = true;
+		fileToSave = null;
 		//test
 		Classe c = new Classe("CarToy");
 		Classe c2 = new Classe("Car");
@@ -135,6 +137,19 @@ public class UmlModel {
 	public void saveToXml(File file) {
 		try {
 			XmlTools.encodeToFile(componentManager.getItems(), file);
+			fileToSave = file;
+			needSave = false;
+			needFilePathToSave = false;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void saveToXml() {
+		try {
+			XmlTools.encodeToFile(componentManager.getItems(), fileToSave);
 			needSave = false;
 			needFilePathToSave = false;
 		} catch (FileNotFoundException e) {
@@ -147,6 +162,7 @@ public class UmlModel {
 	public void openXmlFile(File file) {
 		try {
 			HashSet<Item> items = (HashSet<Item>) XmlTools.decodeFromFile(file);
+			fileToSave = file;
 			componentManager.setItems(items);
 			fireDrawItems(componentManager.getItems());
 			needSave = false;

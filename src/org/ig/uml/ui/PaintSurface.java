@@ -1,6 +1,7 @@
 package org.ig.uml.ui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -32,7 +33,6 @@ public class PaintSurface extends JComponent {
 		itemDraw = new ArrayList<ItemDraw>();
 		this.view = view;
 		this.toolBar = toolBar;
-
 		this.addMouseListener(new MouseEventHandler(this));
 		this.addMouseMotionListener(new MouseEventHandler(this));
 	}

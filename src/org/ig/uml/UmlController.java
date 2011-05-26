@@ -70,4 +70,8 @@ public class UmlController {
 	public void notifyOpenXmlFile(File file) {
 		umlModel.openXmlFile(file);
 	}
+
+	public void notifySaveToXml() {
+		umlModel.saveToXml();
+	}
 }

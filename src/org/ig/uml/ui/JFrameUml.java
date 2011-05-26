@@ -7,9 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
 import org.ig.uml.UmlConstants;
-import org.ig.uml.events.DrawItemEvent;
-import org.ig.uml.events.DrawItemsEvent;
-import org.ig.uml.events.DrawLinkEvent;
+import org.ig.uml.events.*;
+import org.ig.uml.ui.events.CloseWindow;
 
 public class JFrameUml extends JFrame implements UmlConstants {
 
@@ -27,9 +26,9 @@ public class JFrameUml extends JFrame implements UmlConstants {
 		paintSurface = new PaintSurface(toolBarUML, view);
 		paintSurfaceScrollPane = new JScrollPane(paintSurface);
 		this.view = view;
-
+		addWindowListener(new CloseWindow(view));
 		setTitle(TITLE);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setPreferredSize(new Dimension(HEIGHT_FRAME, WIDTH_FRAME));
 		setMinimumSize(new Dimension(HEIGHT_MIN_FRAME, WIDTH_MIN_FRAME));
 		addComponents();

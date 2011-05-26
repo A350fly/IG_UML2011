@@ -16,12 +16,16 @@ public class SaveFileToXml implements ActionListener {
 	
 	public SaveFileToXml(SwingUmlView view) {
 		this.view = view;
-		fileChooser = new JFileChooser();
-		fileChooser.setApproveButtonText("Choisir un dossier");
-		int state = fileChooser.showOpenDialog(view.getJframe());
-		if (state == JFileChooser.APPROVE_OPTION) {
-			file = fileChooser.getSelectedFile();
-			view.getController().notifySaveToXml(file);
+		if(view.getController().getumlModel().isNeedFilePathToSave()) {
+			fileChooser = new JFileChooser();
+			fileChooser.setApproveButtonText("Choisir un dossier");
+			int state = fileChooser.showOpenDialog(view.getJframe());
+			if (state == JFileChooser.APPROVE_OPTION) {
+				file = fileChooser.getSelectedFile();
+				view.getController().notifySaveToXml(file);
+			}
+		} else {
+			view.getController().notifySaveToXml();
 		}
 	}
 	

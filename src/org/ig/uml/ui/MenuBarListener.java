@@ -26,7 +26,7 @@ public class MenuBarListener implements ActionListener {
     		new OpenFileXmlFile(view);
     	}
     	else if (e.getActionCommand().equals(UmlConstants.SAVE)) {
-    		
+    		new SaveFileToXml(view);
     	}
     	else if (e.getActionCommand().equals(UmlConstants.SAVE_AS)) {
     		new SaveFileToXml(view);

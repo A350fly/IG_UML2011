@@ -44,6 +44,12 @@ public interface UmlConstants {
 	public static final String CLOSE_KEY = "close";
 	public static final String DESCRIPTION_KEY = "description";
 	public static final String COPYRIGHT_KEY = "copyright";
+	public static final String SAVE_QUIT_KEY = "save_quit";
+	public static final String NO_SAVE_QUIT_KEY = "no_save_quit";
+	public static final String CANCEL_KEY = "cancel";
+	public static final String UNSAVED_CHANGE_KEY = "unsaved_change";
+	public static final String CHOOSE_FOLDER_KEY = "choose_folder";
+	public static final String WARNING_KEY = "warning";
 	
 	
 	public static Locale currentLocale = new Locale(LOCALE);
@@ -86,6 +92,12 @@ public interface UmlConstants {
 	public static final String CLOSE = rs.getString(CLOSE_KEY);
 	public static final String DESCRIPTION = rs.getString(DESCRIPTION_KEY);
 	public static final String COPYRIGHT = rs.getString(COPYRIGHT_KEY);
+	public static final String SAVE_QUIT = rs.getString(SAVE_QUIT_KEY);
+	public static final String NO_SAVE_QUIT = rs.getString(NO_SAVE_QUIT_KEY);
+	public static final String CANCEL = rs.getString(CANCEL_KEY);
+	public static final String UNSAVED_CHANGE = rs.getString(UNSAVED_CHANGE_KEY);
+	public static final String CHOOSE_FOLDER = rs.getString(CHOOSE_FOLDER_KEY);
+	public static final String WARNING = rs.getString(WARNING_KEY);
 	
 	public static final int WIDTH_FRAME = 500;
 	public static final int HEIGHT_FRAME = 500;

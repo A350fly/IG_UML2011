@@ -27,6 +27,7 @@ public class MouseEventHandler extends MouseAdapter {
 	}
 	
 	public void mousePressed(MouseEvent e) {
+		surface.getView().getController().getumlModel().setNeedSave(true);
 		Point clickPoint = new Point(e.getX(), e.getY());
 		surface.setStartDrag(clickPoint);
 		
@@ -35,8 +36,6 @@ public class MouseEventHandler extends MouseAdapter {
 		for (ItemDraw itemDraw : surface.getItemDraw()) {
 			if (itemDraw.getMainFrame().contains(surface.getStartDrag())) {
 				surface.setCurrentItemDraw(itemDraw);
-	            setxItem(itemDraw.getItem().getPositionOnSurface().x);
-	            yItem = itemDraw.getItem().getPositionOnSurface().y;
 				return;
 			}
 		}

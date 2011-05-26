@@ -13,7 +13,6 @@ import java.util.List;
 
 import javax.swing.JComponent;
 
-import org.ig.uml.entities.Attribute;
 import org.ig.uml.entities.Item;
 import org.ig.uml.events.DrawItemsEvent;
 import org.ig.uml.entities.Method;
@@ -21,10 +20,11 @@ import org.ig.uml.entities.Method;
 public class PaintSurface extends JComponent {
 	private static final long serialVersionUID = 3224506743591509786L;
 
-	private Point startDrag; // point de clique pour créer le rectangle
-	private ItemDraw currentItemDraw; // Objet courant sélectionné
+	private Point startDrag; 			// point de clique pour créer le rectangle
+	private ItemDraw currentItemDraw; 	// Objet courant sélectionné
 	private ArrayList<Point> points;
 	private List<ItemDraw> itemDraw;
+	private List<LineDraw> lineDraw;
 	private ToolBarUML toolBar;
 	private SwingUmlView view;
 
@@ -32,6 +32,7 @@ public class PaintSurface extends JComponent {
 		currentItemDraw = null;
 		points = new ArrayList<Point>();
 		itemDraw = new ArrayList<ItemDraw>();
+		lineDraw = new ArrayList<LineDraw>();
 		this.view = view;
 		this.toolBar = toolBar;
 		this.addMouseListener(new MouseEventHandler(this));
@@ -46,7 +47,17 @@ public class PaintSurface extends JComponent {
 		if (item != null)
 			itemDraw.add(new ItemDraw(item, new Rectangle(item
 					.getPositionOnSurface().x, item.getPositionOnSurface().y,
-					100, 100)));
+					120, 120)));
+		repaint();
+	}
+	
+	/*
+	 * Dessine la ligne reliant deux objets
+	 */
+	public void paintLine(ItemDraw item1, ItemDraw item2) {
+		if (item1 != null && item2 != null)
+			lineDraw.add(new LineDraw(item1, item2));
+		
 		repaint();
 	}
 
@@ -69,7 +80,12 @@ public class PaintSurface extends JComponent {
 
 			g2d.setPaint(Color.WHITE);
 			g2d.fill(main);
-			g2d.setPaint(Color.BLACK);
+			
+			if (draw.equals(currentItemDraw))
+				g2d.setPaint(Color.RED);
+			else
+				g2d.setPaint(Color.BLACK);
+			
 			g2d.draw(main);
 			g2d.draw(atributs);
 			g2d.draw(methods);
@@ -86,6 +102,12 @@ public class PaintSurface extends JComponent {
 				System.out.println(m);
 				g2d.drawString(a, sx, sy);
 			}*/
+		}
+		
+		for (LineDraw line : lineDraw) {
+			System.out.println("TRACE LIGNE");
+			g2d.setPaint(Color.BLACK);
+			g2d.draw(line.getLine());
 		}
 	}
 
@@ -120,6 +142,10 @@ public class PaintSurface extends JComponent {
 	public List<ItemDraw> getItemDraw() {
 		return itemDraw;
 	}
+	
+	public List<LineDraw> getLineDraw() {
+		return lineDraw;
+	}
 
 	public void setCurrentItemDraw(ItemDraw itemDraw) {
 		this.currentItemDraw = itemDraw;
@@ -132,7 +158,7 @@ public class PaintSurface extends JComponent {
 	public void drawItems(DrawItemsEvent drawItemsEvent) {
 		itemDraw.clear();
 		for (Item item : drawItemsEvent.getItems()) {
-			// association de l'item en rectangle créé
+			// association de l'item au rectangle créé
 			itemDraw.add(new ItemDraw(item, new Rectangle(item
 					.getPositionOnSurface().x, item.getPositionOnSurface().y,
 					100, 100)));

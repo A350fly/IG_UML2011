@@ -7,7 +7,8 @@ import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-
+import org.ig.uml.entities.Link;
+import org.ig.uml.entities.LinkType;
 import org.ig.uml.ui.notifications.ClassDialog;
 import org.ig.uml.ui.notifications.InterfaceDialog;
 
@@ -31,32 +32,38 @@ public class MouseEventHandler extends MouseAdapter {
 	}
 	
 	public void mousePressed(MouseEvent e) {
-		surface.getView().getController().getumlModel().setNeedSave(true);
+		ToolBarUML toolBar = surface.getToolBar();
 		Point clickPoint = new Point(e.getX(), e.getY());
+		ItemDraw selected = getItemDraw(clickPoint.x, clickPoint.y);
 		surface.setStartDrag(clickPoint);
 		
-		ToolBarUML toolBar = surface.getToolBar();
-		
-		for (ItemDraw itemDraw : surface.getItemDraw()) {
-			if (itemDraw.getMainFrame().contains(surface.getStartDrag())) {
-				surface.setCurrentItemDraw(itemDraw);
-				return;
+		/*
+		 * Cas où un trait doit relier deux objets
+		 * On les traite avant les opérations suivantes
+		 */
+		if (toolBar.getNewAssociation().isSelected()) {
+			ItemDraw current = surface.getCurrentItemDraw();
+			
+			if (current != null && selected != null) {
+				if (!selected.equals(current)) {
+					boolean flag = true;
+					for (LineDraw line : surface.getLineDraw()) {
+						if ((line.getFirstItem().equals(current) && 
+								line.getSecondItem().equals(selected)) ||
+								(line.getFirstItem().equals(selected) &&
+								line.getSecondItem().equals(current)))
+							flag = false;	// beurk
+					}
+							
+					if (flag) {
+						Link link = new Link(LinkType.ASSOCIATION, current.getItem());
+						surface.paintLine(current, selected);
+						surface.getView().getController().notifyDrawLink(link, selected.getItem());
+					}
+				}
 			}
 		}
-		// On agit en fonction du bouton sélectionné sur la ToolBar
-		if (toolBar.getNewClass().isSelected()) {
-			new ClassDialog(surface.getView(), clickPoint); 
-		}
-		else if (toolBar.getNewInterface().isSelected()) {
-			new InterfaceDialog(surface.getView(), surface.getStartDrag());
-		}
 		else if (toolBar.getNewAggregation().isSelected()) {
-			
-		}
-		else if (toolBar.getNewAssociation().isSelected()) {
-			
-		}
-		else if (toolBar.getNewAttribute().isSelected()) {
 			
 		}
 		else if (toolBar.getNewComposition().isSelected()) {
@@ -68,12 +75,31 @@ public class MouseEventHandler extends MouseAdapter {
 		else if (toolBar.getNewGeneralization().isSelected()) {
 			
 		}
-		else if (toolBar.getNewOperation().isSelected()) {
-			
-		}
 		else if (toolBar.getNewRealization().isSelected()) {
 			
 		}
+		
+		surface.setCurrentItemDraw(selected);
+		surface.repaint();
+		
+		// On agit en fonction du bouton sélectionné sur la ToolBar
+		if (toolBar.getNewClass().isSelected()) {
+			if (surface.getCurrentItemDraw() == null)
+				new ClassDialog(surface.getView(), clickPoint); 
+		}
+		else if (toolBar.getNewInterface().isSelected()) {
+			if (surface.getCurrentItemDraw() == null)
+				new InterfaceDialog(surface.getView(), surface.getStartDrag());
+		}
+		
+		else if (toolBar.getNewOperation().isSelected()) {
+			
+		}
+		else if (toolBar.getNewAttribute().isSelected()) {
+			
+		}
+		
+		surface.getView().getController().getumlModel().setNeedSave(true);
 	}
 	
 	public void mouseDragged(MouseEvent e) {
@@ -84,7 +110,7 @@ public class MouseEventHandler extends MouseAdapter {
 		int x = e.getX();
 		int y = e.getY();
 		
-		if (getRectangle(x, y) != null)
+		if (getItemDraw(x, y) != null)
 			surface.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		else
 			surface.setCursor(Cursor.getDefaultCursor());
@@ -105,13 +131,20 @@ public class MouseEventHandler extends MouseAdapter {
         yItem = yItem + y2 - y1;
         surface.setStartDrag(new Point(x2, y2));
 		item.setLocation(xItem, yItem);
+		
+		for (LineDraw line : surface.getLineDraw())
+			line.setLocation(item, xItem, yItem);
+		
 		surface.paintItem(null);
 	}
 	
-	public Rectangle getRectangle(int x, int y) {
+	/*
+	 * Récupère l'objet aux coordonnées x, y
+	 */
+	public ItemDraw getItemDraw(int x, int y) {
 		for (ItemDraw itemDraw : surface.getItemDraw())
 			if (itemDraw.getMainFrame().contains(x, y))
-				return itemDraw.getMainFrame();
+				return itemDraw;
 		return null;
 	}
 

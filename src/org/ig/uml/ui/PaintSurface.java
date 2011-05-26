@@ -47,7 +47,7 @@ public class PaintSurface extends JComponent {
 		if (item != null)
 			itemDraw.add(new ItemDraw(item, new Rectangle(item
 					.getPositionOnSurface().x, item.getPositionOnSurface().y,
-					100, 100)));
+					120, 120)));
 		repaint();
 	}
 	
@@ -58,6 +58,7 @@ public class PaintSurface extends JComponent {
 		if (item1 != null && item2 != null)
 			lineDraw.add(new LineDraw(item1, item2));
 		
+		//view.getController().notifyDrawLink(link, item)
 		repaint();
 	}
 
@@ -105,6 +106,7 @@ public class PaintSurface extends JComponent {
 		}
 		
 		for (LineDraw line : lineDraw) {
+			System.out.println("TRACE LIGNE");
 			g2d.setPaint(Color.BLACK);
 			g2d.draw(line.getLine());
 		}
@@ -141,6 +143,10 @@ public class PaintSurface extends JComponent {
 	public List<ItemDraw> getItemDraw() {
 		return itemDraw;
 	}
+	
+	public List<LineDraw> getLineDraw() {
+		return lineDraw;
+	}
 
 	public void setCurrentItemDraw(ItemDraw itemDraw) {
 		this.currentItemDraw = itemDraw;
@@ -153,7 +159,7 @@ public class PaintSurface extends JComponent {
 	public void drawItems(DrawItemsEvent drawItemsEvent) {
 		itemDraw.clear();
 		for (Item item : drawItemsEvent.getItems()) {
-			// association de l'item en rectangle créé
+			// association de l'item au rectangle créé
 			itemDraw.add(new ItemDraw(item, new Rectangle(item
 					.getPositionOnSurface().x, item.getPositionOnSurface().y,
 					100, 100)));

@@ -41,9 +41,21 @@ public class MouseEventHandler extends MouseAdapter {
 		 */
 		if (toolBar.getNewAssociation().isSelected()) {
 			ItemDraw current = surface.getCurrentItemDraw();
-			if (current != null) {
-				if (!selected.equals(current))
-					surface.paintLine(current, selected);
+			
+			if (current != null && selected != null) {
+				if (!selected.equals(current)) {
+					boolean flag = true;
+					for (LineDraw line : surface.getLineDraw()) {
+						if ((line.getFirstItem().equals(current) && 
+								line.getSecondItem().equals(selected)) ||
+								(line.getFirstItem().equals(selected) &&
+								line.getSecondItem().equals(current)))
+							flag = false;
+					}
+							
+					if (flag)
+						surface.paintLine(current, selected);
+				}
 			}
 		}
 		else if (toolBar.getNewAggregation().isSelected()) {
@@ -114,9 +126,16 @@ public class MouseEventHandler extends MouseAdapter {
         yItem = yItem + y2 - y1;
         surface.setStartDrag(new Point(x2, y2));
 		item.setLocation(xItem, yItem);
+		
+		for (LineDraw line : surface.getLineDraw())
+			line.setLocation(item, xItem, yItem);
+		
 		surface.paintItem(null);
 	}
 	
+	/*
+	 * Récupère l'objet aux coordonnées x, y
+	 */
 	public ItemDraw getItemDraw(int x, int y) {
 		for (ItemDraw itemDraw : surface.getItemDraw())
 			if (itemDraw.getMainFrame().contains(x, y))

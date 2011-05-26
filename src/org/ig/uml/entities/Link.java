@@ -29,5 +29,4 @@ public class Link {
 	public Item getItem() {
 		return item;
 	}
-
 }

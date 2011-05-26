@@ -58,7 +58,6 @@ public class PaintSurface extends JComponent {
 		if (item1 != null && item2 != null)
 			lineDraw.add(new LineDraw(item1, item2));
 		
-		//view.getController().notifyDrawLink(link, item)
 		repaint();
 	}
 

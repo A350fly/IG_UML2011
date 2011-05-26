@@ -7,6 +7,8 @@ import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import org.ig.uml.entities.Link;
+import org.ig.uml.entities.LinkType;
 import org.ig.uml.ui.notifications.ClassDialog;
 import org.ig.uml.ui.notifications.InterfaceDialog;
 
@@ -50,11 +52,14 @@ public class MouseEventHandler extends MouseAdapter {
 								line.getSecondItem().equals(selected)) ||
 								(line.getFirstItem().equals(selected) &&
 								line.getSecondItem().equals(current)))
-							flag = false;
+							flag = false;	// beurk
 					}
 							
-					if (flag)
+					if (flag) {
+						Link link = new Link(LinkType.ASSOCIATION, current.getItem());
 						surface.paintLine(current, selected);
+						surface.getView().getController().notifyDrawLink(link, selected.getItem());
+					}
 				}
 			}
 		}

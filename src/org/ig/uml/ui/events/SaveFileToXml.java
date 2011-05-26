@@ -6,22 +6,22 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 
+import org.ig.uml.UmlConstants;
 import org.ig.uml.ui.SwingUmlView;
 
-public class SaveFileToXml implements ActionListener {
+public class SaveFileToXml implements ActionListener, UmlConstants {
 	
 	private SwingUmlView view;
-	private File file;
 	private JFileChooser fileChooser;
 	
 	public SaveFileToXml(SwingUmlView view) {
 		this.view = view;
 		if(view.getController().getumlModel().isNeedFilePathToSave()) {
 			fileChooser = new JFileChooser();
-			fileChooser.setApproveButtonText("Choisir un dossier");
+			fileChooser.setApproveButtonText(CHOOSE_FOLDER);
 			int state = fileChooser.showOpenDialog(view.getJframe());
 			if (state == JFileChooser.APPROVE_OPTION) {
-				file = fileChooser.getSelectedFile();
+				File file = fileChooser.getSelectedFile();
 				view.getController().notifySaveToXml(file);
 			}
 		} else {

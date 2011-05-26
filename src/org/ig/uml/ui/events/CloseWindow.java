@@ -36,19 +36,8 @@ public class CloseWindow implements WindowListener, UmlConstants {
 		    case -1:
 //		      System.out.println("You killed my die-alog - it died");
 		    case 0:  // save and quit	
-		    	if(view.getController().getumlModel().isNeedFilePathToSave()){
-			    	File file;
-					JFileChooser fileChooser = new JFileChooser();
-					fileChooser.setApproveButtonText(CHOOSE_FOLDER);
-					int state = fileChooser.showOpenDialog(view.getJframe());
-					if (state == JFileChooser.APPROVE_OPTION) {
-						file = fileChooser.getSelectedFile();
-						view.getController().notifySaveToXml(file);
-					}
-				} else {
-						view.getController().notifySaveToXml();
-				}
 		    case 1:  // just quit
+		    	new SaveFileToXml(view);
 		    	System.exit(0);
 		    	break;
 		    case 2:  // cancel

@@ -74,4 +74,8 @@ public class UmlController {
 	public void notifySaveToXml() {
 		umlModel.saveToXml();
 	}
+
+	public void notifyNewDraw() {
+		umlModel.newDraw();
+	}
 }

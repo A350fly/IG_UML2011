@@ -166,10 +166,10 @@ public class UmlModel implements UmlConstants {
 			HashSet<Item> items = (HashSet<Item>) XmlTools.decodeFromFile(file);
 			fileToSave = file;
 			componentManager.setItems(items);
-			fireDrawItems(componentManager.getItems());
-			fireSetFrameTitle();
 			needSave = false;
 			needFilePathToSave = false;
+			fireDrawItems(componentManager.getItems());
+			fireSetFrameTitle();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -184,8 +184,13 @@ public class UmlModel implements UmlConstants {
 	}
 	
 	private String getTitle() {
-		String finalTitle = fileToSave.getName() + " (" + fileToSave.getAbsolutePath() + ")" 
-		+ " - "+ TITLE;
+		String finalTitle = "";
+		if(!needFilePathToSave) {
+			finalTitle = fileToSave.getName() + " (" + fileToSave.getAbsolutePath() + ")" 
+			+ " - "+ TITLE;
+		} else {
+			finalTitle = UNSAVED_FILE + " - "+ TITLE;
+		}
 		return finalTitle;
 	}
 
@@ -223,6 +228,16 @@ public class UmlModel implements UmlConstants {
 
 	public void setFileToSave(File fileToSave) {
 		this.fileToSave = fileToSave;
+	}
+
+	public void newDraw() {
+		HashSet<Item> items = new HashSet<Item>(); 
+		componentManager.setItems(items);
+		needSave = false;
+		needFilePathToSave = true;
+		fileToSave = null;
+		fireSetFrameTitle();
+		fireDrawItems(componentManager.getItems());
 	}
 
 }

@@ -52,6 +52,9 @@ public interface UmlConstants {
 	public static final String WARNING_KEY = "warning";
 	public static final String EXPORT_IMAGE_KEY = "export_image";
 	public static final String UNSAVED_FILE_KEY = "unsaved_file";
+	public static final String SAVE_NEW_KEY = "save_new";
+	public static final String NO_SAVE_NEW_KEY = "no_save_new";
+	public static final String UNSAVED_CHANGE_NEW_KEY = "unsaved_change_new";
 	
 	
 	public static Locale currentLocale = new Locale(LOCALE);
@@ -102,6 +105,9 @@ public interface UmlConstants {
 	public static final String WARNING = rs.getString(WARNING_KEY);
 	public static final String EXPORT_IMAGE = rs.getString(EXPORT_IMAGE_KEY);
 	public static final String UNSAVED_FILE = rs.getString(UNSAVED_FILE_KEY);
+	public static final String SAVE_NEW = rs.getString(SAVE_NEW_KEY);
+	public static final String NO_SAVE_NEW = rs.getString(NO_SAVE_NEW_KEY);
+	public static final String UNSAVED_CHANGE_NEW = rs.getString(UNSAVED_CHANGE_NEW_KEY);
 	
 	public static final int WIDTH_FRAME = 500;
 	public static final int HEIGHT_FRAME = 500;

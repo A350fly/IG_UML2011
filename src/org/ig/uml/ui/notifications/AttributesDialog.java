@@ -19,32 +19,32 @@ import javax.swing.JScrollPane;
 
 import org.ig.uml.ui.SwingUmlView;
 
-public class MethodDialog extends JDialog implements ActionListener {
+public class AttributesDialog extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 4913896455890642934L;
 
 	private JPanel mainPanel;
 	private JPanel buttonsPanel;
-	private JPanel methods;
+	private JPanel attributes;
 	private JScrollPane methodsPanel;
-	private JButton addMethod;
+	private JButton addAttribute;
 	private JButton validate;
-	private List<MethodBox> methodBoxList;
+	private List<AttributesBox> attributesBoxList;
 	private Box mainBox;
 	
 	private SwingUmlView view;
 	
-	public MethodDialog(SwingUmlView view) {
+	public AttributesDialog(SwingUmlView view) {
 		mainPanel = new JPanel(new BorderLayout());
 		buttonsPanel = new JPanel(new BorderLayout());
-		methods = new JPanel(new GridLayout());
-		methodBoxList = new ArrayList<MethodBox>();
-		addMethod = new JButton("Ajouter méthode");
+		attributes = new JPanel(new GridLayout());
+		attributesBoxList = new ArrayList<AttributesBox>();
+		addAttribute = new JButton("Ajouter attribut");
 		validate = new JButton("Valider");
 		this.view = view;
 		
-		addMethod.setActionCommand("AddMethod");
-		addMethod.addActionListener(this);
+		addAttribute.setActionCommand("AddAttributes");
+		addAttribute.addActionListener(this);
 		validate.setActionCommand("Validate");
 		validate.addActionListener(this);
 		 
@@ -70,7 +70,7 @@ public class MethodDialog extends JDialog implements ActionListener {
 		JLabel label = new JLabel("<html><h3>Définition des méthodes de classe</h3></html>",
 				JLabel.CENTER);
 		
-		methodsPanel = new JScrollPane(methods,
+		methodsPanel = new JScrollPane(attributes,
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		methodsPanel.getVerticalScrollBar().setUnitIncrement(20);
@@ -78,16 +78,16 @@ public class MethodDialog extends JDialog implements ActionListener {
 		mainBox = Box.createVerticalBox();
 		mainBox.add(Box.createVerticalStrut(10));
 		
-		MethodBox box = new MethodBox("Méthode 1 :", view);
+		AttributesBox box = new AttributesBox("Attribut 1 :", view);
 		mainBox.add(box.getBox());
-		methodBoxList.add(box);
+		attributesBoxList.add(box);
 		
-		methods.add(mainBox);
+		attributes.add(mainBox);
 		mainBox.add(Box.createVerticalStrut(10));
 		
-		Box buttonsBox = Box.createVerticalBox();
+		Box buttonsBox = Box.createHorizontalBox();
 		Box hbox = Box.createHorizontalBox();
-		hbox.add(addMethod, Box.CENTER_ALIGNMENT);
+		hbox.add(addAttribute, Box.CENTER_ALIGNMENT);
 		hbox.add(Box.createHorizontalStrut(10));
 		hbox.add(validate, Box.CENTER_ALIGNMENT);
 		buttonsBox.add(Box.createVerticalStrut(10));
@@ -101,12 +101,12 @@ public class MethodDialog extends JDialog implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand() == "AddMethod") {
-			int num = methodBoxList.size()+1;	// numéro de la méthode
-			MethodBox box = new MethodBox("Méthode "+num+" :", view);
+		if (e.getActionCommand() == "AddAttributes") {
+			int num = attributesBoxList.size()+1;	// numéro de l'attribut
+			AttributesBox box = new AttributesBox("Attribut "+num+" :", view);
 			mainBox.add(box.getBox());
 			mainBox.add(Box.createVerticalStrut(10));
-			methodBoxList.add(box);
+			attributesBoxList.add(box);
 			
 			this.setSize(getWidth(), getHeight()+25);
 			mainPanel.validate();
@@ -117,7 +117,7 @@ public class MethodDialog extends JDialog implements ActionListener {
 		}
 	}
 	
-	public List<MethodBox> getMethodBoxList() {
-		return methodBoxList;
+	public List<AttributesBox> getAttributesBoxList() {
+		return attributesBoxList;
 	}
 }

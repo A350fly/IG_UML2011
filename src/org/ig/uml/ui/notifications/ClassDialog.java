@@ -34,13 +34,15 @@ public class ClassDialog extends JDialog implements ActionListener {
 	private Box methodsInformationBox;
 
 	private SwingUmlView view;
-	private Point point;			// coordonnées du clique ayant amené au Jdialog
-	private MethodDialog methods;	// permet de récupérer la liste des méthodes de classe
+	private Point point;					// coordonnées du clique ayant amené au Jdialog
+	private MethodDialog methods;			// permet de récupérer la liste des méthodes de classe
+	private AttributesDialog attributes; 	//permet de récupérer la liste des attributs de classe
 
 	public ClassDialog(SwingUmlView view, Point point) {
 		this.view = view;
 		this.point = point;
 		methods = null;
+		attributes = null;
 		informationsPanel = new JPanel(new BorderLayout());
 		methodsInformationBox = Box.createVerticalBox();
 		
@@ -178,7 +180,8 @@ public class ClassDialog extends JDialog implements ActionListener {
 			informationsPanel.validate();
 			informationsPanel.repaint();
 		}
-		else if (e.getActionCommand() == "AddAttributes")
-			return;
+		else if (e.getActionCommand() == "AddAttributes") {
+			attributes = new AttributesDialog(view);
+		}
 	}
 }

@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.swing.JComponent;
 
+import org.ig.uml.entities.Attribute;
 import org.ig.uml.entities.Item;
 import org.ig.uml.events.DrawItemsEvent;
 import org.ig.uml.entities.Method;
@@ -75,10 +76,16 @@ public class PaintSurface extends JComponent {
 			g2d.drawString(draw.getItem().getName(), sx, sy);
 			
 			for (Method set : draw.getItem().getMethods()) {
-				String m = set.getName()+" : ";
+				String m = set.getName();
 				System.out.println(m);
-				//g2d.drawString(draw.getItem().getName(), sx, sy);
+				//g2d.drawString(m, sx, sy);
 			}
+			
+			/*for (Attribute set : draw.getItem().getAttributes()) {
+				String a = set.getName()+" : ";
+				System.out.println(m);
+				g2d.drawString(a, sx, sy);
+			}*/
 		}
 	}
 

@@ -8,10 +8,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.ig.uml.UmlView;
+import org.ig.uml.entities.Attribute;
 import org.ig.uml.entities.Classe;
-import org.ig.uml.entities.Item;
 import org.ig.uml.entities.Method;
 import org.ig.uml.ui.SwingUmlView;
+import org.ig.uml.ui.notifications.AttributesBox;
+import org.ig.uml.ui.notifications.AttributesDialog;
 import org.ig.uml.ui.notifications.ClassDialog;
 import org.ig.uml.ui.notifications.MethodBox;
 import org.ig.uml.ui.notifications.MethodDialog;
@@ -38,22 +40,14 @@ public class DrawClass implements ActionListener, ItemListener {
 			classe.setFinal(isFinal);
 			classe.setAbstract(isAbstract);
 			
-			MethodDialog methods = dialog.getMethods();
-			if (methods != null) {
-				Set<Method> set = new HashSet<Method>();	// méthodes "valides"
-				
-				for (MethodBox box : methods.getMethodBoxList()) {
-					String mName = box.getNameField().getText();
-					
-					if (mName.equals(""))
-						continue;
-					
-					String ret = box.getReturnType().getSelectedItem().toString();
-					set.add(new Method(mName, new Classe(ret)));
-				}
-				
-				classe.setMethods(set);
-			}
+			Set<Attribute> a = makeAttributesList();
+			Set<Method> m = makeMethodList();
+			
+			if (m != null)
+				classe.setMethods(m);
+			
+			if (a != null)
+				classe.setAttributes(a);
 			
 			view.getController().notifyDrawItem(classe);
 			dialog.dispose();
@@ -75,5 +69,43 @@ public class DrawClass implements ActionListener, ItemListener {
 			else if (source.equals(dialog.getIsFinal()))
 				isFinal = false;
 		}
+	}
+	
+	private Set<Method> makeMethodList() {
+		MethodDialog methods = dialog.getMethods();
+		Set<Method> set = new HashSet<Method>();	// méthodes "valides"
+		if (methods != null) {
+			
+			for (MethodBox box : methods.getMethodBoxList()) {
+				String mName = box.getNameField().getText();
+				
+				if (mName.equals(""))
+					continue;
+				
+				String ret = box.getReturnType().getSelectedItem().toString();
+				set.add(new Method(mName, new Classe(ret)));
+			}
+		}
+		
+		return set;
+	}
+	
+	private Set<Attribute> makeAttributesList() {
+		AttributesDialog attributes = dialog.getAttributes();
+		Set<Attribute> set = new HashSet<Attribute>();	// attributs "valides"
+		if (attributes != null) {
+			
+			for (AttributesBox box : attributes.getAttributesBoxList()) {
+				String aName = box.getNameField().getText();
+				
+				if (aName.equals(""))
+					continue;
+				
+				String type = box.getType().getSelectedItem().toString();
+				set.add(new Attribute(aName, new Classe(type)));
+			}
+		}
+		
+		return set;
 	}
 }

@@ -32,17 +32,21 @@ public class ClassDialog extends JDialog implements ActionListener {
 	private JButton addMethod;
 	private JButton addAttributes;
 	private Box methodsInformationBox;
+	private Box attributesInformationBox;
 
 	private SwingUmlView view;
-	private Point point;			// coordonnées du clique ayant amené au Jdialog
-	private MethodDialog methods;	// permet de récupérer la liste des méthodes de classe
+	private Point point;					// coordonnées du clique ayant amené au Jdialog
+	private MethodDialog methods;			// permet de récupérer la liste des méthodes de classe
+	private AttributesDialog attributes; 	//permet de récupérer la liste des attributs de classe
 
 	public ClassDialog(SwingUmlView view, Point point) {
 		this.view = view;
 		this.point = point;
 		methods = null;
+		attributes = null;
 		informationsPanel = new JPanel(new BorderLayout());
 		methodsInformationBox = Box.createVerticalBox();
+		attributesInformationBox = Box.createVerticalBox();
 		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setResizable(true);
@@ -154,6 +158,10 @@ public class ClassDialog extends JDialog implements ActionListener {
 	public MethodDialog getMethods() {
 		return methods;
 	}
+	
+	public AttributesDialog getAttributes() {
+		return attributes;
+	}
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand() == "AddMethods") {
@@ -178,7 +186,25 @@ public class ClassDialog extends JDialog implements ActionListener {
 			informationsPanel.validate();
 			informationsPanel.repaint();
 		}
-		else if (e.getActionCommand() == "AddAttributes")
-			return;
+		else if (e.getActionCommand() == "AddAttributes") {
+			attributes = new AttributesDialog(view);
+			
+			for (AttributesBox set : attributes.getAttributesBoxList()) {
+				if (set.getNameField().getText().equals(""))
+					continue;
+				
+				Box hbox = Box.createHorizontalBox();
+				String r = set.getType().getSelectedItem().toString();
+				String m = set.getVisibilitiy().getSelectedItem().toString()+" "+r+" "+
+				set.getNameField().getText()+";";
+				
+				hbox.add(new JLabel(m), BorderLayout.SOUTH);
+				attributesInformationBox.add(hbox);
+			}
+			
+			this.setSize(getWidth(), getHeight()+25);
+			informationsPanel.validate();
+			informationsPanel.repaint();
+		}
 	}
 }

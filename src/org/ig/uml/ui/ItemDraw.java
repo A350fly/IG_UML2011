@@ -3,7 +3,6 @@ package org.ig.uml.ui;
 import java.awt.Point;
 import java.awt.Rectangle;
 
-import org.ig.uml.entities.Classe;
 import org.ig.uml.entities.Item;
 
 public class ItemDraw {
@@ -18,10 +17,6 @@ public class ItemDraw {
 		int width = rectangle.width;
 		int x = rectangle.x;
 		int y = rectangle.y;
-		
-		if (item instanceof Classe) {
-			System.out.println("C'est une classe !");
-		}
 		
 		this.item = item;
 		mainFrame = rectangle;

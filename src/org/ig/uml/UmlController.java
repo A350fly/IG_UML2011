@@ -1,6 +1,7 @@
 package org.ig.uml;
 
 import java.io.File;
+import java.util.Set;
 
 import org.ig.uml.entities.Attribute;
 import org.ig.uml.entities.Classe;
@@ -73,5 +74,9 @@ public class UmlController {
 
 	public void notifySaveToXml() {
 		umlModel.saveToXml();
+	}
+	
+	public Set<Item> notifyGetItems() {
+		return umlModel.getComponentManager().getItems();
 	}
 }

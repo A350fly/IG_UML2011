@@ -1,4 +1,5 @@
 package org.ig.uml.entities;
+
 import java.util.HashSet;
 import java.util.Set;
 

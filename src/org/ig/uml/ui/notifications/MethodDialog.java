@@ -3,6 +3,7 @@ package org.ig.uml.ui.notifications;
 import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.awt.GridLayout;
+
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import org.ig.uml.ui.SwingUmlView;
 
@@ -21,25 +23,36 @@ public class MethodDialog extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 4913896455890642934L;
 
-	private JPanel panel;
-	private GridLayout layout;
+	private JPanel mainPanel;
+	private JPanel buttonsPanel;
+	private JPanel methods;
+	private JScrollPane methodsPanel;
 	private JButton addMethod;
-	private JButton addParameter;
+	private JButton validate;
 	private List<MethodBox> methodBoxList;
+	private Box mainBox;
 	
 	private SwingUmlView view;
 	
 	public MethodDialog(SwingUmlView view) {
-		layout = new GridLayout();
-		panel = new JPanel();
+		mainPanel = new JPanel(new BorderLayout());
+		buttonsPanel = new JPanel(new BorderLayout());
+		methods = new JPanel(new GridLayout());
 		methodBoxList = new ArrayList<MethodBox>();
+		addMethod = new JButton("Ajouter méthode");
+		validate = new JButton("Valider");
 		this.view = view;
-
+		
+		addMethod.setActionCommand("AddMethod");
+		addMethod.addActionListener(this);
+		validate.setActionCommand("Validate");
+		validate.addActionListener(this);
+		 
 		buildComponents();
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setResizable(false);
+		setResizable(true);
 		setTitle("Méthodes");
-		setLayout(layout);
+		setContentPane(mainPanel);
 		setModal(true);
 		pack();
 		setDialogLocation(view.getJframe());
@@ -54,22 +67,53 @@ public class MethodDialog extends JDialog implements ActionListener {
 	}
 	
 	public void buildComponents() {
-		add(new JLabel("<html><h3>Définition des méthodes de classe</h3></html>",
-				JLabel.CENTER), BorderLayout.NORTH);
+		JLabel label = new JLabel("<html><h3>Définition des méthodes de classe</h3></html>",
+				JLabel.CENTER);
 		
-		MethodBox method = new MethodBox("Méthode 1 :");
-		methodBoxList.add(method);
+		methodsPanel = new JScrollPane(methods,
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		methodsPanel.getVerticalScrollBar().setUnitIncrement(20);
+
+		mainBox = Box.createVerticalBox();
+		mainBox.add(Box.createVerticalStrut(10));
 		
-		layout.addLayoutComponent("methode", method.getBox());
-	}
-	
-	public Box addParameterBox() {
-		Box box = Box.createHorizontalBox();
+		MethodBox box = new MethodBox("Méthode 1 :", view);
+		mainBox.add(box.getBox());
+		methodBoxList.add(box);
 		
-		return null;
+		methods.add(mainBox);
+		mainBox.add(Box.createVerticalStrut(10));
+		
+		Box buttonsBox = Box.createHorizontalBox();
+		buttonsBox.add(addMethod, Box.CENTER_ALIGNMENT);
+		buttonsBox.add(Box.createHorizontalStrut(10));
+		buttonsBox.add(validate, Box.CENTER_ALIGNMENT);
+		buttonsPanel.add(buttonsBox, BorderLayout.CENTER);
+		
+		mainPanel.add(label, BorderLayout.NORTH);
+        mainPanel.add(methodsPanel, BorderLayout.CENTER);
+        mainPanel.add(buttonsPanel, BorderLayout.SOUTH);
 	}
 
 	public void actionPerformed(ActionEvent e) {
-
+		if (e.getActionCommand() == "AddMethod") {
+			int num = methodBoxList.size()+1;	// numéro de la méthode
+			MethodBox box = new MethodBox("Méthode "+num+" :", view);
+			mainBox.add(box.getBox());
+			mainBox.add(Box.createVerticalStrut(10));
+			methodBoxList.add(box);
+			
+			this.setSize(getWidth(), getHeight()+25);
+			mainPanel.validate();
+			mainPanel.repaint();
+		}
+		else if (e.getActionCommand() == "Validate") {
+			this.dispose();
+		}
+	}
+	
+	public List<MethodBox> getMethodBoxList() {
+		return methodBoxList;
 	}
 }

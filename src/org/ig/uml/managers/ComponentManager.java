@@ -1,7 +1,6 @@
 package org.ig.uml.managers;
 
 import java.util.HashSet;
-import java.util.Set;
 
 import org.ig.uml.UmlModel;
 import org.ig.uml.entities.Attribute;
@@ -18,11 +17,28 @@ public class ComponentManager {
 	public ComponentManager() {
 		this.model = null;
 		items = new HashSet<Item>();
+		
+		// Types primitifs
+		// TODO : Créer une classe Primitives représentant les types primitifs
+		items.add(new Classe("int"));
+		items.add(new Classe("float"));
+		items.add(new Classe("long"));
+		items.add(new Classe("boolean"));
+		items.add(new Classe("String"));
 	}
 	
 	public ComponentManager(UmlModel model) {
 		this.model = model;
 		items = new HashSet<Item>();
+		
+		// Types primitifs
+		// TODO : Créer une classe Primitives représentant les types primitifs
+		items.add(new Classe("int"));
+		items.add(new Classe("float"));
+		items.add(new Classe("long"));
+		items.add(new Classe("boolean"));
+		items.add(new Classe("String"));
+		items.add(new Classe("void"));
 	}
 
 	public void addItem(Item item) {

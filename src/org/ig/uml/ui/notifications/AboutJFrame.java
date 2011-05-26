@@ -74,9 +74,7 @@ public class AboutJFrame extends JFrame implements ActionListener, UmlConstants 
 		return panel;
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent e) {
 		this.dispose();
 	}
-	
 }

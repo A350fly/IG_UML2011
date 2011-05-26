@@ -1,7 +1,6 @@
 package org.ig.uml.ui;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -16,6 +15,7 @@ import javax.swing.JComponent;
 
 import org.ig.uml.entities.Item;
 import org.ig.uml.events.DrawItemsEvent;
+import org.ig.uml.entities.Method;
 
 public class PaintSurface extends JComponent {
 	private static final long serialVersionUID = 3224506743591509786L;
@@ -73,6 +73,12 @@ public class PaintSurface extends JComponent {
 			g2d.draw(atributs);
 			g2d.draw(methods);
 			g2d.drawString(draw.getItem().getName(), sx, sy);
+			
+			for (Method set : draw.getItem().getMethods()) {
+				String m = set.getName()+" : ";
+				System.out.println(m);
+				//g2d.drawString(draw.getItem().getName(), sx, sy);
+			}
 		}
 	}
 

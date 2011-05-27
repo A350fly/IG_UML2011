@@ -233,13 +233,13 @@ public class MouseEventHandler extends MouseAdapter {
 		int new_y = rect.y;
 
 		if ((rect.x + rect.width) > paintZone.getWidth())
-			new_x = (int)paintZone.getWidth()-119;
+			new_x = (int)paintZone.getWidth()-(rect.width-1);
 		
 		if (rect.x < 0)
 			new_x = -1;
 		
 		if ((rect.y + rect.height) > paintZone.getHeight())
-			new_y = (int)paintZone.getHeight()-119;
+			new_y = (int)paintZone.getHeight()-(rect.height-1);
 		
 		if (rect.y < 0)
 			new_y = -1;

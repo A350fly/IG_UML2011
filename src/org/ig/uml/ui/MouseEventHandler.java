@@ -30,7 +30,7 @@ public class MouseEventHandler extends MouseAdapter {
 
 	public MouseEventHandler(PaintSurface surface) {
 		this.surface = surface;
-		Dimension dim = surface.getSize();
+		Dimension dim = new Dimension(700,700);	// TODO : devrait dépendre de la taille de la surface
 		paintZone = new Rectangle(dim);
 	}
 	
@@ -49,7 +49,7 @@ public class MouseEventHandler extends MouseAdapter {
 			if (checkLinkableItems(current, selected)) {
 				Link link = new Link(LinkType.ASSOCIATION, current.getItem());
 				
-				surface.paintLine(current, selected, null, null);
+				surface.paintLine(current, selected, null, null, false);
 				surface.getView().getController().notifyDrawLink(link, selected.getItem());
 			}
 		}
@@ -59,7 +59,7 @@ public class MouseEventHandler extends MouseAdapter {
 				Polygon triangle =
 					new Polygon(new int[] {-15,0,-15,-5,-15}, new int[] {-5,0,5,0,-5}, 5);
 				
-				surface.paintLine(current, selected, triangle, null);
+				surface.paintLine(current, selected, triangle, null, false);
 				surface.getView().getController().notifyDrawLink(link, selected.getItem());
 			}
 		}
@@ -69,7 +69,7 @@ public class MouseEventHandler extends MouseAdapter {
 				Polygon losange =
 					new Polygon(new int[] {-7,-15,-7,0}, new int[] {-5,0,5,0}, 4);
 				
-				surface.paintLine(current, selected, losange, null);
+				surface.paintLine(current, selected, losange, null, false);
 				surface.getView().getController().notifyDrawLink(link, selected.getItem());
 			}
 		}
@@ -79,7 +79,7 @@ public class MouseEventHandler extends MouseAdapter {
 				Polygon losange =
 					new Polygon(new int[] {-7,-15,-7,0}, new int[] {-5,0,5,0}, 4);
 				
-				surface.paintLine(current, selected, losange, null);
+				surface.paintLine(current, selected, losange, null, true);
 				surface.getView().getController().notifyDrawLink(link, selected.getItem());
 			}
 		}
@@ -91,7 +91,7 @@ public class MouseEventHandler extends MouseAdapter {
 				BasicStroke stroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT,
                         BasicStroke.JOIN_MITER, 10.0f, DASH, 0.0f);
 
-				surface.paintLine(current, selected, triangle, stroke);
+				surface.paintLine(current, selected, triangle, stroke, false);
 				surface.getView().getController().notifyDrawLink(link, selected.getItem());
 			}
 		}
@@ -100,7 +100,7 @@ public class MouseEventHandler extends MouseAdapter {
 				Link link = new Link(LinkType.GENERALIZATION, current.getItem());
 				Polygon triangle = new Polygon(new int[] {0,0,10}, new int[] {-5,5,0}, 3);
 				
-				surface.paintLine(current, selected, triangle, null);
+				surface.paintLine(current, selected, triangle, null, false);
 				surface.getView().getController().notifyDrawLink(link, selected.getItem());
 			}
 		}
@@ -111,7 +111,7 @@ public class MouseEventHandler extends MouseAdapter {
 				BasicStroke stroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT,
                         BasicStroke.JOIN_MITER, 10.0f, DASH, 0.0f);
 				
-				surface.paintLine(current, selected, triangle, stroke);
+				surface.paintLine(current, selected, triangle, stroke, false);
 				surface.getView().getController().notifyDrawLink(link, selected.getItem());
 			}
 		}
@@ -191,6 +191,7 @@ public class MouseEventHandler extends MouseAdapter {
 		for (LineDraw line : surface.getLineDraw())
 			line.setLocation(item, xItem, yItem);
 		
+		checkPanelLimit();
 		surface.paintItem(null);
 	}
 	
@@ -232,13 +233,13 @@ public class MouseEventHandler extends MouseAdapter {
 		int new_y = rect.y;
 
 		if ((rect.x + rect.width) > paintZone.getWidth())
-			new_x = (int)paintZone.getWidth()-99;
+			new_x = (int)paintZone.getWidth()-119;
 		
 		if (rect.x < 0)
 			new_x = -1;
 		
 		if ((rect.y + rect.height) > paintZone.getHeight())
-			new_y = (int)paintZone.getHeight()-49;
+			new_y = (int)paintZone.getHeight()-119;
 		
 		if (rect.y < 0)
 			new_y = -1;

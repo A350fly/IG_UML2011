@@ -58,9 +58,9 @@ public class PaintSurface extends JComponent {
 	 * Dessine la ligne reliant deux objets de forme définie par
 	 * polygone (flèche...) et stroke (pointillé...)
 	 */
-	public void paintLine(ItemDraw item1, ItemDraw item2, Polygon p, Stroke s) {
+	public void paintLine(ItemDraw item1, ItemDraw item2, Polygon p, Stroke s, boolean f) {
 		if (item1 != null && item2 != null)
-			lineDraw.add(new LineDraw(item1, item2, p, s));
+			lineDraw.add(new LineDraw(item1, item2, p, s, f));
 		
 		repaint();
 	}
@@ -113,8 +113,12 @@ public class PaintSurface extends JComponent {
 			g2d.setPaint(Color.BLACK);
 			g2d.setStroke(line.getStroke());
 			g2d.draw(line.getLine());
-			if (line.getPolygon() != null)
-				g2d.fill(line.createArrow());
+			if (line.getPolygon() != null) {
+				if (line.isFilled())
+					g2d.fill(line.createArrow());
+				else
+					g2d.draw(line.createArrow());
+			}
 		}
 	}
 	

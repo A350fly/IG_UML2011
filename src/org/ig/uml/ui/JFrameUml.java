@@ -57,6 +57,10 @@ public class JFrameUml extends JFrame implements UmlConstants {
 		pack();
 	}
 
+	public JScrollPane getPaintSurfaceScrollPane() {
+		return paintSurfaceScrollPane;
+	}
+
 	public void setView(SwingUmlView view) {
 		this.view = view;
 	}

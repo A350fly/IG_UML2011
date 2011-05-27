@@ -14,6 +14,7 @@ public class LineDraw {
 	private Line2D line;
 	private int x1, x2, y1, y2;
 	private Stroke stroke;
+	private boolean isFilled;		// indique si la forme doit être rempli
 	
 	// Transformations pour le rendu des flèches
 	private AffineTransform affineTransform ;
@@ -21,7 +22,7 @@ public class LineDraw {
 	private Shape arrow;
 	private double theta;
 	
-	public LineDraw(ItemDraw firstItem, ItemDraw secondItem, Polygon p, Stroke s) {
+	public LineDraw(ItemDraw firstItem, ItemDraw secondItem, Polygon p, Stroke s, boolean f) {
 		this.firstItem = firstItem;
 		this.secondItem = secondItem;
 		
@@ -38,6 +39,8 @@ public class LineDraw {
 		else
 			stroke = s;
 		
+		isFilled = f;
+		
 		if (polygon != null) {
 			affineTransform = new AffineTransform();
 			theta = Math.atan(y2 - y1) / (x2 - x1);
@@ -45,6 +48,10 @@ public class LineDraw {
 			arrow = affineTransform.createTransformedShape(polygon);
 			affineTransform.setToTranslation(x2, y2);
 		}
+	}
+
+	public boolean isFilled() {
+		return isFilled;
 	}
 
 	public Line2D getLine() {

@@ -1,8 +1,10 @@
 package org.ig.uml.ui;
 
+import java.awt.BasicStroke;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -15,6 +17,7 @@ import org.ig.uml.ui.notifications.InterfaceDialog;
 public class MouseEventHandler extends MouseAdapter {
 
 	private static final long serialVersionUID = -5433034343223349595L;
+	private static final float DASH[] = {5.0f};
 	
 	private PaintSurface surface;
 	private int xItem;
@@ -45,49 +48,70 @@ public class MouseEventHandler extends MouseAdapter {
 		if (toolBar.getNewAssociation().isSelected()) {
 			if (checkLinkableItems(current, selected)) {
 				Link link = new Link(LinkType.ASSOCIATION, current.getItem());
-				surface.paintLine(current, selected);
+				
+				surface.paintLine(current, selected, null, null);
 				surface.getView().getController().notifyDrawLink(link, selected.getItem());
 			}
 		}
 		else if (toolBar.getNewUniAssociation().isSelected()) {
 			if (checkLinkableItems(current, selected)) {
 				Link link = new Link(LinkType.UNI_ASSOCIATION, current.getItem());
-				surface.paintLine(current, selected);
+				Polygon triangle =
+					new Polygon(new int[] {-15,0,-15,-5,-15}, new int[] {-5,0,5,0,-5}, 5);
+				
+				surface.paintLine(current, selected, triangle, null);
 				surface.getView().getController().notifyDrawLink(link, selected.getItem());
 			}
 		}
 		else if (toolBar.getNewAggregation().isSelected()) {
 			if (checkLinkableItems(current, selected)) {
 				Link link = new Link(LinkType.AGGREGATION, current.getItem());
-				surface.paintLine(current, selected);
+				Polygon losange =
+					new Polygon(new int[] {-7,-15,-7,0}, new int[] {-5,0,5,0}, 4);
+				
+				surface.paintLine(current, selected, losange, null);
 				surface.getView().getController().notifyDrawLink(link, selected.getItem());
 			}
 		}
 		else if (toolBar.getNewComposition().isSelected()) {
 			if (checkLinkableItems(current, selected)) {
 				Link link = new Link(LinkType.COMPOSITION, current.getItem());
-				surface.paintLine(current, selected);
+				Polygon losange =
+					new Polygon(new int[] {-7,-15,-7,0}, new int[] {-5,0,5,0}, 4);
+				
+				surface.paintLine(current, selected, losange, null);
 				surface.getView().getController().notifyDrawLink(link, selected.getItem());
 			}
 		}
 		else if (toolBar.getNewDependency().isSelected()) {
 			if (checkLinkableItems(current, selected)) {
 				Link link = new Link(LinkType.DEPENDENCY, current.getItem());
-				surface.paintLine(current, selected);
+				Polygon triangle =
+					new Polygon(new int[] {-15,0,-15,-5,-15}, new int[] {-5,0,5,0,-5}, 5);
+				BasicStroke stroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT,
+                        BasicStroke.JOIN_MITER, 10.0f, DASH, 0.0f);
+
+				surface.paintLine(current, selected, triangle, stroke);
 				surface.getView().getController().notifyDrawLink(link, selected.getItem());
 			}
 		}
 		else if (toolBar.getNewGeneralization().isSelected()) {
 			if (checkLinkableItems(current, selected)) {
 				Link link = new Link(LinkType.GENERALIZATION, current.getItem());
-				surface.paintLine(current, selected);
+				Polygon triangle = new Polygon(new int[] {0,0,10}, new int[] {-5,5,0}, 3);
+				
+				surface.paintLine(current, selected, triangle, null);
 				surface.getView().getController().notifyDrawLink(link, selected.getItem());
 			}
 		}
 		else if (toolBar.getNewRealization().isSelected()) {
 			if (checkLinkableItems(current, selected)) {
 				Link link = new Link(LinkType.REALIZATION, current.getItem());
-				surface.paintLine(current, selected);
+				Polygon triangle = new Polygon(new int[] {0,0,10}, new int[] {-5,5,0}, 3);
+				BasicStroke stroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT,
+                        BasicStroke.JOIN_MITER, 10.0f, DASH, 0.0f);
+				
+				surface.paintLine(current, selected, triangle, stroke);
 				surface.getView().getController().notifyDrawLink(link, selected.getItem());
 			}
 		}

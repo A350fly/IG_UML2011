@@ -5,8 +5,10 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.Stroke;
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineMetrics;
 import java.util.ArrayList;
@@ -53,11 +55,12 @@ public class PaintSurface extends JComponent {
 	}
 	
 	/*
-	 * Dessine la ligne reliant deux objets
+	 * Dessine la ligne reliant deux objets de forme définie par
+	 * polygone (flèche...) et stroke (pointillé...)
 	 */
-	public void paintLine(ItemDraw item1, ItemDraw item2) {
+	public void paintLine(ItemDraw item1, ItemDraw item2, Polygon p, Stroke s) {
 		if (item1 != null && item2 != null)
-			lineDraw.add(new LineDraw(item1, item2));
+			lineDraw.add(new LineDraw(item1, item2, p, s));
 		
 		repaint();
 	}
@@ -108,8 +111,10 @@ public class PaintSurface extends JComponent {
 		
 		for (LineDraw line : lineDraw) {
 			g2d.setPaint(Color.BLACK);
+			g2d.setStroke(line.getStroke());
 			g2d.draw(line.getLine());
-			g2d.fill(line.createArrow());
+			if (line.getPolygon() != null)
+				g2d.fill(line.createArrow());
 		}
 	}
 	

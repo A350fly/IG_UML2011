@@ -32,7 +32,7 @@ public class ComponentManager {
 		items = new HashSet<Item>();
 		
 		// Types primitifs
-		// TODO : Créer une classe Primitives représentant les types primitifs
+		// TODO : Utiliser classe PrimitiveType
 		items.add(new Classe("int"));
 		items.add(new Classe("float"));
 		items.add(new Classe("long"));
@@ -45,6 +45,11 @@ public class ComponentManager {
 		items.add(item);
 		model.setNeedSave(true);
 		model.fireDrawItem(item);
+	}
+	
+	public void deleteItem(Item item) {
+		items.remove(item);
+		model.setNeedSave(true);
 	}
 
 	public void addLink(Link link, Item item) {

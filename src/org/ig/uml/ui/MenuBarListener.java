@@ -37,7 +37,10 @@ public class MenuBarListener implements ActionListener {
     		(new CloseWindow(view)).manageClosing();
     	}
     	else if (e.getActionCommand().equals(UmlConstants.CUT)) {
-    		
+    		System.out.println("CUT PRESSED");
+    		ItemDraw current = view.getJframe().getPaintSurface().getCurrentItemDraw();
+    		if (current != null)
+    			view.getJframe().getPaintSurface().paintDeletedItem(current);
     	}
     	else if (e.getActionCommand().equals(UmlConstants.COPY)) {
     		

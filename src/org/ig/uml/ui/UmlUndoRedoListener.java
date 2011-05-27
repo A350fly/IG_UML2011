@@ -19,5 +19,6 @@ public class UmlUndoRedoListener implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		manager.addEdit(new UmlUndoableModification(model));
+		//model.
 	}
 }

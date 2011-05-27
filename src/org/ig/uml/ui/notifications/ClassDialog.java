@@ -16,7 +16,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.ig.uml.UmlModel;
+import org.ig.uml.managers.UmlUndoRedoManager;
 import org.ig.uml.ui.SwingUmlView;
+import org.ig.uml.ui.UmlUndoRedoListener;
 import org.ig.uml.ui.events.DrawClass;
 
 public class ClassDialog extends JDialog implements ActionListener {
@@ -66,6 +69,8 @@ public class ClassDialog extends JDialog implements ActionListener {
 	}
 
 	private JPanel buildComponent() {
+		UmlModel model = view.getController().getumlModel();
+		UmlUndoRedoManager manager = view.getJframe().getUndoRedoManager();
 		DrawClass listener = new DrawClass(view, this);
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.add(new JLabel("<html><h3>Création d'une classe</h3></html>",
@@ -83,6 +88,7 @@ public class ClassDialog extends JDialog implements ActionListener {
 		validate = new JButton("Valider");
 		validate.setActionCommand("Validate");
 		validate.addActionListener(listener);
+		validate.addActionListener(new UmlUndoRedoListener(model, manager));
 		
 		addMethod = new JButton("Ajouter Méthodes");
 		addMethod.setActionCommand("AddMethods");

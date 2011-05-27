@@ -41,6 +41,7 @@ public class PaintSurface extends JComponent {
 		this.addMouseListener(new MouseEventHandler(this));
 		this.addMouseMotionListener(new MouseEventHandler(this));
 	}
+	
 
 	/*
 	 * Dessine la classe associé à l'Item donné en paramètre Si un item est
@@ -51,6 +52,26 @@ public class PaintSurface extends JComponent {
 			itemDraw.add(new ItemDraw(item, new Rectangle(item
 					.getPositionOnSurface().x, item.getPositionOnSurface().y,
 					120, 120)));
+		repaint();
+	}
+	
+	/*
+	 * Redessine le diagramme avec l'objet item en moins
+	 * Les liens relatifs à cet item sont détruits
+	 */
+	public void paintDeletedItem(ItemDraw item) {
+		System.out.println("Trying to delete item");
+		if (item != null) {
+			if (itemDraw.remove(item))
+				System.out.println("Item deleted");
+			for (LineDraw line : lineDraw) {
+				if (line.getFirstItem().getItem().equals(item) ||
+					line.getSecondItem().getItem().equals(item)) {
+					lineDraw.remove(line);
+				}
+			}
+		}
+		
 		repaint();
 	}
 	

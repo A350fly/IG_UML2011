@@ -17,6 +17,7 @@ import org.ig.uml.entities.Item;
 import org.ig.uml.events.DrawItemEvent;
 import org.ig.uml.events.DrawItemsEvent;
 import org.ig.uml.events.DrawLinkEvent;
+import org.ig.uml.managers.UmlUndoRedoManager;
 import org.ig.uml.ui.events.CloseWindow;
 
 public class JFrameUml extends JFrame implements UmlConstants {
@@ -31,6 +32,8 @@ public class JFrameUml extends JFrame implements UmlConstants {
 	private SwingUmlView view;
 	private JTreeElements jtreeElements;
 	private JSplitPane splitPane;
+	
+	private UmlUndoRedoManager undoRedoManager;
 
 	public JFrameUml(SwingUmlView view) {
 		String finalTitle = "";
@@ -47,6 +50,8 @@ public class JFrameUml extends JFrame implements UmlConstants {
         paintSurfaceScrollPane.setMinimumSize(new Dimension(300, 100));
         splitPane.setRightComponent(paintSurfaceScrollPane);
         splitPane.setDividerLocation(150);
+        undoRedoManager = new UmlUndoRedoManager(jmenuBarUML.getAnnuler(), jmenuBarUML.getRetablir());
+        
 		addWindowListener(new CloseWindow(view));
 		finalTitle = UNSAVED_FILE + " - " + TITLE;
 		setTitle(finalTitle);
@@ -55,18 +60,6 @@ public class JFrameUml extends JFrame implements UmlConstants {
 		setMinimumSize(new Dimension(HEIGHT_MIN_FRAME, WIDTH_MIN_FRAME));
 		addComponents();
 		pack();
-	}
-
-	public JScrollPane getPaintSurfaceScrollPane() {
-		return paintSurfaceScrollPane;
-	}
-
-	public void setView(SwingUmlView view) {
-		this.view = view;
-	}
-
-	public SwingUmlView getView() {
-		return view;
 	}
 
 	private void addComponents() {
@@ -107,8 +100,7 @@ public class JFrameUml extends JFrame implements UmlConstants {
 	 * item du link.
 	 */
 	public void drawLink(DrawLinkEvent drawLinkEvent) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	public void drawItems(DrawItemsEvent drawItemsEvent) {
@@ -129,6 +121,18 @@ public class JFrameUml extends JFrame implements UmlConstants {
         }
 		jtreeElements.setModel(new DefaultTreeModel(root));
 	}
+	
+	public JScrollPane getPaintSurfaceScrollPane() {
+		return paintSurfaceScrollPane;
+	}
+
+	public void setView(SwingUmlView view) {
+		this.view = view;
+	}
+
+	public SwingUmlView getView() {
+		return view;
+	}
 
 	public PaintSurface getPaintSurface() {
 		return paintSurface;
@@ -136,5 +140,13 @@ public class JFrameUml extends JFrame implements UmlConstants {
 
 	public void setPaintSurface(PaintSurface paintSurface) {
 		this.paintSurface = paintSurface;
+	}
+
+	public JMenuBarUML getJmenuBarUML() {
+		return jmenuBarUML;
+	}
+
+	public UmlUndoRedoManager getUndoRedoManager() {
+		return undoRedoManager;
 	}
 }

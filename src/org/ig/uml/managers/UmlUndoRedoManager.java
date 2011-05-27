@@ -52,11 +52,6 @@ public class UmlUndoRedoManager extends UndoManager {
 	
 	private void updateItems() {
 		redo.setEnabled(canRedo());
-		if (canRedo())
-			redo.setText(editToBeRedone().getRedoPresentationName());
-		
 		undo.setEnabled(canUndo());
-		if (canUndo())
-			undo.setText(editToBeUndone().getUndoPresentationName());
 	}
 }
